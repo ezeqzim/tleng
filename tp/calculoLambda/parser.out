@@ -1,0 +1,327 @@
+Created by PLY version 3.10 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    TARROW
+    POINT
+    COLON
+    TNAT
+    TBOOL
+    LAMBDA
+
+Grammar
+
+Rule 0     S' -> expression
+Rule 1     expression -> ZERO
+Rule 2     expression -> TRUE
+Rule 3     expression -> FALSE
+Rule 4     expression -> SUCC OPENBRACKET expression CLOSEDBRACKET
+Rule 5     expression -> PRED OPENBRACKET expression CLOSEDBRACKET
+Rule 6     expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET
+Rule 7     expression -> IF expression THEN expression ELSE expression
+
+Terminals, with rules where they appear
+
+CLOSEDBRACKET        : 4 5 6
+COLON                : 
+ELSE                 : 7
+FALSE                : 3
+IF                   : 7
+ISZERO               : 6
+LAMBDA               : 
+OPENBRACKET          : 4 5 6
+POINT                : 
+PRED                 : 5
+SUCC                 : 4
+TARROW               : 
+TBOOL                : 
+THEN                 : 7
+TNAT                 : 
+TRUE                 : 2
+ZERO                 : 1
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 4 5 6 7 7 7 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expression
+    (1) expression -> . ZERO
+    (2) expression -> . TRUE
+    (3) expression -> . FALSE
+    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (7) expression -> . IF expression THEN expression ELSE expression
+
+    ZERO            shift and go to state 4
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 1
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 8
+    ISZERO          shift and go to state 5
+    IF              shift and go to state 6
+
+    expression                     shift and go to state 2
+
+state 1
+
+    (3) expression -> FALSE .
+
+    THEN            reduce using rule 3 (expression -> FALSE .)
+    $end            reduce using rule 3 (expression -> FALSE .)
+    CLOSEDBRACKET   reduce using rule 3 (expression -> FALSE .)
+    ELSE            reduce using rule 3 (expression -> FALSE .)
+
+
+state 2
+
+    (0) S' -> expression .
+
+
+
+state 3
+
+    (4) expression -> SUCC . OPENBRACKET expression CLOSEDBRACKET
+
+    OPENBRACKET     shift and go to state 9
+
+
+state 4
+
+    (1) expression -> ZERO .
+
+    THEN            reduce using rule 1 (expression -> ZERO .)
+    $end            reduce using rule 1 (expression -> ZERO .)
+    CLOSEDBRACKET   reduce using rule 1 (expression -> ZERO .)
+    ELSE            reduce using rule 1 (expression -> ZERO .)
+
+
+state 5
+
+    (6) expression -> ISZERO . OPENBRACKET expression CLOSEDBRACKET
+
+    OPENBRACKET     shift and go to state 10
+
+
+state 6
+
+    (7) expression -> IF . expression THEN expression ELSE expression
+    (1) expression -> . ZERO
+    (2) expression -> . TRUE
+    (3) expression -> . FALSE
+    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (7) expression -> . IF expression THEN expression ELSE expression
+
+    ZERO            shift and go to state 4
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 1
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 8
+    ISZERO          shift and go to state 5
+    IF              shift and go to state 6
+
+    expression                     shift and go to state 11
+
+state 7
+
+    (2) expression -> TRUE .
+
+    THEN            reduce using rule 2 (expression -> TRUE .)
+    $end            reduce using rule 2 (expression -> TRUE .)
+    CLOSEDBRACKET   reduce using rule 2 (expression -> TRUE .)
+    ELSE            reduce using rule 2 (expression -> TRUE .)
+
+
+state 8
+
+    (5) expression -> PRED . OPENBRACKET expression CLOSEDBRACKET
+
+    OPENBRACKET     shift and go to state 12
+
+
+state 9
+
+    (4) expression -> SUCC OPENBRACKET . expression CLOSEDBRACKET
+    (1) expression -> . ZERO
+    (2) expression -> . TRUE
+    (3) expression -> . FALSE
+    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (7) expression -> . IF expression THEN expression ELSE expression
+
+    ZERO            shift and go to state 4
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 1
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 8
+    ISZERO          shift and go to state 5
+    IF              shift and go to state 6
+
+    expression                     shift and go to state 13
+
+state 10
+
+    (6) expression -> ISZERO OPENBRACKET . expression CLOSEDBRACKET
+    (1) expression -> . ZERO
+    (2) expression -> . TRUE
+    (3) expression -> . FALSE
+    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (7) expression -> . IF expression THEN expression ELSE expression
+
+    ZERO            shift and go to state 4
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 1
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 8
+    ISZERO          shift and go to state 5
+    IF              shift and go to state 6
+
+    expression                     shift and go to state 14
+
+state 11
+
+    (7) expression -> IF expression . THEN expression ELSE expression
+
+    THEN            shift and go to state 15
+
+
+state 12
+
+    (5) expression -> PRED OPENBRACKET . expression CLOSEDBRACKET
+    (1) expression -> . ZERO
+    (2) expression -> . TRUE
+    (3) expression -> . FALSE
+    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (7) expression -> . IF expression THEN expression ELSE expression
+
+    ZERO            shift and go to state 4
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 1
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 8
+    ISZERO          shift and go to state 5
+    IF              shift and go to state 6
+
+    expression                     shift and go to state 16
+
+state 13
+
+    (4) expression -> SUCC OPENBRACKET expression . CLOSEDBRACKET
+
+    CLOSEDBRACKET   shift and go to state 17
+
+
+state 14
+
+    (6) expression -> ISZERO OPENBRACKET expression . CLOSEDBRACKET
+
+    CLOSEDBRACKET   shift and go to state 18
+
+
+state 15
+
+    (7) expression -> IF expression THEN . expression ELSE expression
+    (1) expression -> . ZERO
+    (2) expression -> . TRUE
+    (3) expression -> . FALSE
+    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (7) expression -> . IF expression THEN expression ELSE expression
+
+    ZERO            shift and go to state 4
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 1
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 8
+    ISZERO          shift and go to state 5
+    IF              shift and go to state 6
+
+    expression                     shift and go to state 19
+
+state 16
+
+    (5) expression -> PRED OPENBRACKET expression . CLOSEDBRACKET
+
+    CLOSEDBRACKET   shift and go to state 20
+
+
+state 17
+
+    (4) expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .
+
+    THEN            reduce using rule 4 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    $end            reduce using rule 4 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    CLOSEDBRACKET   reduce using rule 4 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    ELSE            reduce using rule 4 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+
+
+state 18
+
+    (6) expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .
+
+    THEN            reduce using rule 6 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    $end            reduce using rule 6 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    CLOSEDBRACKET   reduce using rule 6 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    ELSE            reduce using rule 6 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+
+
+state 19
+
+    (7) expression -> IF expression THEN expression . ELSE expression
+
+    ELSE            shift and go to state 21
+
+
+state 20
+
+    (5) expression -> PRED OPENBRACKET expression CLOSEDBRACKET .
+
+    THEN            reduce using rule 5 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    $end            reduce using rule 5 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    CLOSEDBRACKET   reduce using rule 5 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    ELSE            reduce using rule 5 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+
+
+state 21
+
+    (7) expression -> IF expression THEN expression ELSE . expression
+    (1) expression -> . ZERO
+    (2) expression -> . TRUE
+    (3) expression -> . FALSE
+    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (7) expression -> . IF expression THEN expression ELSE expression
+
+    ZERO            shift and go to state 4
+    TRUE            shift and go to state 7
+    FALSE           shift and go to state 1
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 8
+    ISZERO          shift and go to state 5
+    IF              shift and go to state 6
+
+    expression                     shift and go to state 22
+
+state 22
+
+    (7) expression -> IF expression THEN expression ELSE expression .
+
+    THEN            reduce using rule 7 (expression -> IF expression THEN expression ELSE expression .)
+    $end            reduce using rule 7 (expression -> IF expression THEN expression ELSE expression .)
+    CLOSEDBRACKET   reduce using rule 7 (expression -> IF expression THEN expression ELSE expression .)
+    ELSE            reduce using rule 7 (expression -> IF expression THEN expression ELSE expression .)
+

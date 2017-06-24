@@ -1,0 +1,23 @@
+#! /usr/bin/env python
+"""
+Para correrlo desde la consola, hay que darle permisos de ejecucion
+chmod +x CLambda
+"""
+import sys
+from calculoLambda import parse
+
+if len(sys.argv) > 2:
+  print("El uso correcto es ./CLambda 'input string' ")
+  sys.exit()
+
+if len(sys.argv) == 2:
+  exp_str = sys.argv[1]
+  print(parse(exp_str))
+
+if len(sys.argv) == 1:
+  while True:
+    try:
+      exp_str = raw_input('> ')
+    except EOFError:
+      break
+    print(parse(exp_str))
