@@ -30,6 +30,7 @@ E -> Z | B | if E then E else E | (E) | var | L | A | succ(E) | pred(E) | iszero
 Z -> 0
 B -> true | false
 L -> \var:T.E
-T -> Bool | Nat | T -> T
+T -> Bool R | Nat R
+R -> -> T | LAMBDA
 A -> L E
 """

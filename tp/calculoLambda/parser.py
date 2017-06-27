@@ -1,10 +1,6 @@
 import ply.yacc as yacc
 from .lexer import tokens
 
-def p_root_expression(p):
-  'root : expression'
-  p[0] = p[1]
-
 # Z
 def p_expression_zero(p):
   'expression : zero'
@@ -76,18 +72,22 @@ def p_abstraction_lambda(p):
 
 # Bool
 def p_type_bool(p):
-  'type : BOOL'
+  'type : BOOL rectype'
   p[0] = p[1]
 
 # Nat
 def p_type_nat(p):
-  'type : NAT'
+  'type : NAT rectype'
   p[0] = p[1]
 
 # ->
-def p_type_arrow(p):
-  'type : type ARROW type'
-  p[0] = p[1] + p[2] + p[3]
+def p_rectype_arrow_type(p):
+  'rectype : ARROW type'
+  p[0] = p[1] + p[2]
+
+def p_rectype_empty(p):
+  'rectype : '
+  pass
 
 def p_application_lambda_expression(p):
   'application : abstraction expression'
