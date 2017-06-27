@@ -25,7 +25,6 @@ tokens = [
   'ARROW'
 ] + list(reserved.values())
 
-t_VAR = r'[a-z][a-zA-Z]*'
 t_LAMBDA = r'\\'
 t_COLON = r':'
 t_POINT = r'\.'
@@ -44,20 +43,27 @@ t_ISZERO = r'iszero'
 
 t_ignore = ' \t'
 
-def t_ZERO(t):
+def t_ZERO(token):
   r'0'
-  t.value = 0
-  return t
+  token.value = 0
+  return token
 
-def t_TRUE(t):
+def t_TRUE(token):
   r'true'
-  t.value = True
-  return t
+  token.value = True
+  return token
 
-def t_FALSE(t):
+def t_FALSE(token):
   r'false'
-  t.value = False
-  return t
+  token.value = False
+  return token
+
+def t_VAR(token):
+  r'[a-z][a-zA-Z]*'
+  if token.value in reserved:
+    token.type = reserved[token.value]
+    token.value = reserved[token.value]
+  return token
 
 lexer = lex.lex()
 

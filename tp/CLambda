@@ -26,11 +26,22 @@ if len(sys.argv) == 1:
 Grammar
 
 S -> E
-E -> Z | B | if E then E else E | (E) | var | L | A | succ(E) | pred(E) | iszero(E)
-Z -> 0
+E -> 0 | B | var | (E) | succ(E) | pred(E) | iszero(E) | if E then E else E | L
 B -> true | false
-L -> \var:T.E
 T -> Bool R | Nat R
 R -> -> T | LAMBDA
-A -> L E
+L -> \var:T.E A
+A -> E | LAMBDA
+"""
+
+"""
+Grammar
+
+S -> E.
+E -> 0 | B | var | ( E ) | succ ( E ) | pred ( E ) | iszero ( E ) | if E then E else E | L.
+B -> true | false.
+T -> Bool R | Nat R.
+R -> flecha T | .
+L -> lambda var : T punto E A.
+A -> E | .
 """
