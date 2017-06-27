@@ -1,43 +1,53 @@
 #! coding: utf-8
 import ply.lex as lex
 
-tokens = (
-#  'VAR',
-  'TRUE',
-  'FALSE',
-  'IF',
-  'THEN',
-  'ELSE',
+reserved = {
+   'if' : 'IF',
+   'then' : 'THEN',
+   'else' : 'ELSE',
+   'Bool' : 'BOOL',
+   'Nat' : 'NAT',
+   'succ' : 'SUCC',
+   'pred' : 'PRED',
+   'iszero' : 'ISZERO',
+   'true' : 'TRUE',
+   'false' : 'FALSE',
+}
+
+tokens = [
+  'VAR',
   'LAMBDA',
   'COLON',
   'POINT',
   'ZERO',
-  'SUCC',
-  'PRED',
-  'ISZERO',
   'OPENBRACKET',
   'CLOSEDBRACKET',
-  'TBOOL',
-  'TNAT',
-  'TARROW'
-)
+  'ARROW'
+] + list(reserved.values())
 
-#t_VAR = r'[a-z][a-z0-9]*'
-t_IF = r'if'
-t_THEN = r'then'
-t_ELSE = r'else'
+t_VAR = r'[a-z][a-zA-Z]*'
 t_LAMBDA = r'\\'
 t_COLON = r':'
 t_POINT = r'\.'
+t_OPENBRACKET = r'\('
+t_CLOSEDBRACKET = r'\)'
+t_ARROW = r'->'
+
+t_IF = r'if'
+t_THEN = r'then'
+t_ELSE = r'else'
+t_BOOL = r'Bool'
+t_NAT = r'Nat'
 t_SUCC = r'succ'
 t_PRED = r'pred'
 t_ISZERO = r'iszero'
-t_OPENBRACKET = r'\('
-t_CLOSEDBRACKET = r'\)'
-t_TBOOL = r'Bool'
-t_TNAT = r'Nat'
-t_TARROW = r'->'
+
 t_ignore = ' \t'
+
+def t_ZERO(t):
+  r'0'
+  t.value = 0
+  return t
 
 def t_TRUE(t):
   r'true'
@@ -47,11 +57,6 @@ def t_TRUE(t):
 def t_FALSE(t):
   r'false'
   t.value = False
-  return t
-
-def t_ZERO(t):
-  r'0'
-  t.value = 0
   return t
 
 lexer = lex.lex()

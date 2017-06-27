@@ -1,327 +1,891 @@
 Created by PLY version 3.10 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    TARROW
-    POINT
-    COLON
-    TNAT
-    TBOOL
-    LAMBDA
-
 Grammar
 
-Rule 0     S' -> expression
-Rule 1     expression -> ZERO
-Rule 2     expression -> TRUE
-Rule 3     expression -> FALSE
-Rule 4     expression -> SUCC OPENBRACKET expression CLOSEDBRACKET
-Rule 5     expression -> PRED OPENBRACKET expression CLOSEDBRACKET
-Rule 6     expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET
-Rule 7     expression -> IF expression THEN expression ELSE expression
+Rule 0     S' -> root
+Rule 1     root -> expression
+Rule 2     expression -> zero
+Rule 3     expression -> boolean
+Rule 4     expression -> IF expression THEN expression ELSE expression
+Rule 5     expression -> OPENBRACKET expression CLOSEDBRACKET
+Rule 6     expression -> VAR
+Rule 7     expression -> abstraction
+Rule 8     expression -> application
+Rule 9     expression -> SUCC OPENBRACKET expression CLOSEDBRACKET
+Rule 10    expression -> PRED OPENBRACKET expression CLOSEDBRACKET
+Rule 11    expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET
+Rule 12    zero -> ZERO
+Rule 13    boolean -> TRUE
+Rule 14    boolean -> FALSE
+Rule 15    abstraction -> LAMBDA VAR COLON type POINT expression
+Rule 16    type -> BOOL
+Rule 17    type -> NAT
+Rule 18    type -> type ARROW type
+Rule 19    application -> abstraction expression
 
 Terminals, with rules where they appear
 
-CLOSEDBRACKET        : 4 5 6
-COLON                : 
-ELSE                 : 7
-FALSE                : 3
-IF                   : 7
-ISZERO               : 6
-LAMBDA               : 
-OPENBRACKET          : 4 5 6
-POINT                : 
-PRED                 : 5
-SUCC                 : 4
-TARROW               : 
-TBOOL                : 
-THEN                 : 7
-TNAT                 : 
-TRUE                 : 2
-ZERO                 : 1
+ARROW                : 18
+BOOL                 : 16
+CLOSEDBRACKET        : 5 9 10 11
+COLON                : 15
+ELSE                 : 4
+FALSE                : 14
+IF                   : 4
+ISZERO               : 11
+LAMBDA               : 15
+NAT                  : 17
+OPENBRACKET          : 5 9 10 11
+POINT                : 15
+PRED                 : 10
+SUCC                 : 9
+THEN                 : 4
+TRUE                 : 13
+VAR                  : 6 15
+ZERO                 : 12
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 4 5 6 7 7 7 0
+abstraction          : 7 19
+application          : 8
+boolean              : 3
+expression           : 1 4 4 4 5 9 10 11 15 19
+root                 : 0
+type                 : 15 18 18
+zero                 : 2
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . expression
-    (1) expression -> . ZERO
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
-    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
-    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
-    (7) expression -> . IF expression THEN expression ELSE expression
+    (0) S' -> . root
+    (1) root -> . expression
+    (2) expression -> . zero
+    (3) expression -> . boolean
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . VAR
+    (7) expression -> . abstraction
+    (8) expression -> . application
+    (9) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (10) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (11) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (12) zero -> . ZERO
+    (13) boolean -> . TRUE
+    (14) boolean -> . FALSE
+    (15) abstraction -> . LAMBDA VAR COLON type POINT expression
+    (19) application -> . abstraction expression
 
-    ZERO            shift and go to state 4
-    TRUE            shift and go to state 7
-    FALSE           shift and go to state 1
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 8
-    ISZERO          shift and go to state 5
-    IF              shift and go to state 6
+    IF              shift and go to state 10
+    OPENBRACKET     shift and go to state 5
+    VAR             shift and go to state 9
+    SUCC            shift and go to state 1
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 3
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 4
+    FALSE           shift and go to state 11
+    LAMBDA          shift and go to state 16
 
-    expression                     shift and go to state 2
+    abstraction                    shift and go to state 7
+    root                           shift and go to state 15
+    application                    shift and go to state 6
+    zero                           shift and go to state 12
+    boolean                        shift and go to state 2
+    expression                     shift and go to state 13
 
 state 1
 
-    (3) expression -> FALSE .
+    (9) expression -> SUCC . OPENBRACKET expression CLOSEDBRACKET
 
-    THEN            reduce using rule 3 (expression -> FALSE .)
-    $end            reduce using rule 3 (expression -> FALSE .)
-    CLOSEDBRACKET   reduce using rule 3 (expression -> FALSE .)
-    ELSE            reduce using rule 3 (expression -> FALSE .)
+    OPENBRACKET     shift and go to state 17
 
 
 state 2
 
-    (0) S' -> expression .
+    (3) expression -> boolean .
 
+    ELSE            reduce using rule 3 (expression -> boolean .)
+    CLOSEDBRACKET   reduce using rule 3 (expression -> boolean .)
+    $end            reduce using rule 3 (expression -> boolean .)
+    THEN            reduce using rule 3 (expression -> boolean .)
+    IF              reduce using rule 3 (expression -> boolean .)
+    OPENBRACKET     reduce using rule 3 (expression -> boolean .)
+    VAR             reduce using rule 3 (expression -> boolean .)
+    SUCC            reduce using rule 3 (expression -> boolean .)
+    PRED            reduce using rule 3 (expression -> boolean .)
+    ISZERO          reduce using rule 3 (expression -> boolean .)
+    ZERO            reduce using rule 3 (expression -> boolean .)
+    TRUE            reduce using rule 3 (expression -> boolean .)
+    FALSE           reduce using rule 3 (expression -> boolean .)
+    LAMBDA          reduce using rule 3 (expression -> boolean .)
 
 
 state 3
 
-    (4) expression -> SUCC . OPENBRACKET expression CLOSEDBRACKET
+    (11) expression -> ISZERO . OPENBRACKET expression CLOSEDBRACKET
 
-    OPENBRACKET     shift and go to state 9
+    OPENBRACKET     shift and go to state 18
 
 
 state 4
 
-    (1) expression -> ZERO .
+    (13) boolean -> TRUE .
 
-    THEN            reduce using rule 1 (expression -> ZERO .)
-    $end            reduce using rule 1 (expression -> ZERO .)
-    CLOSEDBRACKET   reduce using rule 1 (expression -> ZERO .)
-    ELSE            reduce using rule 1 (expression -> ZERO .)
+    $end            reduce using rule 13 (boolean -> TRUE .)
+    CLOSEDBRACKET   reduce using rule 13 (boolean -> TRUE .)
+    THEN            reduce using rule 13 (boolean -> TRUE .)
+    ELSE            reduce using rule 13 (boolean -> TRUE .)
+    IF              reduce using rule 13 (boolean -> TRUE .)
+    OPENBRACKET     reduce using rule 13 (boolean -> TRUE .)
+    VAR             reduce using rule 13 (boolean -> TRUE .)
+    SUCC            reduce using rule 13 (boolean -> TRUE .)
+    PRED            reduce using rule 13 (boolean -> TRUE .)
+    ISZERO          reduce using rule 13 (boolean -> TRUE .)
+    ZERO            reduce using rule 13 (boolean -> TRUE .)
+    TRUE            reduce using rule 13 (boolean -> TRUE .)
+    FALSE           reduce using rule 13 (boolean -> TRUE .)
+    LAMBDA          reduce using rule 13 (boolean -> TRUE .)
 
 
 state 5
 
-    (6) expression -> ISZERO . OPENBRACKET expression CLOSEDBRACKET
+    (5) expression -> OPENBRACKET . expression CLOSEDBRACKET
+    (2) expression -> . zero
+    (3) expression -> . boolean
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . VAR
+    (7) expression -> . abstraction
+    (8) expression -> . application
+    (9) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (10) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (11) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (12) zero -> . ZERO
+    (13) boolean -> . TRUE
+    (14) boolean -> . FALSE
+    (15) abstraction -> . LAMBDA VAR COLON type POINT expression
+    (19) application -> . abstraction expression
 
-    OPENBRACKET     shift and go to state 10
+    IF              shift and go to state 10
+    OPENBRACKET     shift and go to state 5
+    VAR             shift and go to state 9
+    SUCC            shift and go to state 1
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 3
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 4
+    FALSE           shift and go to state 11
+    LAMBDA          shift and go to state 16
 
+    abstraction                    shift and go to state 7
+    application                    shift and go to state 6
+    zero                           shift and go to state 12
+    boolean                        shift and go to state 2
+    expression                     shift and go to state 19
 
 state 6
 
-    (7) expression -> IF . expression THEN expression ELSE expression
-    (1) expression -> . ZERO
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
-    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
-    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
-    (7) expression -> . IF expression THEN expression ELSE expression
+    (8) expression -> application .
 
-    ZERO            shift and go to state 4
-    TRUE            shift and go to state 7
-    FALSE           shift and go to state 1
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 8
-    ISZERO          shift and go to state 5
-    IF              shift and go to state 6
+    ELSE            reduce using rule 8 (expression -> application .)
+    CLOSEDBRACKET   reduce using rule 8 (expression -> application .)
+    $end            reduce using rule 8 (expression -> application .)
+    THEN            reduce using rule 8 (expression -> application .)
+    IF              reduce using rule 8 (expression -> application .)
+    OPENBRACKET     reduce using rule 8 (expression -> application .)
+    VAR             reduce using rule 8 (expression -> application .)
+    SUCC            reduce using rule 8 (expression -> application .)
+    PRED            reduce using rule 8 (expression -> application .)
+    ISZERO          reduce using rule 8 (expression -> application .)
+    ZERO            reduce using rule 8 (expression -> application .)
+    TRUE            reduce using rule 8 (expression -> application .)
+    FALSE           reduce using rule 8 (expression -> application .)
+    LAMBDA          reduce using rule 8 (expression -> application .)
 
-    expression                     shift and go to state 11
 
 state 7
 
-    (2) expression -> TRUE .
+    (7) expression -> abstraction .
+    (19) application -> abstraction . expression
+    (2) expression -> . zero
+    (3) expression -> . boolean
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . VAR
+    (7) expression -> . abstraction
+    (8) expression -> . application
+    (9) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (10) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (11) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (12) zero -> . ZERO
+    (13) boolean -> . TRUE
+    (14) boolean -> . FALSE
+    (15) abstraction -> . LAMBDA VAR COLON type POINT expression
+    (19) application -> . abstraction expression
 
-    THEN            reduce using rule 2 (expression -> TRUE .)
-    $end            reduce using rule 2 (expression -> TRUE .)
-    CLOSEDBRACKET   reduce using rule 2 (expression -> TRUE .)
-    ELSE            reduce using rule 2 (expression -> TRUE .)
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for OPENBRACKET resolved as shift
+  ! shift/reduce conflict for VAR resolved as shift
+  ! shift/reduce conflict for SUCC resolved as shift
+  ! shift/reduce conflict for PRED resolved as shift
+  ! shift/reduce conflict for ISZERO resolved as shift
+  ! shift/reduce conflict for ZERO resolved as shift
+  ! shift/reduce conflict for TRUE resolved as shift
+  ! shift/reduce conflict for FALSE resolved as shift
+  ! shift/reduce conflict for LAMBDA resolved as shift
+    ELSE            reduce using rule 7 (expression -> abstraction .)
+    CLOSEDBRACKET   reduce using rule 7 (expression -> abstraction .)
+    $end            reduce using rule 7 (expression -> abstraction .)
+    THEN            reduce using rule 7 (expression -> abstraction .)
+    IF              shift and go to state 10
+    OPENBRACKET     shift and go to state 5
+    VAR             shift and go to state 9
+    SUCC            shift and go to state 1
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 3
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 4
+    FALSE           shift and go to state 11
+    LAMBDA          shift and go to state 16
 
+  ! IF              [ reduce using rule 7 (expression -> abstraction .) ]
+  ! OPENBRACKET     [ reduce using rule 7 (expression -> abstraction .) ]
+  ! VAR             [ reduce using rule 7 (expression -> abstraction .) ]
+  ! SUCC            [ reduce using rule 7 (expression -> abstraction .) ]
+  ! PRED            [ reduce using rule 7 (expression -> abstraction .) ]
+  ! ISZERO          [ reduce using rule 7 (expression -> abstraction .) ]
+  ! ZERO            [ reduce using rule 7 (expression -> abstraction .) ]
+  ! TRUE            [ reduce using rule 7 (expression -> abstraction .) ]
+  ! FALSE           [ reduce using rule 7 (expression -> abstraction .) ]
+  ! LAMBDA          [ reduce using rule 7 (expression -> abstraction .) ]
+
+    abstraction                    shift and go to state 7
+    application                    shift and go to state 6
+    zero                           shift and go to state 12
+    boolean                        shift and go to state 2
+    expression                     shift and go to state 20
 
 state 8
 
-    (5) expression -> PRED . OPENBRACKET expression CLOSEDBRACKET
+    (12) zero -> ZERO .
 
-    OPENBRACKET     shift and go to state 12
+    CLOSEDBRACKET   reduce using rule 12 (zero -> ZERO .)
+    THEN            reduce using rule 12 (zero -> ZERO .)
+    $end            reduce using rule 12 (zero -> ZERO .)
+    ELSE            reduce using rule 12 (zero -> ZERO .)
+    IF              reduce using rule 12 (zero -> ZERO .)
+    OPENBRACKET     reduce using rule 12 (zero -> ZERO .)
+    VAR             reduce using rule 12 (zero -> ZERO .)
+    SUCC            reduce using rule 12 (zero -> ZERO .)
+    PRED            reduce using rule 12 (zero -> ZERO .)
+    ISZERO          reduce using rule 12 (zero -> ZERO .)
+    ZERO            reduce using rule 12 (zero -> ZERO .)
+    TRUE            reduce using rule 12 (zero -> ZERO .)
+    FALSE           reduce using rule 12 (zero -> ZERO .)
+    LAMBDA          reduce using rule 12 (zero -> ZERO .)
 
 
 state 9
 
-    (4) expression -> SUCC OPENBRACKET . expression CLOSEDBRACKET
-    (1) expression -> . ZERO
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
-    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
-    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
-    (7) expression -> . IF expression THEN expression ELSE expression
+    (6) expression -> VAR .
 
-    ZERO            shift and go to state 4
-    TRUE            shift and go to state 7
-    FALSE           shift and go to state 1
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 8
-    ISZERO          shift and go to state 5
-    IF              shift and go to state 6
+    ELSE            reduce using rule 6 (expression -> VAR .)
+    CLOSEDBRACKET   reduce using rule 6 (expression -> VAR .)
+    $end            reduce using rule 6 (expression -> VAR .)
+    THEN            reduce using rule 6 (expression -> VAR .)
+    IF              reduce using rule 6 (expression -> VAR .)
+    OPENBRACKET     reduce using rule 6 (expression -> VAR .)
+    VAR             reduce using rule 6 (expression -> VAR .)
+    SUCC            reduce using rule 6 (expression -> VAR .)
+    PRED            reduce using rule 6 (expression -> VAR .)
+    ISZERO          reduce using rule 6 (expression -> VAR .)
+    ZERO            reduce using rule 6 (expression -> VAR .)
+    TRUE            reduce using rule 6 (expression -> VAR .)
+    FALSE           reduce using rule 6 (expression -> VAR .)
+    LAMBDA          reduce using rule 6 (expression -> VAR .)
 
-    expression                     shift and go to state 13
 
 state 10
 
-    (6) expression -> ISZERO OPENBRACKET . expression CLOSEDBRACKET
-    (1) expression -> . ZERO
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
-    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
-    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
-    (7) expression -> . IF expression THEN expression ELSE expression
+    (4) expression -> IF . expression THEN expression ELSE expression
+    (2) expression -> . zero
+    (3) expression -> . boolean
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . VAR
+    (7) expression -> . abstraction
+    (8) expression -> . application
+    (9) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (10) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (11) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (12) zero -> . ZERO
+    (13) boolean -> . TRUE
+    (14) boolean -> . FALSE
+    (15) abstraction -> . LAMBDA VAR COLON type POINT expression
+    (19) application -> . abstraction expression
 
-    ZERO            shift and go to state 4
-    TRUE            shift and go to state 7
-    FALSE           shift and go to state 1
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 8
-    ISZERO          shift and go to state 5
-    IF              shift and go to state 6
+    IF              shift and go to state 10
+    OPENBRACKET     shift and go to state 5
+    VAR             shift and go to state 9
+    SUCC            shift and go to state 1
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 3
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 4
+    FALSE           shift and go to state 11
+    LAMBDA          shift and go to state 16
 
-    expression                     shift and go to state 14
+    abstraction                    shift and go to state 7
+    application                    shift and go to state 6
+    zero                           shift and go to state 12
+    boolean                        shift and go to state 2
+    expression                     shift and go to state 21
 
 state 11
 
-    (7) expression -> IF expression . THEN expression ELSE expression
+    (14) boolean -> FALSE .
 
-    THEN            shift and go to state 15
+    $end            reduce using rule 14 (boolean -> FALSE .)
+    CLOSEDBRACKET   reduce using rule 14 (boolean -> FALSE .)
+    THEN            reduce using rule 14 (boolean -> FALSE .)
+    ELSE            reduce using rule 14 (boolean -> FALSE .)
+    IF              reduce using rule 14 (boolean -> FALSE .)
+    OPENBRACKET     reduce using rule 14 (boolean -> FALSE .)
+    VAR             reduce using rule 14 (boolean -> FALSE .)
+    SUCC            reduce using rule 14 (boolean -> FALSE .)
+    PRED            reduce using rule 14 (boolean -> FALSE .)
+    ISZERO          reduce using rule 14 (boolean -> FALSE .)
+    ZERO            reduce using rule 14 (boolean -> FALSE .)
+    TRUE            reduce using rule 14 (boolean -> FALSE .)
+    FALSE           reduce using rule 14 (boolean -> FALSE .)
+    LAMBDA          reduce using rule 14 (boolean -> FALSE .)
 
 
 state 12
 
-    (5) expression -> PRED OPENBRACKET . expression CLOSEDBRACKET
-    (1) expression -> . ZERO
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
-    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
-    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
-    (7) expression -> . IF expression THEN expression ELSE expression
+    (2) expression -> zero .
 
-    ZERO            shift and go to state 4
-    TRUE            shift and go to state 7
-    FALSE           shift and go to state 1
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 8
-    ISZERO          shift and go to state 5
-    IF              shift and go to state 6
+    ELSE            reduce using rule 2 (expression -> zero .)
+    CLOSEDBRACKET   reduce using rule 2 (expression -> zero .)
+    $end            reduce using rule 2 (expression -> zero .)
+    THEN            reduce using rule 2 (expression -> zero .)
+    IF              reduce using rule 2 (expression -> zero .)
+    OPENBRACKET     reduce using rule 2 (expression -> zero .)
+    VAR             reduce using rule 2 (expression -> zero .)
+    SUCC            reduce using rule 2 (expression -> zero .)
+    PRED            reduce using rule 2 (expression -> zero .)
+    ISZERO          reduce using rule 2 (expression -> zero .)
+    ZERO            reduce using rule 2 (expression -> zero .)
+    TRUE            reduce using rule 2 (expression -> zero .)
+    FALSE           reduce using rule 2 (expression -> zero .)
+    LAMBDA          reduce using rule 2 (expression -> zero .)
 
-    expression                     shift and go to state 16
 
 state 13
 
-    (4) expression -> SUCC OPENBRACKET expression . CLOSEDBRACKET
+    (1) root -> expression .
 
-    CLOSEDBRACKET   shift and go to state 17
+    $end            reduce using rule 1 (root -> expression .)
 
 
 state 14
 
-    (6) expression -> ISZERO OPENBRACKET expression . CLOSEDBRACKET
+    (10) expression -> PRED . OPENBRACKET expression CLOSEDBRACKET
 
-    CLOSEDBRACKET   shift and go to state 18
+    OPENBRACKET     shift and go to state 22
 
 
 state 15
 
-    (7) expression -> IF expression THEN . expression ELSE expression
-    (1) expression -> . ZERO
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
-    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
-    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
-    (7) expression -> . IF expression THEN expression ELSE expression
+    (0) S' -> root .
 
-    ZERO            shift and go to state 4
-    TRUE            shift and go to state 7
-    FALSE           shift and go to state 1
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 8
-    ISZERO          shift and go to state 5
-    IF              shift and go to state 6
 
-    expression                     shift and go to state 19
 
 state 16
 
-    (5) expression -> PRED OPENBRACKET expression . CLOSEDBRACKET
+    (15) abstraction -> LAMBDA . VAR COLON type POINT expression
 
-    CLOSEDBRACKET   shift and go to state 20
+    VAR             shift and go to state 23
 
 
 state 17
 
-    (4) expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .
+    (9) expression -> SUCC OPENBRACKET . expression CLOSEDBRACKET
+    (2) expression -> . zero
+    (3) expression -> . boolean
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . VAR
+    (7) expression -> . abstraction
+    (8) expression -> . application
+    (9) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (10) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (11) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (12) zero -> . ZERO
+    (13) boolean -> . TRUE
+    (14) boolean -> . FALSE
+    (15) abstraction -> . LAMBDA VAR COLON type POINT expression
+    (19) application -> . abstraction expression
 
-    THEN            reduce using rule 4 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
-    $end            reduce using rule 4 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
-    CLOSEDBRACKET   reduce using rule 4 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
-    ELSE            reduce using rule 4 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    IF              shift and go to state 10
+    OPENBRACKET     shift and go to state 5
+    VAR             shift and go to state 9
+    SUCC            shift and go to state 1
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 3
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 4
+    FALSE           shift and go to state 11
+    LAMBDA          shift and go to state 16
 
+    abstraction                    shift and go to state 7
+    application                    shift and go to state 6
+    zero                           shift and go to state 12
+    boolean                        shift and go to state 2
+    expression                     shift and go to state 24
 
 state 18
 
-    (6) expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .
+    (11) expression -> ISZERO OPENBRACKET . expression CLOSEDBRACKET
+    (2) expression -> . zero
+    (3) expression -> . boolean
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . VAR
+    (7) expression -> . abstraction
+    (8) expression -> . application
+    (9) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (10) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (11) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (12) zero -> . ZERO
+    (13) boolean -> . TRUE
+    (14) boolean -> . FALSE
+    (15) abstraction -> . LAMBDA VAR COLON type POINT expression
+    (19) application -> . abstraction expression
 
-    THEN            reduce using rule 6 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
-    $end            reduce using rule 6 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
-    CLOSEDBRACKET   reduce using rule 6 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
-    ELSE            reduce using rule 6 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    IF              shift and go to state 10
+    OPENBRACKET     shift and go to state 5
+    VAR             shift and go to state 9
+    SUCC            shift and go to state 1
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 3
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 4
+    FALSE           shift and go to state 11
+    LAMBDA          shift and go to state 16
 
+    abstraction                    shift and go to state 7
+    application                    shift and go to state 6
+    zero                           shift and go to state 12
+    boolean                        shift and go to state 2
+    expression                     shift and go to state 25
 
 state 19
 
-    (7) expression -> IF expression THEN expression . ELSE expression
+    (5) expression -> OPENBRACKET expression . CLOSEDBRACKET
 
-    ELSE            shift and go to state 21
+    CLOSEDBRACKET   shift and go to state 26
 
 
 state 20
 
-    (5) expression -> PRED OPENBRACKET expression CLOSEDBRACKET .
+    (19) application -> abstraction expression .
 
-    THEN            reduce using rule 5 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
-    $end            reduce using rule 5 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
-    CLOSEDBRACKET   reduce using rule 5 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
-    ELSE            reduce using rule 5 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    $end            reduce using rule 19 (application -> abstraction expression .)
+    CLOSEDBRACKET   reduce using rule 19 (application -> abstraction expression .)
+    THEN            reduce using rule 19 (application -> abstraction expression .)
+    ELSE            reduce using rule 19 (application -> abstraction expression .)
+    IF              reduce using rule 19 (application -> abstraction expression .)
+    OPENBRACKET     reduce using rule 19 (application -> abstraction expression .)
+    VAR             reduce using rule 19 (application -> abstraction expression .)
+    SUCC            reduce using rule 19 (application -> abstraction expression .)
+    PRED            reduce using rule 19 (application -> abstraction expression .)
+    ISZERO          reduce using rule 19 (application -> abstraction expression .)
+    ZERO            reduce using rule 19 (application -> abstraction expression .)
+    TRUE            reduce using rule 19 (application -> abstraction expression .)
+    FALSE           reduce using rule 19 (application -> abstraction expression .)
+    LAMBDA          reduce using rule 19 (application -> abstraction expression .)
 
 
 state 21
 
-    (7) expression -> IF expression THEN expression ELSE . expression
-    (1) expression -> . ZERO
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
-    (5) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
-    (6) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
-    (7) expression -> . IF expression THEN expression ELSE expression
+    (4) expression -> IF expression . THEN expression ELSE expression
 
-    ZERO            shift and go to state 4
-    TRUE            shift and go to state 7
-    FALSE           shift and go to state 1
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 8
-    ISZERO          shift and go to state 5
-    IF              shift and go to state 6
+    THEN            shift and go to state 27
 
-    expression                     shift and go to state 22
 
 state 22
 
-    (7) expression -> IF expression THEN expression ELSE expression .
+    (10) expression -> PRED OPENBRACKET . expression CLOSEDBRACKET
+    (2) expression -> . zero
+    (3) expression -> . boolean
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . VAR
+    (7) expression -> . abstraction
+    (8) expression -> . application
+    (9) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (10) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (11) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (12) zero -> . ZERO
+    (13) boolean -> . TRUE
+    (14) boolean -> . FALSE
+    (15) abstraction -> . LAMBDA VAR COLON type POINT expression
+    (19) application -> . abstraction expression
 
-    THEN            reduce using rule 7 (expression -> IF expression THEN expression ELSE expression .)
-    $end            reduce using rule 7 (expression -> IF expression THEN expression ELSE expression .)
-    CLOSEDBRACKET   reduce using rule 7 (expression -> IF expression THEN expression ELSE expression .)
-    ELSE            reduce using rule 7 (expression -> IF expression THEN expression ELSE expression .)
+    IF              shift and go to state 10
+    OPENBRACKET     shift and go to state 5
+    VAR             shift and go to state 9
+    SUCC            shift and go to state 1
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 3
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 4
+    FALSE           shift and go to state 11
+    LAMBDA          shift and go to state 16
 
+    abstraction                    shift and go to state 7
+    application                    shift and go to state 6
+    zero                           shift and go to state 12
+    boolean                        shift and go to state 2
+    expression                     shift and go to state 28
+
+state 23
+
+    (15) abstraction -> LAMBDA VAR . COLON type POINT expression
+
+    COLON           shift and go to state 29
+
+
+state 24
+
+    (9) expression -> SUCC OPENBRACKET expression . CLOSEDBRACKET
+
+    CLOSEDBRACKET   shift and go to state 30
+
+
+state 25
+
+    (11) expression -> ISZERO OPENBRACKET expression . CLOSEDBRACKET
+
+    CLOSEDBRACKET   shift and go to state 31
+
+
+state 26
+
+    (5) expression -> OPENBRACKET expression CLOSEDBRACKET .
+
+    ELSE            reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    CLOSEDBRACKET   reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    $end            reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    THEN            reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    IF              reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    OPENBRACKET     reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    VAR             reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    SUCC            reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    PRED            reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    ISZERO          reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    ZERO            reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    TRUE            reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    FALSE           reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+    LAMBDA          reduce using rule 5 (expression -> OPENBRACKET expression CLOSEDBRACKET .)
+
+
+state 27
+
+    (4) expression -> IF expression THEN . expression ELSE expression
+    (2) expression -> . zero
+    (3) expression -> . boolean
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . VAR
+    (7) expression -> . abstraction
+    (8) expression -> . application
+    (9) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (10) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (11) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (12) zero -> . ZERO
+    (13) boolean -> . TRUE
+    (14) boolean -> . FALSE
+    (15) abstraction -> . LAMBDA VAR COLON type POINT expression
+    (19) application -> . abstraction expression
+
+    IF              shift and go to state 10
+    OPENBRACKET     shift and go to state 5
+    VAR             shift and go to state 9
+    SUCC            shift and go to state 1
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 3
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 4
+    FALSE           shift and go to state 11
+    LAMBDA          shift and go to state 16
+
+    abstraction                    shift and go to state 7
+    application                    shift and go to state 6
+    zero                           shift and go to state 12
+    boolean                        shift and go to state 2
+    expression                     shift and go to state 32
+
+state 28
+
+    (10) expression -> PRED OPENBRACKET expression . CLOSEDBRACKET
+
+    CLOSEDBRACKET   shift and go to state 33
+
+
+state 29
+
+    (15) abstraction -> LAMBDA VAR COLON . type POINT expression
+    (16) type -> . BOOL
+    (17) type -> . NAT
+    (18) type -> . type ARROW type
+
+    BOOL            shift and go to state 35
+    NAT             shift and go to state 34
+
+    type                           shift and go to state 36
+
+state 30
+
+    (9) expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .
+
+    ELSE            reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    CLOSEDBRACKET   reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    $end            reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    THEN            reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    IF              reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    OPENBRACKET     reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    VAR             reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    SUCC            reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    PRED            reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    ISZERO          reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    ZERO            reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    TRUE            reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    FALSE           reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+    LAMBDA          reduce using rule 9 (expression -> SUCC OPENBRACKET expression CLOSEDBRACKET .)
+
+
+state 31
+
+    (11) expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .
+
+    ELSE            reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    CLOSEDBRACKET   reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    $end            reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    THEN            reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    IF              reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    OPENBRACKET     reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    VAR             reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    SUCC            reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    PRED            reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    ISZERO          reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    ZERO            reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    TRUE            reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    FALSE           reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+    LAMBDA          reduce using rule 11 (expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET .)
+
+
+state 32
+
+    (4) expression -> IF expression THEN expression . ELSE expression
+
+    ELSE            shift and go to state 37
+
+
+state 33
+
+    (10) expression -> PRED OPENBRACKET expression CLOSEDBRACKET .
+
+    ELSE            reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    CLOSEDBRACKET   reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    $end            reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    THEN            reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    IF              reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    OPENBRACKET     reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    VAR             reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    SUCC            reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    PRED            reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    ISZERO          reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    ZERO            reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    TRUE            reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    FALSE           reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+    LAMBDA          reduce using rule 10 (expression -> PRED OPENBRACKET expression CLOSEDBRACKET .)
+
+
+state 34
+
+    (17) type -> NAT .
+
+    POINT           reduce using rule 17 (type -> NAT .)
+    ARROW           reduce using rule 17 (type -> NAT .)
+
+
+state 35
+
+    (16) type -> BOOL .
+
+    POINT           reduce using rule 16 (type -> BOOL .)
+    ARROW           reduce using rule 16 (type -> BOOL .)
+
+
+state 36
+
+    (15) abstraction -> LAMBDA VAR COLON type . POINT expression
+    (18) type -> type . ARROW type
+
+    POINT           shift and go to state 38
+    ARROW           shift and go to state 39
+
+
+state 37
+
+    (4) expression -> IF expression THEN expression ELSE . expression
+    (2) expression -> . zero
+    (3) expression -> . boolean
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . VAR
+    (7) expression -> . abstraction
+    (8) expression -> . application
+    (9) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (10) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (11) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (12) zero -> . ZERO
+    (13) boolean -> . TRUE
+    (14) boolean -> . FALSE
+    (15) abstraction -> . LAMBDA VAR COLON type POINT expression
+    (19) application -> . abstraction expression
+
+    IF              shift and go to state 10
+    OPENBRACKET     shift and go to state 5
+    VAR             shift and go to state 9
+    SUCC            shift and go to state 1
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 3
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 4
+    FALSE           shift and go to state 11
+    LAMBDA          shift and go to state 16
+
+    abstraction                    shift and go to state 7
+    application                    shift and go to state 6
+    zero                           shift and go to state 12
+    boolean                        shift and go to state 2
+    expression                     shift and go to state 40
+
+state 38
+
+    (15) abstraction -> LAMBDA VAR COLON type POINT . expression
+    (2) expression -> . zero
+    (3) expression -> . boolean
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . OPENBRACKET expression CLOSEDBRACKET
+    (6) expression -> . VAR
+    (7) expression -> . abstraction
+    (8) expression -> . application
+    (9) expression -> . SUCC OPENBRACKET expression CLOSEDBRACKET
+    (10) expression -> . PRED OPENBRACKET expression CLOSEDBRACKET
+    (11) expression -> . ISZERO OPENBRACKET expression CLOSEDBRACKET
+    (12) zero -> . ZERO
+    (13) boolean -> . TRUE
+    (14) boolean -> . FALSE
+    (15) abstraction -> . LAMBDA VAR COLON type POINT expression
+    (19) application -> . abstraction expression
+
+    IF              shift and go to state 10
+    OPENBRACKET     shift and go to state 5
+    VAR             shift and go to state 9
+    SUCC            shift and go to state 1
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 3
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 4
+    FALSE           shift and go to state 11
+    LAMBDA          shift and go to state 16
+
+    abstraction                    shift and go to state 7
+    application                    shift and go to state 6
+    zero                           shift and go to state 12
+    boolean                        shift and go to state 2
+    expression                     shift and go to state 41
+
+state 39
+
+    (18) type -> type ARROW . type
+    (16) type -> . BOOL
+    (17) type -> . NAT
+    (18) type -> . type ARROW type
+
+    BOOL            shift and go to state 35
+    NAT             shift and go to state 34
+
+    type                           shift and go to state 42
+
+state 40
+
+    (4) expression -> IF expression THEN expression ELSE expression .
+
+    ELSE            reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    CLOSEDBRACKET   reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    $end            reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    THEN            reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    IF              reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    OPENBRACKET     reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    VAR             reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    SUCC            reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    PRED            reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    ISZERO          reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    ZERO            reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    TRUE            reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    FALSE           reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    LAMBDA          reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+
+
+state 41
+
+    (15) abstraction -> LAMBDA VAR COLON type POINT expression .
+
+    IF              reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    OPENBRACKET     reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    VAR             reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    SUCC            reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    PRED            reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    ISZERO          reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    ZERO            reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    TRUE            reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    FALSE           reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    LAMBDA          reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    CLOSEDBRACKET   reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    $end            reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    THEN            reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+    ELSE            reduce using rule 15 (abstraction -> LAMBDA VAR COLON type POINT expression .)
+
+
+state 42
+
+    (18) type -> type ARROW type .
+    (18) type -> type . ARROW type
+
+  ! shift/reduce conflict for ARROW resolved as shift
+    POINT           reduce using rule 18 (type -> type ARROW type .)
+    ARROW           shift and go to state 39
+
+  ! ARROW           [ reduce using rule 18 (type -> type ARROW type .) ]
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for IF in state 7 resolved as shift
+WARNING: shift/reduce conflict for OPENBRACKET in state 7 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 7 resolved as shift
+WARNING: shift/reduce conflict for SUCC in state 7 resolved as shift
+WARNING: shift/reduce conflict for PRED in state 7 resolved as shift
+WARNING: shift/reduce conflict for ISZERO in state 7 resolved as shift
+WARNING: shift/reduce conflict for ZERO in state 7 resolved as shift
+WARNING: shift/reduce conflict for TRUE in state 7 resolved as shift
+WARNING: shift/reduce conflict for FALSE in state 7 resolved as shift
+WARNING: shift/reduce conflict for LAMBDA in state 7 resolved as shift
+WARNING: shift/reduce conflict for ARROW in state 42 resolved as shift

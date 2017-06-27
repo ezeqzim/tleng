@@ -7,7 +7,7 @@ import sys
 from calculoLambda import parse
 
 if len(sys.argv) > 2:
-  print("El uso correcto es ./CLambda 'input string' ")
+  print("El uso correcto es ./CLambda 'input string' o ./CLambda")
   sys.exit()
 
 if len(sys.argv) == 2:
@@ -21,3 +21,15 @@ if len(sys.argv) == 1:
     except EOFError:
       break
     print(parse(exp_str))
+
+"""
+Grammar
+
+S -> E
+E -> Z | B | if E then E else E | (E) | var | L | A | succ(E) | pred(E) | iszero(E)
+Z -> 0
+B -> true | false
+L -> \var:T.E
+T -> Bool | Nat | T -> T
+A -> L E
+"""
