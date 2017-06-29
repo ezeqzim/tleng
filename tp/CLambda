@@ -25,17 +25,17 @@ if len(sys.argv) == 1:
 """
 Grammar
 
-Term -> App | succ(Term) | pred(Term) | iszero(Term) | if Term then Term else Term | \var:T.Term
+Term -> App | succ(Term) | pred(Term) | iszero(Term) | if Term then Term else Term | \var:T.Term | (Term)
 App -> ATerm | App ATerm
-ATerm -> 0 | true | false | var | (Term)
+ATerm -> 0 | true | false | var
 T -> Bool R | Nat R
 R -> -> T |
 
 
 
-Term -> App | succ ( Term ) | pred ( Term ) | iszero ( Term ) | if Term then Term else Term | lambda var : T punto Term.
+Term -> App | succ ( Term ) | pred ( Term ) | iszero ( Term ) | if Term then Term else Term | lambda var : T punto Term | ( Term ).
 App -> ATerm | App ATerm.
-ATerm -> 0 | true | false | var | ( Term ).
+ATerm -> 0 | true | false | var.
 Type -> Bool Arrow | Nat Arrow.
 Arrow -> flecha Type | .
 """

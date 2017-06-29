@@ -15,7 +15,7 @@ Rule 9     aterm -> ZERO
 Rule 10    aterm -> TRUE
 Rule 11    aterm -> FALSE
 Rule 12    aterm -> VAR
-Rule 13    aterm -> OPENBRACKET term CLOSEDBRACKET
+Rule 13    term -> OPENBRACKET term CLOSEDBRACKET
 Rule 14    type -> BOOL arrow
 Rule 15    type -> NAT arrow
 Rule 16    arrow -> ARROW type
@@ -62,24 +62,24 @@ state 0
     (4) term -> . ISZERO OPENBRACKET term CLOSEDBRACKET
     (5) term -> . IF term THEN term ELSE term
     (6) term -> . LAMBDA VAR COLON type POINT term
+    (13) term -> . OPENBRACKET term CLOSEDBRACKET
     (7) app -> . aterm
     (8) app -> . app aterm
     (9) aterm -> . ZERO
     (10) aterm -> . TRUE
     (11) aterm -> . FALSE
     (12) aterm -> . VAR
-    (13) aterm -> . OPENBRACKET term CLOSEDBRACKET
 
     SUCC            shift and go to state 7
     PRED            shift and go to state 9
     ISZERO          shift and go to state 10
     IF              shift and go to state 13
     LAMBDA          shift and go to state 11
+    OPENBRACKET     shift and go to state 3
     ZERO            shift and go to state 5
     TRUE            shift and go to state 8
     FALSE           shift and go to state 2
     VAR             shift and go to state 6
-    OPENBRACKET     shift and go to state 3
 
     term                           shift and go to state 1
     app                            shift and go to state 4
@@ -99,7 +99,6 @@ state 2
     TRUE            reduce using rule 11 (aterm -> FALSE .)
     FALSE           reduce using rule 11 (aterm -> FALSE .)
     VAR             reduce using rule 11 (aterm -> FALSE .)
-    OPENBRACKET     reduce using rule 11 (aterm -> FALSE .)
     THEN            reduce using rule 11 (aterm -> FALSE .)
     CLOSEDBRACKET   reduce using rule 11 (aterm -> FALSE .)
     $end            reduce using rule 11 (aterm -> FALSE .)
@@ -108,31 +107,31 @@ state 2
 
 state 3
 
-    (13) aterm -> OPENBRACKET . term CLOSEDBRACKET
+    (13) term -> OPENBRACKET . term CLOSEDBRACKET
     (1) term -> . app
     (2) term -> . SUCC OPENBRACKET term CLOSEDBRACKET
     (3) term -> . PRED OPENBRACKET term CLOSEDBRACKET
     (4) term -> . ISZERO OPENBRACKET term CLOSEDBRACKET
     (5) term -> . IF term THEN term ELSE term
     (6) term -> . LAMBDA VAR COLON type POINT term
+    (13) term -> . OPENBRACKET term CLOSEDBRACKET
     (7) app -> . aterm
     (8) app -> . app aterm
     (9) aterm -> . ZERO
     (10) aterm -> . TRUE
     (11) aterm -> . FALSE
     (12) aterm -> . VAR
-    (13) aterm -> . OPENBRACKET term CLOSEDBRACKET
 
     SUCC            shift and go to state 7
     PRED            shift and go to state 9
     ISZERO          shift and go to state 10
     IF              shift and go to state 13
     LAMBDA          shift and go to state 11
+    OPENBRACKET     shift and go to state 3
     ZERO            shift and go to state 5
     TRUE            shift and go to state 8
     FALSE           shift and go to state 2
     VAR             shift and go to state 6
-    OPENBRACKET     shift and go to state 3
 
     term                           shift and go to state 14
     app                            shift and go to state 4
@@ -146,7 +145,6 @@ state 4
     (10) aterm -> . TRUE
     (11) aterm -> . FALSE
     (12) aterm -> . VAR
-    (13) aterm -> . OPENBRACKET term CLOSEDBRACKET
 
     $end            reduce using rule 1 (term -> app .)
     CLOSEDBRACKET   reduce using rule 1 (term -> app .)
@@ -156,7 +154,6 @@ state 4
     TRUE            shift and go to state 8
     FALSE           shift and go to state 2
     VAR             shift and go to state 6
-    OPENBRACKET     shift and go to state 3
 
     aterm                          shift and go to state 15
 
@@ -168,7 +165,6 @@ state 5
     TRUE            reduce using rule 9 (aterm -> ZERO .)
     FALSE           reduce using rule 9 (aterm -> ZERO .)
     VAR             reduce using rule 9 (aterm -> ZERO .)
-    OPENBRACKET     reduce using rule 9 (aterm -> ZERO .)
     THEN            reduce using rule 9 (aterm -> ZERO .)
     CLOSEDBRACKET   reduce using rule 9 (aterm -> ZERO .)
     $end            reduce using rule 9 (aterm -> ZERO .)
@@ -183,7 +179,6 @@ state 6
     TRUE            reduce using rule 12 (aterm -> VAR .)
     FALSE           reduce using rule 12 (aterm -> VAR .)
     VAR             reduce using rule 12 (aterm -> VAR .)
-    OPENBRACKET     reduce using rule 12 (aterm -> VAR .)
     THEN            reduce using rule 12 (aterm -> VAR .)
     CLOSEDBRACKET   reduce using rule 12 (aterm -> VAR .)
     $end            reduce using rule 12 (aterm -> VAR .)
@@ -205,7 +200,6 @@ state 8
     TRUE            reduce using rule 10 (aterm -> TRUE .)
     FALSE           reduce using rule 10 (aterm -> TRUE .)
     VAR             reduce using rule 10 (aterm -> TRUE .)
-    OPENBRACKET     reduce using rule 10 (aterm -> TRUE .)
     THEN            reduce using rule 10 (aterm -> TRUE .)
     CLOSEDBRACKET   reduce using rule 10 (aterm -> TRUE .)
     $end            reduce using rule 10 (aterm -> TRUE .)
@@ -241,7 +235,6 @@ state 12
     TRUE            reduce using rule 7 (app -> aterm .)
     FALSE           reduce using rule 7 (app -> aterm .)
     VAR             reduce using rule 7 (app -> aterm .)
-    OPENBRACKET     reduce using rule 7 (app -> aterm .)
     $end            reduce using rule 7 (app -> aterm .)
     CLOSEDBRACKET   reduce using rule 7 (app -> aterm .)
     THEN            reduce using rule 7 (app -> aterm .)
@@ -257,24 +250,24 @@ state 13
     (4) term -> . ISZERO OPENBRACKET term CLOSEDBRACKET
     (5) term -> . IF term THEN term ELSE term
     (6) term -> . LAMBDA VAR COLON type POINT term
+    (13) term -> . OPENBRACKET term CLOSEDBRACKET
     (7) app -> . aterm
     (8) app -> . app aterm
     (9) aterm -> . ZERO
     (10) aterm -> . TRUE
     (11) aterm -> . FALSE
     (12) aterm -> . VAR
-    (13) aterm -> . OPENBRACKET term CLOSEDBRACKET
 
     SUCC            shift and go to state 7
     PRED            shift and go to state 9
     ISZERO          shift and go to state 10
     IF              shift and go to state 13
     LAMBDA          shift and go to state 11
+    OPENBRACKET     shift and go to state 3
     ZERO            shift and go to state 5
     TRUE            shift and go to state 8
     FALSE           shift and go to state 2
     VAR             shift and go to state 6
-    OPENBRACKET     shift and go to state 3
 
     term                           shift and go to state 20
     app                            shift and go to state 4
@@ -282,7 +275,7 @@ state 13
 
 state 14
 
-    (13) aterm -> OPENBRACKET term . CLOSEDBRACKET
+    (13) term -> OPENBRACKET term . CLOSEDBRACKET
 
     CLOSEDBRACKET   shift and go to state 21
 
@@ -295,7 +288,6 @@ state 15
     TRUE            reduce using rule 8 (app -> app aterm .)
     FALSE           reduce using rule 8 (app -> app aterm .)
     VAR             reduce using rule 8 (app -> app aterm .)
-    OPENBRACKET     reduce using rule 8 (app -> app aterm .)
     $end            reduce using rule 8 (app -> app aterm .)
     CLOSEDBRACKET   reduce using rule 8 (app -> app aterm .)
     THEN            reduce using rule 8 (app -> app aterm .)
@@ -311,24 +303,24 @@ state 16
     (4) term -> . ISZERO OPENBRACKET term CLOSEDBRACKET
     (5) term -> . IF term THEN term ELSE term
     (6) term -> . LAMBDA VAR COLON type POINT term
+    (13) term -> . OPENBRACKET term CLOSEDBRACKET
     (7) app -> . aterm
     (8) app -> . app aterm
     (9) aterm -> . ZERO
     (10) aterm -> . TRUE
     (11) aterm -> . FALSE
     (12) aterm -> . VAR
-    (13) aterm -> . OPENBRACKET term CLOSEDBRACKET
 
     SUCC            shift and go to state 7
     PRED            shift and go to state 9
     ISZERO          shift and go to state 10
     IF              shift and go to state 13
     LAMBDA          shift and go to state 11
+    OPENBRACKET     shift and go to state 3
     ZERO            shift and go to state 5
     TRUE            shift and go to state 8
     FALSE           shift and go to state 2
     VAR             shift and go to state 6
-    OPENBRACKET     shift and go to state 3
 
     term                           shift and go to state 22
     app                            shift and go to state 4
@@ -343,24 +335,24 @@ state 17
     (4) term -> . ISZERO OPENBRACKET term CLOSEDBRACKET
     (5) term -> . IF term THEN term ELSE term
     (6) term -> . LAMBDA VAR COLON type POINT term
+    (13) term -> . OPENBRACKET term CLOSEDBRACKET
     (7) app -> . aterm
     (8) app -> . app aterm
     (9) aterm -> . ZERO
     (10) aterm -> . TRUE
     (11) aterm -> . FALSE
     (12) aterm -> . VAR
-    (13) aterm -> . OPENBRACKET term CLOSEDBRACKET
 
     SUCC            shift and go to state 7
     PRED            shift and go to state 9
     ISZERO          shift and go to state 10
     IF              shift and go to state 13
     LAMBDA          shift and go to state 11
+    OPENBRACKET     shift and go to state 3
     ZERO            shift and go to state 5
     TRUE            shift and go to state 8
     FALSE           shift and go to state 2
     VAR             shift and go to state 6
-    OPENBRACKET     shift and go to state 3
 
     term                           shift and go to state 23
     app                            shift and go to state 4
@@ -375,24 +367,24 @@ state 18
     (4) term -> . ISZERO OPENBRACKET term CLOSEDBRACKET
     (5) term -> . IF term THEN term ELSE term
     (6) term -> . LAMBDA VAR COLON type POINT term
+    (13) term -> . OPENBRACKET term CLOSEDBRACKET
     (7) app -> . aterm
     (8) app -> . app aterm
     (9) aterm -> . ZERO
     (10) aterm -> . TRUE
     (11) aterm -> . FALSE
     (12) aterm -> . VAR
-    (13) aterm -> . OPENBRACKET term CLOSEDBRACKET
 
     SUCC            shift and go to state 7
     PRED            shift and go to state 9
     ISZERO          shift and go to state 10
     IF              shift and go to state 13
     LAMBDA          shift and go to state 11
+    OPENBRACKET     shift and go to state 3
     ZERO            shift and go to state 5
     TRUE            shift and go to state 8
     FALSE           shift and go to state 2
     VAR             shift and go to state 6
-    OPENBRACKET     shift and go to state 3
 
     term                           shift and go to state 24
     app                            shift and go to state 4
@@ -414,17 +406,12 @@ state 20
 
 state 21
 
-    (13) aterm -> OPENBRACKET term CLOSEDBRACKET .
+    (13) term -> OPENBRACKET term CLOSEDBRACKET .
 
-    ZERO            reduce using rule 13 (aterm -> OPENBRACKET term CLOSEDBRACKET .)
-    TRUE            reduce using rule 13 (aterm -> OPENBRACKET term CLOSEDBRACKET .)
-    FALSE           reduce using rule 13 (aterm -> OPENBRACKET term CLOSEDBRACKET .)
-    VAR             reduce using rule 13 (aterm -> OPENBRACKET term CLOSEDBRACKET .)
-    OPENBRACKET     reduce using rule 13 (aterm -> OPENBRACKET term CLOSEDBRACKET .)
-    THEN            reduce using rule 13 (aterm -> OPENBRACKET term CLOSEDBRACKET .)
-    CLOSEDBRACKET   reduce using rule 13 (aterm -> OPENBRACKET term CLOSEDBRACKET .)
-    $end            reduce using rule 13 (aterm -> OPENBRACKET term CLOSEDBRACKET .)
-    ELSE            reduce using rule 13 (aterm -> OPENBRACKET term CLOSEDBRACKET .)
+    $end            reduce using rule 13 (term -> OPENBRACKET term CLOSEDBRACKET .)
+    CLOSEDBRACKET   reduce using rule 13 (term -> OPENBRACKET term CLOSEDBRACKET .)
+    THEN            reduce using rule 13 (term -> OPENBRACKET term CLOSEDBRACKET .)
+    ELSE            reduce using rule 13 (term -> OPENBRACKET term CLOSEDBRACKET .)
 
 
 state 22
@@ -468,24 +455,24 @@ state 26
     (4) term -> . ISZERO OPENBRACKET term CLOSEDBRACKET
     (5) term -> . IF term THEN term ELSE term
     (6) term -> . LAMBDA VAR COLON type POINT term
+    (13) term -> . OPENBRACKET term CLOSEDBRACKET
     (7) app -> . aterm
     (8) app -> . app aterm
     (9) aterm -> . ZERO
     (10) aterm -> . TRUE
     (11) aterm -> . FALSE
     (12) aterm -> . VAR
-    (13) aterm -> . OPENBRACKET term CLOSEDBRACKET
 
     SUCC            shift and go to state 7
     PRED            shift and go to state 9
     ISZERO          shift and go to state 10
     IF              shift and go to state 13
     LAMBDA          shift and go to state 11
+    OPENBRACKET     shift and go to state 3
     ZERO            shift and go to state 5
     TRUE            shift and go to state 8
     FALSE           shift and go to state 2
     VAR             shift and go to state 6
-    OPENBRACKET     shift and go to state 3
 
     term                           shift and go to state 33
     app                            shift and go to state 4
@@ -591,24 +578,24 @@ state 37
     (4) term -> . ISZERO OPENBRACKET term CLOSEDBRACKET
     (5) term -> . IF term THEN term ELSE term
     (6) term -> . LAMBDA VAR COLON type POINT term
+    (13) term -> . OPENBRACKET term CLOSEDBRACKET
     (7) app -> . aterm
     (8) app -> . app aterm
     (9) aterm -> . ZERO
     (10) aterm -> . TRUE
     (11) aterm -> . FALSE
     (12) aterm -> . VAR
-    (13) aterm -> . OPENBRACKET term CLOSEDBRACKET
 
     SUCC            shift and go to state 7
     PRED            shift and go to state 9
     ISZERO          shift and go to state 10
     IF              shift and go to state 13
     LAMBDA          shift and go to state 11
+    OPENBRACKET     shift and go to state 3
     ZERO            shift and go to state 5
     TRUE            shift and go to state 8
     FALSE           shift and go to state 2
     VAR             shift and go to state 6
-    OPENBRACKET     shift and go to state 3
 
     term                           shift and go to state 40
     app                            shift and go to state 4
@@ -623,24 +610,24 @@ state 38
     (4) term -> . ISZERO OPENBRACKET term CLOSEDBRACKET
     (5) term -> . IF term THEN term ELSE term
     (6) term -> . LAMBDA VAR COLON type POINT term
+    (13) term -> . OPENBRACKET term CLOSEDBRACKET
     (7) app -> . aterm
     (8) app -> . app aterm
     (9) aterm -> . ZERO
     (10) aterm -> . TRUE
     (11) aterm -> . FALSE
     (12) aterm -> . VAR
-    (13) aterm -> . OPENBRACKET term CLOSEDBRACKET
 
     SUCC            shift and go to state 7
     PRED            shift and go to state 9
     ISZERO          shift and go to state 10
     IF              shift and go to state 13
     LAMBDA          shift and go to state 11
+    OPENBRACKET     shift and go to state 3
     ZERO            shift and go to state 5
     TRUE            shift and go to state 8
     FALSE           shift and go to state 2
     VAR             shift and go to state 6
-    OPENBRACKET     shift and go to state 3
 
     term                           shift and go to state 41
     app                            shift and go to state 4

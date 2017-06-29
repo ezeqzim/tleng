@@ -46,6 +46,13 @@ def p_term_lambda_var_colon_type_point_term(p):
     print 'term : LAMBDA VAR COLON type POINT term'
   p[0] = p[1]
 
+# Term -> (Term)
+def p_term_openbracket_term_closedbracket(p):
+  'term : OPENBRACKET term CLOSEDBRACKET'
+  if (enable_debug):
+    print 'term : OPENBRACKET term CLOSEDBRACKET'
+  p[0] = p[2]
+
 # App -> ATerm
 def p_app_aterm(p):
   'app : aterm'
@@ -87,13 +94,6 @@ def p_aterm_var(p):
   if(enable_debug):
     print 'aterm : VAR'
   p[0] = p[1]
-
-# ATerm -> (Term)
-def p_aterm_openbracket_term_closedbracket(p):
-  'aterm : OPENBRACKET term CLOSEDBRACKET'
-  if (enable_debug):
-    print 'aterm : OPENBRACKET term CLOSEDBRACKET'
-  p[0] = p[2]
 
 # Type -> Bool Arrow
 def p_type_bool_arrow(p):
