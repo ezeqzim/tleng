@@ -5,9 +5,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'VAR LAMBDA COLON POINT ZERO OPENBRACKET CLOSEDBRACKET ARROW THEN SUCC BOOL NAT ISZERO PRED FALSE ELSE TRUE IFexpression : ZEROexpression : booleanexpression : VARexpression : OPENBRACKET expression CLOSEDBRACKETexpression : SUCC OPENBRACKET expression CLOSEDBRACKETexpression : PRED OPENBRACKET expression CLOSEDBRACKETexpression : ISZERO OPENBRACKET expression CLOSEDBRACKETexpression : IF expression THEN expression ELSE expressionexpression : abstractionboolean : TRUEboolean : FALSEtype : BOOL rectypetype : NAT rectyperectype : ARROW typerectype : abstraction : LAMBDA VAR COLON type POINT expression applicationapplication : expressionapplication : '
+_lr_signature = 'VAR LAMBDA COLON POINT ZERO OPENBRACKET CLOSEDBRACKET ARROW THEN SUCC BOOL NAT ISZERO PRED FALSE ELSE TRUE IFterm : appterm : SUCC OPENBRACKET term CLOSEDBRACKETterm : PRED OPENBRACKET term CLOSEDBRACKETterm : ISZERO OPENBRACKET term CLOSEDBRACKETterm : IF term THEN term ELSE termterm : LAMBDA VAR COLON type POINT termapp : atermapp : app atermaterm : ZEROaterm : TRUEaterm : FALSEaterm : VARaterm : OPENBRACKET term CLOSEDBRACKETtype : BOOL arrowtype : NAT arrowarrow : ARROW typearrow : '
     
-_lr_action_items = {'THEN':([1,2,6,7,9,12,19,20,26,27,28,39,40,41,42,],[-9,-11,-1,-2,-3,-10,25,-4,-5,-7,-6,-18,-8,-17,-16,]),'FALSE':([0,1,2,3,6,7,9,12,13,15,16,17,20,25,26,27,28,36,37,39,40,41,42,],[2,-9,-11,2,-1,-2,-3,-10,2,2,2,2,-4,2,-5,-7,-6,2,2,2,-8,-17,-16,]),'ARROW':([29,30,],[33,33,]),'OPENBRACKET':([0,1,2,3,4,5,6,7,8,9,12,13,15,16,17,20,25,26,27,28,36,37,39,40,41,42,],[3,-9,-11,3,15,16,-1,-2,17,-3,-10,3,3,3,3,-4,3,-5,-7,-6,3,3,3,-8,-17,-16,]),'PRED':([0,1,2,3,6,7,9,12,13,15,16,17,20,25,26,27,28,36,37,39,40,41,42,],[8,-9,-11,8,-1,-2,-3,-10,8,8,8,8,-4,8,-5,-7,-6,8,8,8,-8,-17,-16,]),'POINT':([29,30,31,34,35,38,],[-15,-15,36,-13,-12,-14,]),'ZERO':([0,1,2,3,6,7,9,12,13,15,16,17,20,25,26,27,28,36,37,39,40,41,42,],[6,-9,-11,6,-1,-2,-3,-10,6,6,6,6,-4,6,-5,-7,-6,6,6,6,-8,-17,-16,]),'ELSE':([1,2,6,7,9,12,20,26,27,28,32,39,40,41,42,],[-9,-11,-1,-2,-3,-10,-4,-5,-7,-6,37,-18,-8,-17,-16,]),'VAR':([0,1,2,3,6,7,9,10,12,13,15,16,17,20,25,26,27,28,36,37,39,40,41,42,],[9,-9,-11,9,-1,-2,-3,18,-10,9,9,9,9,-4,9,-5,-7,-6,9,9,9,-8,-17,-16,]),'SUCC':([0,1,2,3,6,7,9,12,13,15,16,17,20,25,26,27,28,36,37,39,40,41,42,],[4,-9,-11,4,-1,-2,-3,-10,4,4,4,4,-4,4,-5,-7,-6,4,4,4,-8,-17,-16,]),'COLON':([18,],[24,]),'NAT':([24,33,],[29,29,]),'CLOSEDBRACKET':([1,2,6,7,9,12,14,20,21,22,23,26,27,28,39,40,41,42,],[-9,-11,-1,-2,-3,-10,20,-4,26,27,28,-5,-7,-6,-18,-8,-17,-16,]),'ISZERO':([0,1,2,3,6,7,9,12,13,15,16,17,20,25,26,27,28,36,37,39,40,41,42,],[5,-9,-11,5,-1,-2,-3,-10,5,5,5,5,-4,5,-5,-7,-6,5,5,5,-8,-17,-16,]),'BOOL':([24,33,],[30,30,]),'IF':([0,1,2,3,6,7,9,12,13,15,16,17,20,25,26,27,28,36,37,39,40,41,42,],[13,-9,-11,13,-1,-2,-3,-10,13,13,13,13,-4,13,-5,-7,-6,13,13,13,-8,-17,-16,]),'TRUE':([0,1,2,3,6,7,9,12,13,15,16,17,20,25,26,27,28,36,37,39,40,41,42,],[12,-9,-11,12,-1,-2,-3,-10,12,12,12,12,-4,12,-5,-7,-6,12,12,12,-8,-17,-16,]),'$end':([1,2,6,7,9,11,12,20,26,27,28,39,40,41,42,],[-9,-11,-1,-2,-3,0,-10,-4,-5,-7,-6,-18,-8,-17,-16,]),'LAMBDA':([0,1,2,3,6,7,9,12,13,15,16,17,20,25,26,27,28,36,37,39,40,41,42,],[10,-9,-11,10,-1,-2,-3,-10,10,10,10,10,-4,10,-5,-7,-6,10,10,10,-8,-17,-16,]),}
+_lr_action_items = {'THEN':([2,4,5,6,8,12,15,20,21,27,28,29,40,41,],[-11,-1,-9,-12,-10,-7,-8,26,-13,-2,-3,-4,-6,-5,]),'FALSE':([0,2,3,4,5,6,8,12,13,15,16,17,18,21,26,37,38,],[2,-11,2,2,-9,-12,-10,-7,2,-8,2,2,2,-13,2,2,2,]),'ARROW':([30,31,],[34,34,]),'OPENBRACKET':([0,2,3,4,5,6,7,8,9,10,12,13,15,16,17,18,21,26,37,38,],[3,-11,3,3,-9,-12,16,-10,17,18,-7,3,-8,3,3,3,-13,3,3,3,]),'PRED':([0,3,13,16,17,18,26,37,38,],[9,9,9,9,9,9,9,9,9,]),'POINT':([30,31,32,35,36,39,],[-17,-17,37,-15,-14,-16,]),'SUCC':([0,3,13,16,17,18,26,37,38,],[7,7,7,7,7,7,7,7,7,]),'ELSE':([2,4,5,6,8,12,15,21,27,28,29,33,40,41,],[-11,-1,-9,-12,-10,-7,-8,-13,-2,-3,-4,38,-6,-5,]),'ISZERO':([0,3,13,16,17,18,26,37,38,],[10,10,10,10,10,10,10,10,10,]),'ZERO':([0,2,3,4,5,6,8,12,13,15,16,17,18,21,26,37,38,],[5,-11,5,5,-9,-12,-10,-7,5,-8,5,5,5,-13,5,5,5,]),'COLON':([19,],[25,]),'NAT':([25,34,],[30,30,]),'CLOSEDBRACKET':([2,4,5,6,8,12,14,15,21,22,23,24,27,28,29,40,41,],[-11,-1,-9,-12,-10,-7,21,-8,-13,27,28,29,-2,-3,-4,-6,-5,]),'VAR':([0,2,3,4,5,6,8,11,12,13,15,16,17,18,21,26,37,38,],[6,-11,6,6,-9,-12,-10,19,-7,6,-8,6,6,6,-13,6,6,6,]),'BOOL':([25,34,],[31,31,]),'LAMBDA':([0,3,13,16,17,18,26,37,38,],[11,11,11,11,11,11,11,11,11,]),'TRUE':([0,2,3,4,5,6,8,12,13,15,16,17,18,21,26,37,38,],[8,-11,8,8,-9,-12,-10,-7,8,-8,8,8,8,-13,8,8,8,]),'$end':([1,2,4,5,6,8,12,15,21,27,28,29,40,41,],[0,-11,-1,-9,-12,-10,-7,-8,-13,-2,-3,-4,-6,-5,]),'IF':([0,3,13,16,17,18,26,37,38,],[13,13,13,13,13,13,13,13,13,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'abstraction':([0,3,13,15,16,17,25,36,37,39,],[1,1,1,1,1,1,1,1,1,1,]),'expression':([0,3,13,15,16,17,25,36,37,39,],[11,14,19,21,22,23,32,39,40,41,]),'application':([39,],[42,]),'boolean':([0,3,13,15,16,17,25,36,37,39,],[7,7,7,7,7,7,7,7,7,7,]),'type':([24,33,],[31,38,]),'rectype':([29,30,],[34,35,]),}
+_lr_goto_items = {'term':([0,3,13,16,17,18,26,37,38,],[1,14,20,22,23,24,33,40,41,]),'type':([25,34,],[32,39,]),'app':([0,3,13,16,17,18,26,37,38,],[4,4,4,4,4,4,4,4,4,]),'aterm':([0,3,4,13,16,17,18,26,37,38,],[12,12,15,12,12,12,12,12,12,12,]),'arrow':([30,31,],[35,36,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -25,23 +25,22 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> expression","S'",1,None,None,None),
-  ('expression -> ZERO','expression',1,'p_expression_zero','parser.py',6),
-  ('expression -> boolean','expression',1,'p_expression_boolean','parser.py',11),
-  ('expression -> VAR','expression',1,'p_expression_var','parser.py',16),
-  ('expression -> OPENBRACKET expression CLOSEDBRACKET','expression',3,'p_expression_brackets','parser.py',21),
-  ('expression -> SUCC OPENBRACKET expression CLOSEDBRACKET','expression',4,'p_expression_succ','parser.py',26),
-  ('expression -> PRED OPENBRACKET expression CLOSEDBRACKET','expression',4,'p_expression_pred','parser.py',31),
-  ('expression -> ISZERO OPENBRACKET expression CLOSEDBRACKET','expression',4,'p_expression_iszero','parser.py',36),
-  ('expression -> IF expression THEN expression ELSE expression','expression',6,'p_expression_if_then_else','parser.py',41),
-  ('expression -> abstraction','expression',1,'p_expression_abstraction','parser.py',46),
-  ('boolean -> TRUE','boolean',1,'p_boolean_true','parser.py',51),
-  ('boolean -> FALSE','boolean',1,'p_boolean_false','parser.py',56),
-  ('type -> BOOL rectype','type',2,'p_type_bool_maybe_arrow','parser.py',61),
-  ('type -> NAT rectype','type',2,'p_type_nat_maybe_arrow','parser.py',66),
-  ('rectype -> ARROW type','rectype',2,'p_rectype_arrow_type','parser.py',71),
-  ('rectype -> <empty>','rectype',0,'p_rectype_empty','parser.py',76),
-  ('abstraction -> LAMBDA VAR COLON type POINT expression application','abstraction',7,'p_abstraction_lambda_maybe_application','parser.py',81),
-  ('application -> expression','application',1,'p_application_expression','parser.py',86),
-  ('application -> <empty>','application',0,'p_application_lambda','parser.py',91),
+  ("S' -> term","S'",1,None,None,None),
+  ('term -> app','term',1,'p_term_app','parser.py',9),
+  ('term -> SUCC OPENBRACKET term CLOSEDBRACKET','term',4,'p_term_succ_openbracket_term_closedbracket','parser.py',16),
+  ('term -> PRED OPENBRACKET term CLOSEDBRACKET','term',4,'p_term_pred_openbracket_term_closedbracket','parser.py',23),
+  ('term -> ISZERO OPENBRACKET term CLOSEDBRACKET','term',4,'p_term_iszero_openbracket_term_closedbracket','parser.py',30),
+  ('term -> IF term THEN term ELSE term','term',6,'p_term_if_term_then_term_else_term','parser.py',37),
+  ('term -> LAMBDA VAR COLON type POINT term','term',6,'p_term_lambda_var_colon_type_point_term','parser.py',44),
+  ('app -> aterm','app',1,'p_app_aterm','parser.py',51),
+  ('app -> app aterm','app',2,'p_app_app_aterm','parser.py',58),
+  ('aterm -> ZERO','aterm',1,'p_aterm_0','parser.py',65),
+  ('aterm -> TRUE','aterm',1,'p_aterm_true','parser.py',72),
+  ('aterm -> FALSE','aterm',1,'p_aterm_false','parser.py',79),
+  ('aterm -> VAR','aterm',1,'p_aterm_var','parser.py',86),
+  ('aterm -> OPENBRACKET term CLOSEDBRACKET','aterm',3,'p_aterm_openbracket_term_closedbracket','parser.py',93),
+  ('type -> BOOL arrow','type',2,'p_type_bool_arrow','parser.py',100),
+  ('type -> NAT arrow','type',2,'p_type_nat_arrow','parser.py',107),
+  ('arrow -> ARROW type','arrow',2,'p_arrow_arrow_type','parser.py',114),
+  ('arrow -> <empty>','arrow',0,'p_arrow','parser.py',121),
 ]
