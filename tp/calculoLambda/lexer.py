@@ -1,6 +1,9 @@
 #! coding: utf-8
 import ply.lex as lex
 
+class UnexpectedTokenException(Exception):
+  pass
+
 reserved = {
    'if' : 'IF',
    'then' : 'THEN',
@@ -28,6 +31,7 @@ tokens = [
 t_LAMBDA = r'\\'
 t_COLON = r':'
 t_POINT = r'\.'
+t_ZERO = r'0'
 t_OPENBRACKET = r'\('
 t_CLOSEDBRACKET = r'\)'
 t_ARROW = r'->'
@@ -40,23 +44,10 @@ t_NAT = r'Nat'
 t_SUCC = r'succ'
 t_PRED = r'pred'
 t_ISZERO = r'iszero'
+t_TRUE = r'true'
+t_FALSE = r'false'
 
 t_ignore = ' \t'
-
-def t_ZERO(token):
-  r'0'
-  token.value = 0
-  return token
-
-def t_TRUE(token):
-  r'true'
-  token.value = True
-  return token
-
-def t_FALSE(token):
-  r'false'
-  token.value = False
-  return token
 
 def t_VAR(token):
   r'[a-z][a-zA-Z]*'
@@ -64,6 +55,10 @@ def t_VAR(token):
     token.type = reserved[token.value]
     token.value = reserved[token.value]
   return token
+
+def t_error(token):
+  message = 'Token desconocido: ' + str(token.value)
+  raise UnexpectedTokenException(message)
 
 lexer = lex.lex()
 

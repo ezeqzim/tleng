@@ -4,7 +4,7 @@ Para correrlo desde la consola, hay que darle permisos de ejecucion
 chmod +x CLambda
 """
 import sys
-from calculoLambda import parse
+from calculoLambda import *
 
 if len(sys.argv) > 2:
   print("El uso correcto es ./CLambda 'input string' o ./CLambda")
@@ -18,9 +18,25 @@ if len(sys.argv) == 1:
   while True:
     try:
       exp_str = raw_input('> ')
+      parsed = parse(exp_str)
+      print parsed.printString()
     except EOFError:
       break
-    print(parse(exp_str))
+    except UnexpectedTokenException as ute:
+      print(ute.message)
+      pass
+    except ExpressionMustBeBool as embb:
+      print(embb.message)
+      pass
+    except ExpressionMustBeNat as embn:
+      print(embn.message)
+      pass
+    except ExpressionsMustHaveEqualType as emheq:
+      print(emheq.message)
+      pass
+    except ExpressionMustBeApplicable as emba:
+      print(emba.message)
+      pass
 
 """
 Grammar
