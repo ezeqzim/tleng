@@ -19,39 +19,21 @@ if len(sys.argv) == 1:
     try:
       exp_str = raw_input('> ')
       parsed = parse(exp_str)
-      print parsed.printString()
+      # print parsed.printString()
     except EOFError:
       break
-    except UnexpectedTokenException as ute:
-      print(ute.message)
-      pass
-    except ExpressionMustBeBool as embb:
-      print(embb.message)
-      pass
-    except ExpressionMustBeNat as embn:
-      print(embn.message)
-      pass
-    except ExpressionsMustHaveEqualType as emheq:
-      print(emheq.message)
-      pass
-    except ExpressionMustBeApplicable as emba:
-      print(emba.message)
+    except (UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable) as e:
+      print(e.message)
       pass
 
 """
 Grammar
 
-Term -> App | succ(Term) | pred(Term) | iszero(Term) | if Term then Term else Term | \var:T.Term | (Term)
-App -> ATerm | App ATerm
-ATerm -> 0 | true | false | var
-T -> Bool R | Nat R
-R -> -> T |
-
-
-
-Term -> App | succ ( Term ) | pred ( Term ) | iszero ( Term ) | if Term then Term else Term | lambda var : T punto Term | ( Term ).
-App -> ATerm | App ATerm.
-ATerm -> 0 | true | false | var.
-Type -> Bool Arrow | Nat Arrow.
-Arrow -> flecha Type | .
+S -> A.
+A -> A L | L.
+L -> \ V : T . L | E.
+T -> Bool F | Nat F.
+F -> -> T | .
+E -> 0 | true | false | if A then E else E | V | succ ( A ) | pred ( A ) | iszero ( A ) | ( A ).
+V -> var
 """
