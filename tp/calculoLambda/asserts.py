@@ -1,4 +1,4 @@
-from .types import *
+from .Types import *
 
 class ExpressionMustBeBool(Exception):
   pass

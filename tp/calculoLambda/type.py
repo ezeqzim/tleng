@@ -1,4 +1,4 @@
-from .types import *
+from .Types import *
 
 class Type(object):
   def printString(self):
