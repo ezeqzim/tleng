@@ -29,11 +29,11 @@ if len(sys.argv) == 1:
 """
 Grammar
 
-S -> A.
-A -> A L | L.
-L -> \ V : T . L | E.
-T -> Bool F | Nat F.
-F -> -> T | .
-E -> 0 | true | false | if A then E else E | V | succ ( A ) | pred ( A ) | iszero ( A ) | ( A ).
-V -> var
+S -> Lambda
+Lambda -> App
+App -> App Final | Final
+Final -> 0 | true | false | Var | if Lambda then Lambda else Lambda | succ ( Lambda ) | pred ( Lambda ) | iszero ( Lambda ) | ( Lambda ) | \ Var : Tipo . Lambda
+Tipo -> Bool Flecha | Nat Flecha
+Flecha -> -> Tipo |
+Var -> var
 """
