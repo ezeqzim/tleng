@@ -1,5 +1,5 @@
 from .Types import *
-from .asserts import *
+from .Asserts import *
 
 class Final(object):
   def printString(self):

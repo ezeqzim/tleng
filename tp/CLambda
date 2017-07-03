@@ -19,7 +19,7 @@ if len(sys.argv) == 1:
     try:
       exp_str = raw_input('> ')
       parsed = parse(exp_str)
-      # print parsed.printString()
+      print parsed.printString()
     except EOFError:
       break
     except (UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable) as e:
