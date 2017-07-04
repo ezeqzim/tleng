@@ -19,7 +19,8 @@ if len(sys.argv) == 1:
     try:
       exp_str = raw_input('> ')
       parsed = parse(exp_str)
-      print parsed.printString()
+      evaluation = parsed.evaluate()
+      print evaluation.printString()
     except EOFError:
       break
     except (UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable) as e:
@@ -30,10 +31,11 @@ if len(sys.argv) == 1:
 Grammar
 
 S -> Lambda
-Lambda -> App
+Lambda -> \ Var : Tipo . Lambda | ITE
+ITE -> if Lambda then Lambda else Lambda | App
 App -> App Final | Final
-Final -> 0 | true | false | Var | if Lambda then Lambda else Lambda | succ ( Lambda ) | pred ( Lambda ) | iszero ( Lambda ) | ( Lambda ) | \ Var : Tipo . Lambda
+Final -> 0 | true | false | Var | succ ( Lambda ) | pred ( Lambda ) | iszero ( Lambda ) | ( Lambda )
+Var -> var
 Tipo -> Bool Flecha | Nat Flecha
 Flecha -> -> Tipo |
-Var -> var
 """

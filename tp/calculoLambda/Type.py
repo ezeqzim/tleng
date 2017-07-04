@@ -1,24 +1,63 @@
-from .Types import *
+class Types:
+  BOOL = 'BOOL'
+  NAT = 'NAT'
 
-class Type(object):
-  def printString(self):
-    return str(self.type)
-
-class Bool(Type):
-  def __init__(self, value):
+class Bool(object):
+  def __init__(self):
     self.type = Types.BOOL
 
-class Nat(Type):
-  def __init__(self, value):
+  def evaluate(self):
+    return self
+
+  def printString(self):
+    return 'Bool'
+
+  def __eq__(self, other):
+    if (isinstance(other, self.__class__)):
+      return self.type == other.type
+
+  def __ne__(self, other):
+    return not self.__eq__(self, other)
+
+class Nat(object):
+  def __init__(self):
     self.type = Types.NAT
 
-class Arrow(Type):
+  def evaluate(self):
+    return self
+
+  def printString(self):
+    return 'Nat'
+
+  def __eq__(self, other):
+    if (isinstance(other, self.__class__)):
+      return self.type == other.type
+
+  def __ne__(self, other):
+    return not self.__eq__(self, other)
+
+class Arrow(object):
   def __init__(self, left, right = None):
     self.left = left
     self.right = right
-    self.type = left.type if right is None else Types.ARROW
+
+  def evaluate(self):
+    if (self.right is None):
+      return self.left
+    return Arrow(self.left, self.right.evaluate())
 
   def printString(self):
-    if (self.type == Types.ARROW):
-      return self.left.printString() + ' -> ' + self.right.printString()
-    return self.left.printString()
+    if (self.right is None):
+      return self.left.printString()
+    return self.left.printString() + ' -> ' + self.right.printString()
+
+  def __eq__(self, other):
+    if (isinstance(other, self.__class__)):
+      if (self.right is not None and other.right is not None):
+        return self.left == other.left and self.right == other.right
+      if (self.right is None and other.right is None):
+        return self.left == other.left
+    return False
+
+  def __ne__(self, other):
+    return not self.__eq__(self, other)

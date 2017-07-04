@@ -1,73 +1,113 @@
-from .Types import *
+from .Type import *
 from .Asserts import *
 
-class Final(object):
-  def printString(self):
-    return str(self.value)
-
-class Zero(Final):
+class Zero(object):
   def __init__(self):
     self.value = 0
-    self.type = Types.NAT
+    self.type = Arrow(Nat())
 
-class FTrue(Final):
+  def evaluate(self):
+    return self
+
+  def printString(self):
+    return '0'
+
+  def findAndReplace(self, var, parameter):
+    return self
+
+class FTrue(object):
   def __init__(self):
     self.value = True
-    self.type = Types.BOOL
+    self.type = Arrow(Bool())
 
-class FFalse(Final):
+  def evaluate(self):
+    return self
+
+  def printString(self):
+    return 'true'
+
+  def findAndReplace(self, var, parameter):
+    return self
+
+class FFalse(object):
   def __init__(self):
     self.value = False
-    self.type = Types.BOOL
+    self.type = Arrow(Bool())
 
-class IfThenElse(Final):
-  def __init__(self, condition, ifTrue, ifFalse):
-    # assertTypeBool(condition)
-    # assertSameType(ifTrue, ifFalse)
-    self.expression = lambda x, y, z: y if x else z
-    self.condition = condition
-    self.ifTrue = ifTrue
-    self.ifFalse = ifFalse
-    self.value = ifTrue.value if condition.value else ifFalse.value
-    self.type = ifTrue.type
+  def evaluate(self):
+    return self
 
-class Succ(Final):
-  def __init__(self, expression):
-    # assertTypeNat(expression)
-    self.expression = expression
-    self.value = expression.value + 1
-    self.type = Types.NAT
+  def printString(self):
+    return 'false'
 
-class Pred(Final):
-  def __init__(self, expression):
-    # assertTypeNat(expression)
-    self.expression = expression
-    self.value = 0 if expression.value == 0 else expression.value - 1
-    self.type = Types.NAT
+  def findAndReplace(self, var, parameter):
+    return self
 
-class Iszero(Final):
-  def __init__(self, expression):
-    # assertTypeNat(expression)
-    self.expression = expression
-    self.value = expression.value == 0
-    self.type = Types.BOOL
-
-class Enclosed(Final):
+class Succ(object):
   def __init__(self, expression):
     self.expression = expression
     self.value = expression.value
     self.type = expression.type
 
+  def evaluate(self):
+    resExpression = self.expression.evaluate()
+    assertTypeNat(resExpression)
+    resExpression.value += 1
+    return resExpression
+
+  def printString(self):
+    return 'succ(' + self.expression.printString() + ')'
+
+  def findAndReplace(self, var, parameter):
+    return Succ(self.expression.findAndReplace(var, parameter))
+
+class Pred(object):
+  def __init__(self, expression):
+    self.expression = expression
+    self.value = expression.value
+    self.type = expression.type
+
+  def evaluate(self):
+    resExpression = self.expression.evaluate()
+    assertTypeNat(resExpression)
+    resExpression.value -= 0 if resExpression.value == 0 else 1
+    return resExpression
+
+  def printString(self):
+    return 'pred(' + self.expression.printString() + ')'
+
+  def findAndReplace(self, var, parameter):
+    return Pred(self.expression.findAndReplace(var, parameter))
+
+class Iszero(object):
+  def __init__(self, expression):
+    self.expression = expression
+    self.value = expression.value
+    self.type = expression.type
+
+  def evaluate(self):
+    resExpression = self.expression.evaluate()
+    assertTypeNat(resExpression)
+    resExpression.value = resExpression.value == 0
+    resExpression.type = Bool()
+    return resExpression
+
+  def printString(self):
+    return 'iszero(' + self.expression.printString() + ')'
+
+  def findAndReplace(self, var, parameter):
+    return Iszero(self.expression.findAndReplace(var, parameter))
+
+class Enclosed(object):
+  def __init__(self, expression):
+    self.expression = expression
+    self.type = expression.type
+
+  def evaluate(self):
+    return self.expression.evaluate()
+
   def printString(self):
     return '(' + self.expression.printString() + ')'
 
-class Abstraction(Final):
-  def __init__(self, var, ftype, body):
-    self.var = var
-    self.ftype = ftype
-    self.expression = lambda x: body(x)
-    self.value = body.value
-    self.type = Types.LAMBDA
-
-  def printString(self):
-    return '\\' + self.var.printString() + ':' + self.ftype.printString() + '.' + self.expression.printString()
+  def findAndReplace(self, var, parameter):
+    return Enclosed(self.expression.findAndReplace(var, parameter))

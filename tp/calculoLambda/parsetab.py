@@ -5,9 +5,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'VAR LAMBDA COLON POINT ZERO OPENBRACKET CLOSEDBRACKET ARROW THEN SUCC BOOL NAT ISZERO PRED FALSE ELSE TRUE IFs : lambdalambda : appapp : app finalapp : finalfinal : ZEROfinal : TRUEfinal : FALSEfinal : varfinal : IF lambda THEN lambda ELSE lambdafinal : SUCC OPENBRACKET lambda CLOSEDBRACKETfinal : PRED OPENBRACKET lambda CLOSEDBRACKETfinal : ISZERO OPENBRACKET lambda CLOSEDBRACKETfinal : OPENBRACKET lambda CLOSEDBRACKETfinal : LAMBDA var COLON tipo POINT lambdatipo : BOOL flechatipo : NAT flechaflecha : ARROW tipoflecha : var : VAR'
+_lr_signature = 'VAR LAMBDA COLON POINT ZERO OPENBRACKET CLOSEDBRACKET ARROW THEN SUCC BOOL NAT ISZERO PRED FALSE ELSE TRUE IFs : lambdalambda : LAMBDA var COLON tipo POINT lambdalambda : iteite : IF lambda THEN lambda ELSE lambdaite : appapp : app finalapp : finalfinal : ZEROfinal : TRUEfinal : FALSEfinal : varfinal : SUCC OPENBRACKET lambda CLOSEDBRACKETfinal : PRED OPENBRACKET lambda CLOSEDBRACKETfinal : ISZERO OPENBRACKET lambda CLOSEDBRACKETfinal : OPENBRACKET lambda CLOSEDBRACKETvar : VARtipo : BOOL flechatipo : NAT flechaflecha : ARROW tipoflecha : '
     
-_lr_action_items = {'THEN':([1,2,5,7,11,13,14,18,22,24,29,33,34,41,43,],[-19,-7,-2,-5,-8,-6,-4,-3,28,-13,-10,-12,-11,-14,-9,]),'FALSE':([0,1,2,4,5,7,11,12,13,14,16,18,20,21,24,28,29,33,34,36,40,41,43,],[2,-19,-7,2,2,-5,-8,2,-6,-4,2,-3,2,2,-13,2,-10,-12,-11,2,2,-14,-9,]),'ARROW':([31,32,],[38,38,]),'OPENBRACKET':([0,1,2,3,4,5,7,8,10,11,12,13,14,16,18,20,21,24,28,29,33,34,36,40,41,43,],[4,-19,-7,16,4,4,-5,20,21,-8,4,-6,-4,4,-3,4,4,-13,4,-10,-12,-11,4,4,-14,-9,]),'PRED':([0,1,2,4,5,7,11,12,13,14,16,18,20,21,24,28,29,33,34,36,40,41,43,],[10,-19,-7,10,10,-5,-8,10,-6,-4,10,-3,10,10,-13,10,-10,-12,-11,10,10,-14,-9,]),'POINT':([30,31,32,37,39,42,],[36,-18,-18,-16,-15,-17,]),'ZERO':([0,1,2,4,5,7,11,12,13,14,16,18,20,21,24,28,29,33,34,36,40,41,43,],[7,-19,-7,7,7,-5,-8,7,-6,-4,7,-3,7,7,-13,7,-10,-12,-11,7,7,-14,-9,]),'ELSE':([1,2,5,7,11,13,14,18,24,29,33,34,35,41,43,],[-19,-7,-2,-5,-8,-6,-4,-3,-13,-10,-12,-11,40,-14,-9,]),'ISZERO':([0,1,2,4,5,7,11,12,13,14,16,18,20,21,24,28,29,33,34,36,40,41,43,],[8,-19,-7,8,8,-5,-8,8,-6,-4,8,-3,8,8,-13,8,-10,-12,-11,8,8,-14,-9,]),'SUCC':([0,1,2,4,5,7,11,12,13,14,16,18,20,21,24,28,29,33,34,36,40,41,43,],[3,-19,-7,3,3,-5,-8,3,-6,-4,3,-3,3,3,-13,3,-10,-12,-11,3,3,-14,-9,]),'COLON':([1,19,],[-19,25,]),'NAT':([25,38,],[31,31,]),'CLOSEDBRACKET':([1,2,5,7,11,13,14,17,18,23,24,26,27,29,33,34,41,43,],[-19,-7,-2,-5,-8,-6,-4,24,-3,29,-13,33,34,-10,-12,-11,-14,-9,]),'VAR':([0,1,2,4,5,6,7,11,12,13,14,16,18,20,21,24,28,29,33,34,36,40,41,43,],[1,-19,-7,1,1,1,-5,-8,1,-6,-4,1,-3,1,1,-13,1,-10,-12,-11,1,1,-14,-9,]),'BOOL':([25,38,],[32,32,]),'IF':([0,1,2,4,5,7,11,12,13,14,16,18,20,21,24,28,29,33,34,36,40,41,43,],[12,-19,-7,12,12,-5,-8,12,-6,-4,12,-3,12,12,-13,12,-10,-12,-11,12,12,-14,-9,]),'TRUE':([0,1,2,4,5,7,11,12,13,14,16,18,20,21,24,28,29,33,34,36,40,41,43,],[13,-19,-7,13,13,-5,-8,13,-6,-4,13,-3,13,13,-13,13,-10,-12,-11,13,13,-14,-9,]),'$end':([1,2,5,7,9,11,13,14,15,18,24,29,33,34,41,43,],[-19,-7,-2,-5,0,-8,-6,-4,-1,-3,-13,-10,-12,-11,-14,-9,]),'LAMBDA':([0,1,2,4,5,7,11,12,13,14,16,18,20,21,24,28,29,33,34,36,40,41,43,],[6,-19,-7,6,6,-5,-8,6,-6,-4,6,-3,6,6,-13,6,-10,-12,-11,6,6,-14,-9,]),}
+_lr_action_items = {'THEN':([1,2,5,6,7,8,9,11,17,20,27,30,31,33,42,43,],[-5,-3,-9,-11,-7,-8,-16,-10,-6,26,-15,-12,-14,-13,-4,-2,]),'FALSE':([0,1,5,6,7,8,9,10,11,12,17,18,19,22,26,27,30,31,33,37,38,],[11,11,-9,-11,-7,-8,-16,11,-10,11,-6,11,11,11,11,-15,-12,-14,-13,11,11,]),'ARROW':([35,36,],[40,40,]),'OPENBRACKET':([0,1,3,4,5,6,7,8,9,10,11,12,14,17,18,19,22,26,27,30,31,33,37,38,],[12,12,18,19,-9,-11,-7,-8,-16,12,-10,12,22,-6,12,12,12,12,-15,-12,-14,-13,12,12,]),'PRED':([0,1,5,6,7,8,9,10,11,12,17,18,19,22,26,27,30,31,33,37,38,],[14,14,-9,-11,-7,-8,-16,14,-10,14,-6,14,14,14,14,-15,-12,-14,-13,14,14,]),'POINT':([34,35,36,39,41,44,],[38,-20,-20,-18,-17,-19,]),'ZERO':([0,1,5,6,7,8,9,10,11,12,17,18,19,22,26,27,30,31,33,37,38,],[8,8,-9,-11,-7,-8,-16,8,-10,8,-6,8,8,8,8,-15,-12,-14,-13,8,8,]),'ELSE':([1,2,5,6,7,8,9,11,17,27,30,31,32,33,42,43,],[-5,-3,-9,-11,-7,-8,-16,-10,-6,-15,-12,-14,37,-13,-4,-2,]),'ISZERO':([0,1,5,6,7,8,9,10,11,12,17,18,19,22,26,27,30,31,33,37,38,],[4,4,-9,-11,-7,-8,-16,4,-10,4,-6,4,4,4,4,-15,-12,-14,-13,4,4,]),'SUCC':([0,1,5,6,7,8,9,10,11,12,17,18,19,22,26,27,30,31,33,37,38,],[3,3,-9,-11,-7,-8,-16,3,-10,3,-6,3,3,3,3,-15,-12,-14,-13,3,3,]),'COLON':([9,23,],[-16,29,]),'NAT':([29,40,],[35,35,]),'CLOSEDBRACKET':([1,2,5,6,7,8,9,11,17,21,24,25,27,28,30,31,33,42,43,],[-5,-3,-9,-11,-7,-8,-16,-10,-6,27,30,31,-15,33,-12,-14,-13,-4,-2,]),'VAR':([0,1,5,6,7,8,9,10,11,12,15,17,18,19,22,26,27,30,31,33,37,38,],[9,9,-9,-11,-7,-8,-16,9,-10,9,9,-6,9,9,9,9,-15,-12,-14,-13,9,9,]),'BOOL':([29,40,],[36,36,]),'IF':([0,10,12,18,19,22,26,37,38,],[10,10,10,10,10,10,10,10,10,]),'TRUE':([0,1,5,6,7,8,9,10,11,12,17,18,19,22,26,27,30,31,33,37,38,],[5,5,-9,-11,-7,-8,-16,5,-10,5,-6,5,5,5,5,-15,-12,-14,-13,5,5,]),'$end':([1,2,5,6,7,8,9,11,13,16,17,27,30,31,33,42,43,],[-5,-3,-9,-11,-7,-8,-16,-10,0,-1,-6,-15,-12,-14,-13,-4,-2,]),'LAMBDA':([0,10,12,18,19,22,26,37,38,],[15,15,15,15,15,15,15,15,15,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'tipo':([25,38,],[30,42,]),'app':([0,4,12,16,20,21,28,36,40,],[5,5,5,5,5,5,5,5,5,]),'flecha':([31,32,],[37,39,]),'s':([0,],[9,]),'var':([0,4,5,6,12,16,20,21,28,36,40,],[11,11,11,19,11,11,11,11,11,11,11,]),'final':([0,4,5,12,16,20,21,28,36,40,],[14,14,18,14,14,14,14,14,14,14,]),'lambda':([0,4,12,16,20,21,28,36,40,],[15,17,22,23,26,27,35,41,43,]),}
+_lr_goto_items = {'tipo':([29,40,],[34,44,]),'app':([0,10,12,18,19,22,26,37,38,],[1,1,1,1,1,1,1,1,1,]),'ite':([0,10,12,18,19,22,26,37,38,],[2,2,2,2,2,2,2,2,2,]),'flecha':([35,36,],[39,41,]),'s':([0,],[13,]),'var':([0,1,10,12,15,18,19,22,26,37,38,],[6,6,6,6,23,6,6,6,6,6,6,]),'final':([0,1,10,12,18,19,22,26,37,38,],[7,17,7,7,7,7,7,7,7,7,]),'lambda':([0,10,12,18,19,22,26,37,38,],[16,20,21,24,25,28,32,42,43,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,23 +26,24 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> s","S'",1,None,None,None),
-  ('s -> lambda','s',1,'p_s_lambda','parser.py',10),
-  ('lambda -> app','lambda',1,'p_lambda_app','parser.py',16),
-  ('app -> app final','app',2,'p_app_app_final','parser.py',22),
-  ('app -> final','app',1,'p_app_final','parser.py',28),
-  ('final -> ZERO','final',1,'p_final_zero','parser.py',34),
-  ('final -> TRUE','final',1,'p_final_true','parser.py',40),
-  ('final -> FALSE','final',1,'p_final_false','parser.py',46),
-  ('final -> var','final',1,'p_final_var','parser.py',52),
-  ('final -> IF lambda THEN lambda ELSE lambda','final',6,'p_final_if_lambda_then_lambda_else_lambda','parser.py',58),
-  ('final -> SUCC OPENBRACKET lambda CLOSEDBRACKET','final',4,'p_final_succ_openbracket_lambda_closedbracket','parser.py',64),
-  ('final -> PRED OPENBRACKET lambda CLOSEDBRACKET','final',4,'p_final_pred_openbracket_lambda_closedbracket','parser.py',70),
-  ('final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET','final',4,'p_final_iszero_openbracket_lambda_closedbracket','parser.py',76),
-  ('final -> OPENBRACKET lambda CLOSEDBRACKET','final',3,'p_final_openbracket_lambda_closedbracket','parser.py',82),
-  ('final -> LAMBDA var COLON tipo POINT lambda','final',6,'p_final_lambda_var_colon_tipo_point_lambda','parser.py',88),
-  ('tipo -> BOOL flecha','tipo',2,'p_tipo_bool_flecha','parser.py',94),
-  ('tipo -> NAT flecha','tipo',2,'p_tipo_nat_flecha','parser.py',100),
-  ('flecha -> ARROW tipo','flecha',2,'p_flecha_arrow_tipo','parser.py',106),
-  ('flecha -> <empty>','flecha',0,'p_flecha','parser.py',112),
-  ('var -> VAR','var',1,'p_var_var','parser.py',118),
+  ('s -> lambda','s',1,'p_s_lambda','parser.py',12),
+  ('lambda -> LAMBDA var COLON tipo POINT lambda','lambda',6,'p_lambda_lambda_var_colon_tipo_point_lambda','parser.py',18),
+  ('lambda -> ite','lambda',1,'p_lambda_ite','parser.py',24),
+  ('ite -> IF lambda THEN lambda ELSE lambda','ite',6,'p_ite_if_lambda_then_lambda_else_lambda','parser.py',30),
+  ('ite -> app','ite',1,'p_ite_app','parser.py',36),
+  ('app -> app final','app',2,'p_app_app_final','parser.py',42),
+  ('app -> final','app',1,'p_app_final','parser.py',48),
+  ('final -> ZERO','final',1,'p_final_zero','parser.py',54),
+  ('final -> TRUE','final',1,'p_final_true','parser.py',60),
+  ('final -> FALSE','final',1,'p_final_false','parser.py',66),
+  ('final -> var','final',1,'p_final_var','parser.py',72),
+  ('final -> SUCC OPENBRACKET lambda CLOSEDBRACKET','final',4,'p_final_succ_openbracket_lambda_closedbracket','parser.py',78),
+  ('final -> PRED OPENBRACKET lambda CLOSEDBRACKET','final',4,'p_final_pred_openbracket_lambda_closedbracket','parser.py',84),
+  ('final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET','final',4,'p_final_iszero_openbracket_lambda_closedbracket','parser.py',90),
+  ('final -> OPENBRACKET lambda CLOSEDBRACKET','final',3,'p_final_openbracket_lambda_closedbracket','parser.py',96),
+  ('var -> VAR','var',1,'p_var_var','parser.py',102),
+  ('tipo -> BOOL flecha','tipo',2,'p_tipo_bool_flecha','parser.py',108),
+  ('tipo -> NAT flecha','tipo',2,'p_tipo_nat_flecha','parser.py',114),
+  ('flecha -> ARROW tipo','flecha',2,'p_flecha_arrow_tipo','parser.py',120),
+  ('flecha -> <empty>','flecha',0,'p_flecha','parser.py',126),
 ]

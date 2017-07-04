@@ -1,7 +1,9 @@
 class Start(object):
   def __init__(self, expression):
     self.expression = expression
-    self.type = expression.type
+
+  def evaluate(self):
+    return Start(self.expression.evaluate())
 
   def printString(self):
-    return self.expression.printString() + ':' + self.expression.type
+    return self.expression.printString() + ':' #+ self.expression.type

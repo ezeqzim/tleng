@@ -4,56 +4,58 @@ Grammar
 
 Rule 0     S' -> s
 Rule 1     s -> lambda
-Rule 2     lambda -> app
-Rule 3     app -> app final
-Rule 4     app -> final
-Rule 5     final -> ZERO
-Rule 6     final -> TRUE
-Rule 7     final -> FALSE
-Rule 8     final -> var
-Rule 9     final -> IF lambda THEN lambda ELSE lambda
-Rule 10    final -> SUCC OPENBRACKET lambda CLOSEDBRACKET
-Rule 11    final -> PRED OPENBRACKET lambda CLOSEDBRACKET
-Rule 12    final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET
-Rule 13    final -> OPENBRACKET lambda CLOSEDBRACKET
-Rule 14    final -> LAMBDA var COLON tipo POINT lambda
-Rule 15    tipo -> BOOL flecha
-Rule 16    tipo -> NAT flecha
-Rule 17    flecha -> ARROW tipo
-Rule 18    flecha -> <empty>
-Rule 19    var -> VAR
+Rule 2     lambda -> LAMBDA var COLON tipo POINT lambda
+Rule 3     lambda -> ite
+Rule 4     ite -> IF lambda THEN lambda ELSE lambda
+Rule 5     ite -> app
+Rule 6     app -> app final
+Rule 7     app -> final
+Rule 8     final -> ZERO
+Rule 9     final -> TRUE
+Rule 10    final -> FALSE
+Rule 11    final -> var
+Rule 12    final -> SUCC OPENBRACKET lambda CLOSEDBRACKET
+Rule 13    final -> PRED OPENBRACKET lambda CLOSEDBRACKET
+Rule 14    final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET
+Rule 15    final -> OPENBRACKET lambda CLOSEDBRACKET
+Rule 16    var -> VAR
+Rule 17    tipo -> BOOL flecha
+Rule 18    tipo -> NAT flecha
+Rule 19    flecha -> ARROW tipo
+Rule 20    flecha -> <empty>
 
 Terminals, with rules where they appear
 
-ARROW                : 17
-BOOL                 : 15
-CLOSEDBRACKET        : 10 11 12 13
-COLON                : 14
-ELSE                 : 9
-FALSE                : 7
-IF                   : 9
-ISZERO               : 12
-LAMBDA               : 14
-NAT                  : 16
-OPENBRACKET          : 10 11 12 13
-POINT                : 14
-PRED                 : 11
-SUCC                 : 10
-THEN                 : 9
-TRUE                 : 6
-VAR                  : 19
-ZERO                 : 5
+ARROW                : 19
+BOOL                 : 17
+CLOSEDBRACKET        : 12 13 14 15
+COLON                : 2
+ELSE                 : 4
+FALSE                : 10
+IF                   : 4
+ISZERO               : 14
+LAMBDA               : 2
+NAT                  : 18
+OPENBRACKET          : 12 13 14 15
+POINT                : 2
+PRED                 : 13
+SUCC                 : 12
+THEN                 : 4
+TRUE                 : 9
+VAR                  : 16
+ZERO                 : 8
 error                : 
 
 Nonterminals, with rules where they appear
 
-app                  : 2 3
-final                : 3 4
-flecha               : 15 16
-lambda               : 1 9 9 9 10 11 12 13 14
+app                  : 5 6
+final                : 6 7
+flecha               : 17 18
+ite                  : 3
+lambda               : 1 2 4 4 4 12 13 14 15
 s                    : 0
-tipo                 : 14 17
-var                  : 8 14
+tipo                 : 2 19
+var                  : 2 11
 
 Parsing method: LALR
 
@@ -61,799 +63,747 @@ state 0
 
     (0) S' -> . s
     (1) s -> . lambda
-    (2) lambda -> . app
-    (3) app -> . app final
-    (4) app -> . final
-    (5) final -> . ZERO
-    (6) final -> . TRUE
-    (7) final -> . FALSE
-    (8) final -> . var
-    (9) final -> . IF lambda THEN lambda ELSE lambda
-    (10) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
-    (11) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
-    (12) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
-    (13) final -> . OPENBRACKET lambda CLOSEDBRACKET
-    (14) final -> . LAMBDA var COLON tipo POINT lambda
-    (19) var -> . VAR
+    (2) lambda -> . LAMBDA var COLON tipo POINT lambda
+    (3) lambda -> . ite
+    (4) ite -> . IF lambda THEN lambda ELSE lambda
+    (5) ite -> . app
+    (6) app -> . app final
+    (7) app -> . final
+    (8) final -> . ZERO
+    (9) final -> . TRUE
+    (10) final -> . FALSE
+    (11) final -> . var
+    (12) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
+    (13) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
+    (14) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
+    (15) final -> . OPENBRACKET lambda CLOSEDBRACKET
+    (16) var -> . VAR
 
-    ZERO            shift and go to state 7
-    TRUE            shift and go to state 13
-    FALSE           shift and go to state 2
-    IF              shift and go to state 12
+    LAMBDA          shift and go to state 15
+    IF              shift and go to state 10
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 5
+    FALSE           shift and go to state 11
     SUCC            shift and go to state 3
-    PRED            shift and go to state 10
-    ISZERO          shift and go to state 8
-    OPENBRACKET     shift and go to state 4
-    LAMBDA          shift and go to state 6
-    VAR             shift and go to state 1
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 4
+    OPENBRACKET     shift and go to state 12
+    VAR             shift and go to state 9
 
-    app                            shift and go to state 5
-    s                              shift and go to state 9
-    var                            shift and go to state 11
-    final                          shift and go to state 14
-    lambda                         shift and go to state 15
+    app                            shift and go to state 1
+    ite                            shift and go to state 2
+    s                              shift and go to state 13
+    var                            shift and go to state 6
+    final                          shift and go to state 7
+    lambda                         shift and go to state 16
 
 state 1
 
-    (19) var -> VAR .
+    (5) ite -> app .
+    (6) app -> app . final
+    (8) final -> . ZERO
+    (9) final -> . TRUE
+    (10) final -> . FALSE
+    (11) final -> . var
+    (12) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
+    (13) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
+    (14) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
+    (15) final -> . OPENBRACKET lambda CLOSEDBRACKET
+    (16) var -> . VAR
 
-    ZERO            reduce using rule 19 (var -> VAR .)
-    TRUE            reduce using rule 19 (var -> VAR .)
-    FALSE           reduce using rule 19 (var -> VAR .)
-    IF              reduce using rule 19 (var -> VAR .)
-    SUCC            reduce using rule 19 (var -> VAR .)
-    PRED            reduce using rule 19 (var -> VAR .)
-    ISZERO          reduce using rule 19 (var -> VAR .)
-    OPENBRACKET     reduce using rule 19 (var -> VAR .)
-    LAMBDA          reduce using rule 19 (var -> VAR .)
-    VAR             reduce using rule 19 (var -> VAR .)
-    CLOSEDBRACKET   reduce using rule 19 (var -> VAR .)
-    $end            reduce using rule 19 (var -> VAR .)
-    THEN            reduce using rule 19 (var -> VAR .)
-    ELSE            reduce using rule 19 (var -> VAR .)
-    COLON           reduce using rule 19 (var -> VAR .)
+    THEN            reduce using rule 5 (ite -> app .)
+    CLOSEDBRACKET   reduce using rule 5 (ite -> app .)
+    ELSE            reduce using rule 5 (ite -> app .)
+    $end            reduce using rule 5 (ite -> app .)
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 5
+    FALSE           shift and go to state 11
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 4
+    OPENBRACKET     shift and go to state 12
+    VAR             shift and go to state 9
 
+    var                            shift and go to state 6
+    final                          shift and go to state 17
 
 state 2
 
-    (7) final -> FALSE .
+    (3) lambda -> ite .
 
-    ZERO            reduce using rule 7 (final -> FALSE .)
-    TRUE            reduce using rule 7 (final -> FALSE .)
-    FALSE           reduce using rule 7 (final -> FALSE .)
-    IF              reduce using rule 7 (final -> FALSE .)
-    SUCC            reduce using rule 7 (final -> FALSE .)
-    PRED            reduce using rule 7 (final -> FALSE .)
-    ISZERO          reduce using rule 7 (final -> FALSE .)
-    OPENBRACKET     reduce using rule 7 (final -> FALSE .)
-    LAMBDA          reduce using rule 7 (final -> FALSE .)
-    VAR             reduce using rule 7 (final -> FALSE .)
-    CLOSEDBRACKET   reduce using rule 7 (final -> FALSE .)
-    $end            reduce using rule 7 (final -> FALSE .)
-    THEN            reduce using rule 7 (final -> FALSE .)
-    ELSE            reduce using rule 7 (final -> FALSE .)
+    $end            reduce using rule 3 (lambda -> ite .)
+    THEN            reduce using rule 3 (lambda -> ite .)
+    CLOSEDBRACKET   reduce using rule 3 (lambda -> ite .)
+    ELSE            reduce using rule 3 (lambda -> ite .)
 
 
 state 3
 
-    (10) final -> SUCC . OPENBRACKET lambda CLOSEDBRACKET
+    (12) final -> SUCC . OPENBRACKET lambda CLOSEDBRACKET
 
-    OPENBRACKET     shift and go to state 16
+    OPENBRACKET     shift and go to state 18
 
 
 state 4
 
-    (13) final -> OPENBRACKET . lambda CLOSEDBRACKET
-    (2) lambda -> . app
-    (3) app -> . app final
-    (4) app -> . final
-    (5) final -> . ZERO
-    (6) final -> . TRUE
-    (7) final -> . FALSE
-    (8) final -> . var
-    (9) final -> . IF lambda THEN lambda ELSE lambda
-    (10) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
-    (11) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
-    (12) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
-    (13) final -> . OPENBRACKET lambda CLOSEDBRACKET
-    (14) final -> . LAMBDA var COLON tipo POINT lambda
-    (19) var -> . VAR
+    (14) final -> ISZERO . OPENBRACKET lambda CLOSEDBRACKET
 
-    ZERO            shift and go to state 7
-    TRUE            shift and go to state 13
-    FALSE           shift and go to state 2
-    IF              shift and go to state 12
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 10
-    ISZERO          shift and go to state 8
-    OPENBRACKET     shift and go to state 4
-    LAMBDA          shift and go to state 6
-    VAR             shift and go to state 1
+    OPENBRACKET     shift and go to state 19
 
-    var                            shift and go to state 11
-    app                            shift and go to state 5
-    final                          shift and go to state 14
-    lambda                         shift and go to state 17
 
 state 5
 
-    (2) lambda -> app .
-    (3) app -> app . final
-    (5) final -> . ZERO
-    (6) final -> . TRUE
-    (7) final -> . FALSE
-    (8) final -> . var
-    (9) final -> . IF lambda THEN lambda ELSE lambda
-    (10) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
-    (11) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
-    (12) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
-    (13) final -> . OPENBRACKET lambda CLOSEDBRACKET
-    (14) final -> . LAMBDA var COLON tipo POINT lambda
-    (19) var -> . VAR
+    (9) final -> TRUE .
 
-  ! shift/reduce conflict for ZERO resolved as shift
-  ! shift/reduce conflict for TRUE resolved as shift
-  ! shift/reduce conflict for FALSE resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for SUCC resolved as shift
-  ! shift/reduce conflict for PRED resolved as shift
-  ! shift/reduce conflict for ISZERO resolved as shift
-  ! shift/reduce conflict for OPENBRACKET resolved as shift
-  ! shift/reduce conflict for LAMBDA resolved as shift
-  ! shift/reduce conflict for VAR resolved as shift
-    CLOSEDBRACKET   reduce using rule 2 (lambda -> app .)
-    $end            reduce using rule 2 (lambda -> app .)
-    THEN            reduce using rule 2 (lambda -> app .)
-    ELSE            reduce using rule 2 (lambda -> app .)
-    ZERO            shift and go to state 7
-    TRUE            shift and go to state 13
-    FALSE           shift and go to state 2
-    IF              shift and go to state 12
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 10
-    ISZERO          shift and go to state 8
-    OPENBRACKET     shift and go to state 4
-    LAMBDA          shift and go to state 6
-    VAR             shift and go to state 1
+    ZERO            reduce using rule 9 (final -> TRUE .)
+    TRUE            reduce using rule 9 (final -> TRUE .)
+    FALSE           reduce using rule 9 (final -> TRUE .)
+    SUCC            reduce using rule 9 (final -> TRUE .)
+    PRED            reduce using rule 9 (final -> TRUE .)
+    ISZERO          reduce using rule 9 (final -> TRUE .)
+    OPENBRACKET     reduce using rule 9 (final -> TRUE .)
+    VAR             reduce using rule 9 (final -> TRUE .)
+    ELSE            reduce using rule 9 (final -> TRUE .)
+    THEN            reduce using rule 9 (final -> TRUE .)
+    $end            reduce using rule 9 (final -> TRUE .)
+    CLOSEDBRACKET   reduce using rule 9 (final -> TRUE .)
 
-  ! ZERO            [ reduce using rule 2 (lambda -> app .) ]
-  ! TRUE            [ reduce using rule 2 (lambda -> app .) ]
-  ! FALSE           [ reduce using rule 2 (lambda -> app .) ]
-  ! IF              [ reduce using rule 2 (lambda -> app .) ]
-  ! SUCC            [ reduce using rule 2 (lambda -> app .) ]
-  ! PRED            [ reduce using rule 2 (lambda -> app .) ]
-  ! ISZERO          [ reduce using rule 2 (lambda -> app .) ]
-  ! OPENBRACKET     [ reduce using rule 2 (lambda -> app .) ]
-  ! LAMBDA          [ reduce using rule 2 (lambda -> app .) ]
-  ! VAR             [ reduce using rule 2 (lambda -> app .) ]
-
-    var                            shift and go to state 11
-    final                          shift and go to state 18
 
 state 6
 
-    (14) final -> LAMBDA . var COLON tipo POINT lambda
-    (19) var -> . VAR
+    (11) final -> var .
 
-    VAR             shift and go to state 1
+    ZERO            reduce using rule 11 (final -> var .)
+    TRUE            reduce using rule 11 (final -> var .)
+    FALSE           reduce using rule 11 (final -> var .)
+    SUCC            reduce using rule 11 (final -> var .)
+    PRED            reduce using rule 11 (final -> var .)
+    ISZERO          reduce using rule 11 (final -> var .)
+    OPENBRACKET     reduce using rule 11 (final -> var .)
+    VAR             reduce using rule 11 (final -> var .)
+    ELSE            reduce using rule 11 (final -> var .)
+    THEN            reduce using rule 11 (final -> var .)
+    $end            reduce using rule 11 (final -> var .)
+    CLOSEDBRACKET   reduce using rule 11 (final -> var .)
 
-    var                            shift and go to state 19
 
 state 7
 
-    (5) final -> ZERO .
+    (7) app -> final .
 
-    ZERO            reduce using rule 5 (final -> ZERO .)
-    TRUE            reduce using rule 5 (final -> ZERO .)
-    FALSE           reduce using rule 5 (final -> ZERO .)
-    IF              reduce using rule 5 (final -> ZERO .)
-    SUCC            reduce using rule 5 (final -> ZERO .)
-    PRED            reduce using rule 5 (final -> ZERO .)
-    ISZERO          reduce using rule 5 (final -> ZERO .)
-    OPENBRACKET     reduce using rule 5 (final -> ZERO .)
-    LAMBDA          reduce using rule 5 (final -> ZERO .)
-    VAR             reduce using rule 5 (final -> ZERO .)
-    CLOSEDBRACKET   reduce using rule 5 (final -> ZERO .)
-    $end            reduce using rule 5 (final -> ZERO .)
-    THEN            reduce using rule 5 (final -> ZERO .)
-    ELSE            reduce using rule 5 (final -> ZERO .)
+    ZERO            reduce using rule 7 (app -> final .)
+    TRUE            reduce using rule 7 (app -> final .)
+    FALSE           reduce using rule 7 (app -> final .)
+    SUCC            reduce using rule 7 (app -> final .)
+    PRED            reduce using rule 7 (app -> final .)
+    ISZERO          reduce using rule 7 (app -> final .)
+    OPENBRACKET     reduce using rule 7 (app -> final .)
+    VAR             reduce using rule 7 (app -> final .)
+    $end            reduce using rule 7 (app -> final .)
+    THEN            reduce using rule 7 (app -> final .)
+    CLOSEDBRACKET   reduce using rule 7 (app -> final .)
+    ELSE            reduce using rule 7 (app -> final .)
 
 
 state 8
 
-    (12) final -> ISZERO . OPENBRACKET lambda CLOSEDBRACKET
+    (8) final -> ZERO .
 
-    OPENBRACKET     shift and go to state 20
+    ZERO            reduce using rule 8 (final -> ZERO .)
+    TRUE            reduce using rule 8 (final -> ZERO .)
+    FALSE           reduce using rule 8 (final -> ZERO .)
+    SUCC            reduce using rule 8 (final -> ZERO .)
+    PRED            reduce using rule 8 (final -> ZERO .)
+    ISZERO          reduce using rule 8 (final -> ZERO .)
+    OPENBRACKET     reduce using rule 8 (final -> ZERO .)
+    VAR             reduce using rule 8 (final -> ZERO .)
+    ELSE            reduce using rule 8 (final -> ZERO .)
+    THEN            reduce using rule 8 (final -> ZERO .)
+    $end            reduce using rule 8 (final -> ZERO .)
+    CLOSEDBRACKET   reduce using rule 8 (final -> ZERO .)
 
 
 state 9
+
+    (16) var -> VAR .
+
+    ZERO            reduce using rule 16 (var -> VAR .)
+    TRUE            reduce using rule 16 (var -> VAR .)
+    FALSE           reduce using rule 16 (var -> VAR .)
+    SUCC            reduce using rule 16 (var -> VAR .)
+    PRED            reduce using rule 16 (var -> VAR .)
+    ISZERO          reduce using rule 16 (var -> VAR .)
+    OPENBRACKET     reduce using rule 16 (var -> VAR .)
+    VAR             reduce using rule 16 (var -> VAR .)
+    $end            reduce using rule 16 (var -> VAR .)
+    THEN            reduce using rule 16 (var -> VAR .)
+    CLOSEDBRACKET   reduce using rule 16 (var -> VAR .)
+    ELSE            reduce using rule 16 (var -> VAR .)
+    COLON           reduce using rule 16 (var -> VAR .)
+
+
+state 10
+
+    (4) ite -> IF . lambda THEN lambda ELSE lambda
+    (2) lambda -> . LAMBDA var COLON tipo POINT lambda
+    (3) lambda -> . ite
+    (4) ite -> . IF lambda THEN lambda ELSE lambda
+    (5) ite -> . app
+    (6) app -> . app final
+    (7) app -> . final
+    (8) final -> . ZERO
+    (9) final -> . TRUE
+    (10) final -> . FALSE
+    (11) final -> . var
+    (12) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
+    (13) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
+    (14) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
+    (15) final -> . OPENBRACKET lambda CLOSEDBRACKET
+    (16) var -> . VAR
+
+    LAMBDA          shift and go to state 15
+    IF              shift and go to state 10
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 5
+    FALSE           shift and go to state 11
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 4
+    OPENBRACKET     shift and go to state 12
+    VAR             shift and go to state 9
+
+    app                            shift and go to state 1
+    ite                            shift and go to state 2
+    var                            shift and go to state 6
+    final                          shift and go to state 7
+    lambda                         shift and go to state 20
+
+state 11
+
+    (10) final -> FALSE .
+
+    ZERO            reduce using rule 10 (final -> FALSE .)
+    TRUE            reduce using rule 10 (final -> FALSE .)
+    FALSE           reduce using rule 10 (final -> FALSE .)
+    SUCC            reduce using rule 10 (final -> FALSE .)
+    PRED            reduce using rule 10 (final -> FALSE .)
+    ISZERO          reduce using rule 10 (final -> FALSE .)
+    OPENBRACKET     reduce using rule 10 (final -> FALSE .)
+    VAR             reduce using rule 10 (final -> FALSE .)
+    ELSE            reduce using rule 10 (final -> FALSE .)
+    THEN            reduce using rule 10 (final -> FALSE .)
+    $end            reduce using rule 10 (final -> FALSE .)
+    CLOSEDBRACKET   reduce using rule 10 (final -> FALSE .)
+
+
+state 12
+
+    (15) final -> OPENBRACKET . lambda CLOSEDBRACKET
+    (2) lambda -> . LAMBDA var COLON tipo POINT lambda
+    (3) lambda -> . ite
+    (4) ite -> . IF lambda THEN lambda ELSE lambda
+    (5) ite -> . app
+    (6) app -> . app final
+    (7) app -> . final
+    (8) final -> . ZERO
+    (9) final -> . TRUE
+    (10) final -> . FALSE
+    (11) final -> . var
+    (12) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
+    (13) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
+    (14) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
+    (15) final -> . OPENBRACKET lambda CLOSEDBRACKET
+    (16) var -> . VAR
+
+    LAMBDA          shift and go to state 15
+    IF              shift and go to state 10
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 5
+    FALSE           shift and go to state 11
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 4
+    OPENBRACKET     shift and go to state 12
+    VAR             shift and go to state 9
+
+    app                            shift and go to state 1
+    ite                            shift and go to state 2
+    var                            shift and go to state 6
+    final                          shift and go to state 7
+    lambda                         shift and go to state 21
+
+state 13
 
     (0) S' -> s .
 
 
 
-state 10
-
-    (11) final -> PRED . OPENBRACKET lambda CLOSEDBRACKET
-
-    OPENBRACKET     shift and go to state 21
-
-
-state 11
-
-    (8) final -> var .
-
-    ZERO            reduce using rule 8 (final -> var .)
-    TRUE            reduce using rule 8 (final -> var .)
-    FALSE           reduce using rule 8 (final -> var .)
-    IF              reduce using rule 8 (final -> var .)
-    SUCC            reduce using rule 8 (final -> var .)
-    PRED            reduce using rule 8 (final -> var .)
-    ISZERO          reduce using rule 8 (final -> var .)
-    OPENBRACKET     reduce using rule 8 (final -> var .)
-    LAMBDA          reduce using rule 8 (final -> var .)
-    VAR             reduce using rule 8 (final -> var .)
-    CLOSEDBRACKET   reduce using rule 8 (final -> var .)
-    $end            reduce using rule 8 (final -> var .)
-    THEN            reduce using rule 8 (final -> var .)
-    ELSE            reduce using rule 8 (final -> var .)
-
-
-state 12
-
-    (9) final -> IF . lambda THEN lambda ELSE lambda
-    (2) lambda -> . app
-    (3) app -> . app final
-    (4) app -> . final
-    (5) final -> . ZERO
-    (6) final -> . TRUE
-    (7) final -> . FALSE
-    (8) final -> . var
-    (9) final -> . IF lambda THEN lambda ELSE lambda
-    (10) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
-    (11) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
-    (12) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
-    (13) final -> . OPENBRACKET lambda CLOSEDBRACKET
-    (14) final -> . LAMBDA var COLON tipo POINT lambda
-    (19) var -> . VAR
-
-    ZERO            shift and go to state 7
-    TRUE            shift and go to state 13
-    FALSE           shift and go to state 2
-    IF              shift and go to state 12
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 10
-    ISZERO          shift and go to state 8
-    OPENBRACKET     shift and go to state 4
-    LAMBDA          shift and go to state 6
-    VAR             shift and go to state 1
-
-    var                            shift and go to state 11
-    app                            shift and go to state 5
-    final                          shift and go to state 14
-    lambda                         shift and go to state 22
-
-state 13
-
-    (6) final -> TRUE .
-
-    ZERO            reduce using rule 6 (final -> TRUE .)
-    TRUE            reduce using rule 6 (final -> TRUE .)
-    FALSE           reduce using rule 6 (final -> TRUE .)
-    IF              reduce using rule 6 (final -> TRUE .)
-    SUCC            reduce using rule 6 (final -> TRUE .)
-    PRED            reduce using rule 6 (final -> TRUE .)
-    ISZERO          reduce using rule 6 (final -> TRUE .)
-    OPENBRACKET     reduce using rule 6 (final -> TRUE .)
-    LAMBDA          reduce using rule 6 (final -> TRUE .)
-    VAR             reduce using rule 6 (final -> TRUE .)
-    CLOSEDBRACKET   reduce using rule 6 (final -> TRUE .)
-    $end            reduce using rule 6 (final -> TRUE .)
-    THEN            reduce using rule 6 (final -> TRUE .)
-    ELSE            reduce using rule 6 (final -> TRUE .)
-
-
 state 14
 
-    (4) app -> final .
+    (13) final -> PRED . OPENBRACKET lambda CLOSEDBRACKET
 
-    ZERO            reduce using rule 4 (app -> final .)
-    TRUE            reduce using rule 4 (app -> final .)
-    FALSE           reduce using rule 4 (app -> final .)
-    IF              reduce using rule 4 (app -> final .)
-    SUCC            reduce using rule 4 (app -> final .)
-    PRED            reduce using rule 4 (app -> final .)
-    ISZERO          reduce using rule 4 (app -> final .)
-    OPENBRACKET     reduce using rule 4 (app -> final .)
-    LAMBDA          reduce using rule 4 (app -> final .)
-    VAR             reduce using rule 4 (app -> final .)
-    $end            reduce using rule 4 (app -> final .)
-    CLOSEDBRACKET   reduce using rule 4 (app -> final .)
-    THEN            reduce using rule 4 (app -> final .)
-    ELSE            reduce using rule 4 (app -> final .)
+    OPENBRACKET     shift and go to state 22
 
 
 state 15
+
+    (2) lambda -> LAMBDA . var COLON tipo POINT lambda
+    (16) var -> . VAR
+
+    VAR             shift and go to state 9
+
+    var                            shift and go to state 23
+
+state 16
 
     (1) s -> lambda .
 
     $end            reduce using rule 1 (s -> lambda .)
 
 
-state 16
-
-    (10) final -> SUCC OPENBRACKET . lambda CLOSEDBRACKET
-    (2) lambda -> . app
-    (3) app -> . app final
-    (4) app -> . final
-    (5) final -> . ZERO
-    (6) final -> . TRUE
-    (7) final -> . FALSE
-    (8) final -> . var
-    (9) final -> . IF lambda THEN lambda ELSE lambda
-    (10) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
-    (11) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
-    (12) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
-    (13) final -> . OPENBRACKET lambda CLOSEDBRACKET
-    (14) final -> . LAMBDA var COLON tipo POINT lambda
-    (19) var -> . VAR
-
-    ZERO            shift and go to state 7
-    TRUE            shift and go to state 13
-    FALSE           shift and go to state 2
-    IF              shift and go to state 12
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 10
-    ISZERO          shift and go to state 8
-    OPENBRACKET     shift and go to state 4
-    LAMBDA          shift and go to state 6
-    VAR             shift and go to state 1
-
-    var                            shift and go to state 11
-    app                            shift and go to state 5
-    final                          shift and go to state 14
-    lambda                         shift and go to state 23
-
 state 17
 
-    (13) final -> OPENBRACKET lambda . CLOSEDBRACKET
+    (6) app -> app final .
 
-    CLOSEDBRACKET   shift and go to state 24
+    ZERO            reduce using rule 6 (app -> app final .)
+    TRUE            reduce using rule 6 (app -> app final .)
+    FALSE           reduce using rule 6 (app -> app final .)
+    SUCC            reduce using rule 6 (app -> app final .)
+    PRED            reduce using rule 6 (app -> app final .)
+    ISZERO          reduce using rule 6 (app -> app final .)
+    OPENBRACKET     reduce using rule 6 (app -> app final .)
+    VAR             reduce using rule 6 (app -> app final .)
+    $end            reduce using rule 6 (app -> app final .)
+    THEN            reduce using rule 6 (app -> app final .)
+    CLOSEDBRACKET   reduce using rule 6 (app -> app final .)
+    ELSE            reduce using rule 6 (app -> app final .)
 
 
 state 18
 
-    (3) app -> app final .
+    (12) final -> SUCC OPENBRACKET . lambda CLOSEDBRACKET
+    (2) lambda -> . LAMBDA var COLON tipo POINT lambda
+    (3) lambda -> . ite
+    (4) ite -> . IF lambda THEN lambda ELSE lambda
+    (5) ite -> . app
+    (6) app -> . app final
+    (7) app -> . final
+    (8) final -> . ZERO
+    (9) final -> . TRUE
+    (10) final -> . FALSE
+    (11) final -> . var
+    (12) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
+    (13) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
+    (14) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
+    (15) final -> . OPENBRACKET lambda CLOSEDBRACKET
+    (16) var -> . VAR
 
-    ZERO            reduce using rule 3 (app -> app final .)
-    TRUE            reduce using rule 3 (app -> app final .)
-    FALSE           reduce using rule 3 (app -> app final .)
-    IF              reduce using rule 3 (app -> app final .)
-    SUCC            reduce using rule 3 (app -> app final .)
-    PRED            reduce using rule 3 (app -> app final .)
-    ISZERO          reduce using rule 3 (app -> app final .)
-    OPENBRACKET     reduce using rule 3 (app -> app final .)
-    LAMBDA          reduce using rule 3 (app -> app final .)
-    VAR             reduce using rule 3 (app -> app final .)
-    $end            reduce using rule 3 (app -> app final .)
-    CLOSEDBRACKET   reduce using rule 3 (app -> app final .)
-    THEN            reduce using rule 3 (app -> app final .)
-    ELSE            reduce using rule 3 (app -> app final .)
+    LAMBDA          shift and go to state 15
+    IF              shift and go to state 10
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 5
+    FALSE           shift and go to state 11
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 4
+    OPENBRACKET     shift and go to state 12
+    VAR             shift and go to state 9
 
+    app                            shift and go to state 1
+    ite                            shift and go to state 2
+    var                            shift and go to state 6
+    final                          shift and go to state 7
+    lambda                         shift and go to state 24
 
 state 19
 
-    (14) final -> LAMBDA var . COLON tipo POINT lambda
+    (14) final -> ISZERO OPENBRACKET . lambda CLOSEDBRACKET
+    (2) lambda -> . LAMBDA var COLON tipo POINT lambda
+    (3) lambda -> . ite
+    (4) ite -> . IF lambda THEN lambda ELSE lambda
+    (5) ite -> . app
+    (6) app -> . app final
+    (7) app -> . final
+    (8) final -> . ZERO
+    (9) final -> . TRUE
+    (10) final -> . FALSE
+    (11) final -> . var
+    (12) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
+    (13) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
+    (14) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
+    (15) final -> . OPENBRACKET lambda CLOSEDBRACKET
+    (16) var -> . VAR
 
-    COLON           shift and go to state 25
+    LAMBDA          shift and go to state 15
+    IF              shift and go to state 10
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 5
+    FALSE           shift and go to state 11
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 4
+    OPENBRACKET     shift and go to state 12
+    VAR             shift and go to state 9
 
+    app                            shift and go to state 1
+    ite                            shift and go to state 2
+    var                            shift and go to state 6
+    final                          shift and go to state 7
+    lambda                         shift and go to state 25
 
 state 20
 
-    (12) final -> ISZERO OPENBRACKET . lambda CLOSEDBRACKET
-    (2) lambda -> . app
-    (3) app -> . app final
-    (4) app -> . final
-    (5) final -> . ZERO
-    (6) final -> . TRUE
-    (7) final -> . FALSE
-    (8) final -> . var
-    (9) final -> . IF lambda THEN lambda ELSE lambda
-    (10) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
-    (11) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
-    (12) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
-    (13) final -> . OPENBRACKET lambda CLOSEDBRACKET
-    (14) final -> . LAMBDA var COLON tipo POINT lambda
-    (19) var -> . VAR
+    (4) ite -> IF lambda . THEN lambda ELSE lambda
 
-    ZERO            shift and go to state 7
-    TRUE            shift and go to state 13
-    FALSE           shift and go to state 2
-    IF              shift and go to state 12
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 10
-    ISZERO          shift and go to state 8
-    OPENBRACKET     shift and go to state 4
-    LAMBDA          shift and go to state 6
-    VAR             shift and go to state 1
+    THEN            shift and go to state 26
 
-    var                            shift and go to state 11
-    app                            shift and go to state 5
-    final                          shift and go to state 14
-    lambda                         shift and go to state 26
 
 state 21
 
-    (11) final -> PRED OPENBRACKET . lambda CLOSEDBRACKET
-    (2) lambda -> . app
-    (3) app -> . app final
-    (4) app -> . final
-    (5) final -> . ZERO
-    (6) final -> . TRUE
-    (7) final -> . FALSE
-    (8) final -> . var
-    (9) final -> . IF lambda THEN lambda ELSE lambda
-    (10) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
-    (11) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
-    (12) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
-    (13) final -> . OPENBRACKET lambda CLOSEDBRACKET
-    (14) final -> . LAMBDA var COLON tipo POINT lambda
-    (19) var -> . VAR
+    (15) final -> OPENBRACKET lambda . CLOSEDBRACKET
 
-    ZERO            shift and go to state 7
-    TRUE            shift and go to state 13
-    FALSE           shift and go to state 2
-    IF              shift and go to state 12
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 10
-    ISZERO          shift and go to state 8
-    OPENBRACKET     shift and go to state 4
-    LAMBDA          shift and go to state 6
-    VAR             shift and go to state 1
+    CLOSEDBRACKET   shift and go to state 27
 
-    var                            shift and go to state 11
-    app                            shift and go to state 5
-    final                          shift and go to state 14
-    lambda                         shift and go to state 27
 
 state 22
 
-    (9) final -> IF lambda . THEN lambda ELSE lambda
+    (13) final -> PRED OPENBRACKET . lambda CLOSEDBRACKET
+    (2) lambda -> . LAMBDA var COLON tipo POINT lambda
+    (3) lambda -> . ite
+    (4) ite -> . IF lambda THEN lambda ELSE lambda
+    (5) ite -> . app
+    (6) app -> . app final
+    (7) app -> . final
+    (8) final -> . ZERO
+    (9) final -> . TRUE
+    (10) final -> . FALSE
+    (11) final -> . var
+    (12) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
+    (13) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
+    (14) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
+    (15) final -> . OPENBRACKET lambda CLOSEDBRACKET
+    (16) var -> . VAR
 
-    THEN            shift and go to state 28
+    LAMBDA          shift and go to state 15
+    IF              shift and go to state 10
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 5
+    FALSE           shift and go to state 11
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 4
+    OPENBRACKET     shift and go to state 12
+    VAR             shift and go to state 9
 
+    app                            shift and go to state 1
+    ite                            shift and go to state 2
+    var                            shift and go to state 6
+    final                          shift and go to state 7
+    lambda                         shift and go to state 28
 
 state 23
 
-    (10) final -> SUCC OPENBRACKET lambda . CLOSEDBRACKET
+    (2) lambda -> LAMBDA var . COLON tipo POINT lambda
 
-    CLOSEDBRACKET   shift and go to state 29
+    COLON           shift and go to state 29
 
 
 state 24
 
-    (13) final -> OPENBRACKET lambda CLOSEDBRACKET .
+    (12) final -> SUCC OPENBRACKET lambda . CLOSEDBRACKET
 
-    ZERO            reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    TRUE            reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    FALSE           reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    IF              reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    SUCC            reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    PRED            reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    ISZERO          reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    OPENBRACKET     reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    LAMBDA          reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    VAR             reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    CLOSEDBRACKET   reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    $end            reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    THEN            reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
-    ELSE            reduce using rule 13 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
+    CLOSEDBRACKET   shift and go to state 30
 
 
 state 25
 
-    (14) final -> LAMBDA var COLON . tipo POINT lambda
-    (15) tipo -> . BOOL flecha
-    (16) tipo -> . NAT flecha
+    (14) final -> ISZERO OPENBRACKET lambda . CLOSEDBRACKET
 
-    BOOL            shift and go to state 32
-    NAT             shift and go to state 31
+    CLOSEDBRACKET   shift and go to state 31
 
-    tipo                           shift and go to state 30
 
 state 26
 
-    (12) final -> ISZERO OPENBRACKET lambda . CLOSEDBRACKET
+    (4) ite -> IF lambda THEN . lambda ELSE lambda
+    (2) lambda -> . LAMBDA var COLON tipo POINT lambda
+    (3) lambda -> . ite
+    (4) ite -> . IF lambda THEN lambda ELSE lambda
+    (5) ite -> . app
+    (6) app -> . app final
+    (7) app -> . final
+    (8) final -> . ZERO
+    (9) final -> . TRUE
+    (10) final -> . FALSE
+    (11) final -> . var
+    (12) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
+    (13) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
+    (14) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
+    (15) final -> . OPENBRACKET lambda CLOSEDBRACKET
+    (16) var -> . VAR
 
-    CLOSEDBRACKET   shift and go to state 33
+    LAMBDA          shift and go to state 15
+    IF              shift and go to state 10
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 5
+    FALSE           shift and go to state 11
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 4
+    OPENBRACKET     shift and go to state 12
+    VAR             shift and go to state 9
 
+    app                            shift and go to state 1
+    ite                            shift and go to state 2
+    var                            shift and go to state 6
+    final                          shift and go to state 7
+    lambda                         shift and go to state 32
 
 state 27
 
-    (11) final -> PRED OPENBRACKET lambda . CLOSEDBRACKET
+    (15) final -> OPENBRACKET lambda CLOSEDBRACKET .
 
-    CLOSEDBRACKET   shift and go to state 34
+    ZERO            reduce using rule 15 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
+    TRUE            reduce using rule 15 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
+    FALSE           reduce using rule 15 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
+    SUCC            reduce using rule 15 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
+    PRED            reduce using rule 15 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
+    ISZERO          reduce using rule 15 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
+    OPENBRACKET     reduce using rule 15 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
+    VAR             reduce using rule 15 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
+    ELSE            reduce using rule 15 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
+    THEN            reduce using rule 15 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
+    $end            reduce using rule 15 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
+    CLOSEDBRACKET   reduce using rule 15 (final -> OPENBRACKET lambda CLOSEDBRACKET .)
 
 
 state 28
 
-    (9) final -> IF lambda THEN . lambda ELSE lambda
-    (2) lambda -> . app
-    (3) app -> . app final
-    (4) app -> . final
-    (5) final -> . ZERO
-    (6) final -> . TRUE
-    (7) final -> . FALSE
-    (8) final -> . var
-    (9) final -> . IF lambda THEN lambda ELSE lambda
-    (10) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
-    (11) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
-    (12) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
-    (13) final -> . OPENBRACKET lambda CLOSEDBRACKET
-    (14) final -> . LAMBDA var COLON tipo POINT lambda
-    (19) var -> . VAR
+    (13) final -> PRED OPENBRACKET lambda . CLOSEDBRACKET
 
-    ZERO            shift and go to state 7
-    TRUE            shift and go to state 13
-    FALSE           shift and go to state 2
-    IF              shift and go to state 12
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 10
-    ISZERO          shift and go to state 8
-    OPENBRACKET     shift and go to state 4
-    LAMBDA          shift and go to state 6
-    VAR             shift and go to state 1
+    CLOSEDBRACKET   shift and go to state 33
 
-    var                            shift and go to state 11
-    app                            shift and go to state 5
-    final                          shift and go to state 14
-    lambda                         shift and go to state 35
 
 state 29
 
-    (10) final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .
+    (2) lambda -> LAMBDA var COLON . tipo POINT lambda
+    (17) tipo -> . BOOL flecha
+    (18) tipo -> . NAT flecha
 
-    ZERO            reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    TRUE            reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    FALSE           reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    IF              reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    SUCC            reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    PRED            reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    ISZERO          reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    OPENBRACKET     reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    LAMBDA          reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    VAR             reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    CLOSEDBRACKET   reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    $end            reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    THEN            reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
-    ELSE            reduce using rule 10 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
+    BOOL            shift and go to state 36
+    NAT             shift and go to state 35
 
+    tipo                           shift and go to state 34
 
 state 30
 
-    (14) final -> LAMBDA var COLON tipo . POINT lambda
+    (12) final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .
 
-    POINT           shift and go to state 36
+    ZERO            reduce using rule 12 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
+    TRUE            reduce using rule 12 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
+    FALSE           reduce using rule 12 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
+    SUCC            reduce using rule 12 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
+    PRED            reduce using rule 12 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
+    ISZERO          reduce using rule 12 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
+    OPENBRACKET     reduce using rule 12 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
+    VAR             reduce using rule 12 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
+    ELSE            reduce using rule 12 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
+    THEN            reduce using rule 12 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
+    $end            reduce using rule 12 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
+    CLOSEDBRACKET   reduce using rule 12 (final -> SUCC OPENBRACKET lambda CLOSEDBRACKET .)
 
 
 state 31
 
-    (16) tipo -> NAT . flecha
-    (17) flecha -> . ARROW tipo
-    (18) flecha -> .
+    (14) final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .
 
-    ARROW           shift and go to state 38
-    POINT           reduce using rule 18 (flecha -> .)
+    ZERO            reduce using rule 14 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
+    TRUE            reduce using rule 14 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
+    FALSE           reduce using rule 14 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
+    SUCC            reduce using rule 14 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
+    PRED            reduce using rule 14 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
+    ISZERO          reduce using rule 14 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
+    OPENBRACKET     reduce using rule 14 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
+    VAR             reduce using rule 14 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
+    ELSE            reduce using rule 14 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
+    THEN            reduce using rule 14 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
+    $end            reduce using rule 14 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
+    CLOSEDBRACKET   reduce using rule 14 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
 
-    flecha                         shift and go to state 37
 
 state 32
 
-    (15) tipo -> BOOL . flecha
-    (17) flecha -> . ARROW tipo
-    (18) flecha -> .
+    (4) ite -> IF lambda THEN lambda . ELSE lambda
 
-    ARROW           shift and go to state 38
-    POINT           reduce using rule 18 (flecha -> .)
+    ELSE            shift and go to state 37
 
-    flecha                         shift and go to state 39
 
 state 33
 
-    (12) final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .
+    (13) final -> PRED OPENBRACKET lambda CLOSEDBRACKET .
 
-    ZERO            reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    TRUE            reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    FALSE           reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    IF              reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    SUCC            reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    PRED            reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    ISZERO          reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    OPENBRACKET     reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    LAMBDA          reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    VAR             reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    CLOSEDBRACKET   reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    $end            reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    THEN            reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
-    ELSE            reduce using rule 12 (final -> ISZERO OPENBRACKET lambda CLOSEDBRACKET .)
+    ZERO            reduce using rule 13 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
+    TRUE            reduce using rule 13 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
+    FALSE           reduce using rule 13 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
+    SUCC            reduce using rule 13 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
+    PRED            reduce using rule 13 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
+    ISZERO          reduce using rule 13 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
+    OPENBRACKET     reduce using rule 13 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
+    VAR             reduce using rule 13 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
+    ELSE            reduce using rule 13 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
+    THEN            reduce using rule 13 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
+    $end            reduce using rule 13 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
+    CLOSEDBRACKET   reduce using rule 13 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
 
 
 state 34
 
-    (11) final -> PRED OPENBRACKET lambda CLOSEDBRACKET .
+    (2) lambda -> LAMBDA var COLON tipo . POINT lambda
 
-    ZERO            reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    TRUE            reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    FALSE           reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    IF              reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    SUCC            reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    PRED            reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    ISZERO          reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    OPENBRACKET     reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    LAMBDA          reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    VAR             reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    CLOSEDBRACKET   reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    $end            reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    THEN            reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
-    ELSE            reduce using rule 11 (final -> PRED OPENBRACKET lambda CLOSEDBRACKET .)
+    POINT           shift and go to state 38
 
 
 state 35
 
-    (9) final -> IF lambda THEN lambda . ELSE lambda
+    (18) tipo -> NAT . flecha
+    (19) flecha -> . ARROW tipo
+    (20) flecha -> .
 
-    ELSE            shift and go to state 40
+    ARROW           shift and go to state 40
+    POINT           reduce using rule 20 (flecha -> .)
 
+    flecha                         shift and go to state 39
 
 state 36
 
-    (14) final -> LAMBDA var COLON tipo POINT . lambda
-    (2) lambda -> . app
-    (3) app -> . app final
-    (4) app -> . final
-    (5) final -> . ZERO
-    (6) final -> . TRUE
-    (7) final -> . FALSE
-    (8) final -> . var
-    (9) final -> . IF lambda THEN lambda ELSE lambda
-    (10) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
-    (11) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
-    (12) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
-    (13) final -> . OPENBRACKET lambda CLOSEDBRACKET
-    (14) final -> . LAMBDA var COLON tipo POINT lambda
-    (19) var -> . VAR
+    (17) tipo -> BOOL . flecha
+    (19) flecha -> . ARROW tipo
+    (20) flecha -> .
 
-    ZERO            shift and go to state 7
-    TRUE            shift and go to state 13
-    FALSE           shift and go to state 2
-    IF              shift and go to state 12
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 10
-    ISZERO          shift and go to state 8
-    OPENBRACKET     shift and go to state 4
-    LAMBDA          shift and go to state 6
-    VAR             shift and go to state 1
+    ARROW           shift and go to state 40
+    POINT           reduce using rule 20 (flecha -> .)
 
-    var                            shift and go to state 11
-    app                            shift and go to state 5
-    final                          shift and go to state 14
-    lambda                         shift and go to state 41
+    flecha                         shift and go to state 41
 
 state 37
 
-    (16) tipo -> NAT flecha .
+    (4) ite -> IF lambda THEN lambda ELSE . lambda
+    (2) lambda -> . LAMBDA var COLON tipo POINT lambda
+    (3) lambda -> . ite
+    (4) ite -> . IF lambda THEN lambda ELSE lambda
+    (5) ite -> . app
+    (6) app -> . app final
+    (7) app -> . final
+    (8) final -> . ZERO
+    (9) final -> . TRUE
+    (10) final -> . FALSE
+    (11) final -> . var
+    (12) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
+    (13) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
+    (14) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
+    (15) final -> . OPENBRACKET lambda CLOSEDBRACKET
+    (16) var -> . VAR
 
-    POINT           reduce using rule 16 (tipo -> NAT flecha .)
+    LAMBDA          shift and go to state 15
+    IF              shift and go to state 10
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 5
+    FALSE           shift and go to state 11
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 4
+    OPENBRACKET     shift and go to state 12
+    VAR             shift and go to state 9
 
+    app                            shift and go to state 1
+    ite                            shift and go to state 2
+    var                            shift and go to state 6
+    final                          shift and go to state 7
+    lambda                         shift and go to state 42
 
 state 38
 
-    (17) flecha -> ARROW . tipo
-    (15) tipo -> . BOOL flecha
-    (16) tipo -> . NAT flecha
+    (2) lambda -> LAMBDA var COLON tipo POINT . lambda
+    (2) lambda -> . LAMBDA var COLON tipo POINT lambda
+    (3) lambda -> . ite
+    (4) ite -> . IF lambda THEN lambda ELSE lambda
+    (5) ite -> . app
+    (6) app -> . app final
+    (7) app -> . final
+    (8) final -> . ZERO
+    (9) final -> . TRUE
+    (10) final -> . FALSE
+    (11) final -> . var
+    (12) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
+    (13) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
+    (14) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
+    (15) final -> . OPENBRACKET lambda CLOSEDBRACKET
+    (16) var -> . VAR
 
-    BOOL            shift and go to state 32
-    NAT             shift and go to state 31
+    LAMBDA          shift and go to state 15
+    IF              shift and go to state 10
+    ZERO            shift and go to state 8
+    TRUE            shift and go to state 5
+    FALSE           shift and go to state 11
+    SUCC            shift and go to state 3
+    PRED            shift and go to state 14
+    ISZERO          shift and go to state 4
+    OPENBRACKET     shift and go to state 12
+    VAR             shift and go to state 9
 
-    tipo                           shift and go to state 42
+    app                            shift and go to state 1
+    ite                            shift and go to state 2
+    var                            shift and go to state 6
+    final                          shift and go to state 7
+    lambda                         shift and go to state 43
 
 state 39
 
-    (15) tipo -> BOOL flecha .
+    (18) tipo -> NAT flecha .
 
-    POINT           reduce using rule 15 (tipo -> BOOL flecha .)
+    POINT           reduce using rule 18 (tipo -> NAT flecha .)
 
 
 state 40
 
-    (9) final -> IF lambda THEN lambda ELSE . lambda
-    (2) lambda -> . app
-    (3) app -> . app final
-    (4) app -> . final
-    (5) final -> . ZERO
-    (6) final -> . TRUE
-    (7) final -> . FALSE
-    (8) final -> . var
-    (9) final -> . IF lambda THEN lambda ELSE lambda
-    (10) final -> . SUCC OPENBRACKET lambda CLOSEDBRACKET
-    (11) final -> . PRED OPENBRACKET lambda CLOSEDBRACKET
-    (12) final -> . ISZERO OPENBRACKET lambda CLOSEDBRACKET
-    (13) final -> . OPENBRACKET lambda CLOSEDBRACKET
-    (14) final -> . LAMBDA var COLON tipo POINT lambda
-    (19) var -> . VAR
+    (19) flecha -> ARROW . tipo
+    (17) tipo -> . BOOL flecha
+    (18) tipo -> . NAT flecha
 
-    ZERO            shift and go to state 7
-    TRUE            shift and go to state 13
-    FALSE           shift and go to state 2
-    IF              shift and go to state 12
-    SUCC            shift and go to state 3
-    PRED            shift and go to state 10
-    ISZERO          shift and go to state 8
-    OPENBRACKET     shift and go to state 4
-    LAMBDA          shift and go to state 6
-    VAR             shift and go to state 1
+    BOOL            shift and go to state 36
+    NAT             shift and go to state 35
 
-    var                            shift and go to state 11
-    app                            shift and go to state 5
-    final                          shift and go to state 14
-    lambda                         shift and go to state 43
+    tipo                           shift and go to state 44
 
 state 41
 
-    (14) final -> LAMBDA var COLON tipo POINT lambda .
+    (17) tipo -> BOOL flecha .
 
-    ZERO            reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    TRUE            reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    FALSE           reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    IF              reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    SUCC            reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    PRED            reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    ISZERO          reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    OPENBRACKET     reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    LAMBDA          reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    VAR             reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    CLOSEDBRACKET   reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    $end            reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    THEN            reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
-    ELSE            reduce using rule 14 (final -> LAMBDA var COLON tipo POINT lambda .)
+    POINT           reduce using rule 17 (tipo -> BOOL flecha .)
 
 
 state 42
 
-    (17) flecha -> ARROW tipo .
+    (4) ite -> IF lambda THEN lambda ELSE lambda .
 
-    POINT           reduce using rule 17 (flecha -> ARROW tipo .)
+    THEN            reduce using rule 4 (ite -> IF lambda THEN lambda ELSE lambda .)
+    CLOSEDBRACKET   reduce using rule 4 (ite -> IF lambda THEN lambda ELSE lambda .)
+    ELSE            reduce using rule 4 (ite -> IF lambda THEN lambda ELSE lambda .)
+    $end            reduce using rule 4 (ite -> IF lambda THEN lambda ELSE lambda .)
 
 
 state 43
 
-    (9) final -> IF lambda THEN lambda ELSE lambda .
+    (2) lambda -> LAMBDA var COLON tipo POINT lambda .
 
-    ZERO            reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    TRUE            reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    FALSE           reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    IF              reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    SUCC            reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    PRED            reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    ISZERO          reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    OPENBRACKET     reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    LAMBDA          reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    VAR             reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    CLOSEDBRACKET   reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    $end            reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    THEN            reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
-    ELSE            reduce using rule 9 (final -> IF lambda THEN lambda ELSE lambda .)
+    $end            reduce using rule 2 (lambda -> LAMBDA var COLON tipo POINT lambda .)
+    THEN            reduce using rule 2 (lambda -> LAMBDA var COLON tipo POINT lambda .)
+    CLOSEDBRACKET   reduce using rule 2 (lambda -> LAMBDA var COLON tipo POINT lambda .)
+    ELSE            reduce using rule 2 (lambda -> LAMBDA var COLON tipo POINT lambda .)
 
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for ZERO in state 5 resolved as shift
-WARNING: shift/reduce conflict for TRUE in state 5 resolved as shift
-WARNING: shift/reduce conflict for FALSE in state 5 resolved as shift
-WARNING: shift/reduce conflict for IF in state 5 resolved as shift
-WARNING: shift/reduce conflict for SUCC in state 5 resolved as shift
-WARNING: shift/reduce conflict for PRED in state 5 resolved as shift
-WARNING: shift/reduce conflict for ISZERO in state 5 resolved as shift
-WARNING: shift/reduce conflict for OPENBRACKET in state 5 resolved as shift
-WARNING: shift/reduce conflict for LAMBDA in state 5 resolved as shift
-WARNING: shift/reduce conflict for VAR in state 5 resolved as shift
+
+state 44
+
+    (19) flecha -> ARROW tipo .
+
+    POINT           reduce using rule 19 (flecha -> ARROW tipo .)
+

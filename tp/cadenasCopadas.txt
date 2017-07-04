@@ -18,4 +18,4 @@ succ(succ(pred(0)))
 \x:Nat.succ(x)
 0 0
 (\x:Nat -> Nat.\y:Nat.(\z:Bool.if z then x y else 0))
-(\x:Nat -> Nat.\y:Nat.(\z:Bool.if z then x y else 0)) (\j:Nat.succ(j)) 8 true
+(\x:Nat -> Nat.\y:Nat.(\z:Bool.if z then x y else 0)) (\j:Nat.succ(j)) succ(succ(succ(succ(succ(succ(succ(succ(0)))))))) true
