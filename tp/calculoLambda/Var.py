@@ -1,3 +1,5 @@
+from .Asserts import *
+
 class Types:
   VAR = 'VAR'
 
@@ -14,3 +16,8 @@ class Var(object):
 
   def findAndReplace(self, var, parameter):
     return parameter if self.value == var else self
+
+  def printType(self):
+    message = 'La variable ' + self.value + ' esta libre'
+    raise FreeVariable(message)
+    # return self.type.printType()

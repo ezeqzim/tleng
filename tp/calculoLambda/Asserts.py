@@ -15,6 +15,9 @@ class ExpressionsMustHaveEqualType(Exception):
 class ExpressionMustBeApplicable(Exception):
   pass
 
+class FreeVariable(Exception):
+  pass
+
 def assertTypeBool(expression):
   if (not (expression.type == Arrow(Bool()))):
     message = 'La expresion ' + expression.printString() + ' debe ser de tipo Bool'
@@ -37,5 +40,5 @@ def assertSameType(expression1, expression2):
 
 def assertTypeForApplication(expression1, expression2):
   if (not (expression1.vtype == expression2.type)):
-    message = 'La expresion ' + expression1.printString() + ' : INSERTAR ALGO ACA no tiene el tipo correcto para aplicarse a ' + expression.printString() + ' : INSERTAR ALGO ACA'
+    message = 'La expresion ' + expression2.printString() + ' : INSERTAR ALGO ACA no tiene el tipo correcto para aplicarse a ' + expression1.printString() + ' : INSERTAR ALGO ACA'
     raise ExpressionMustBeApplicable(message)

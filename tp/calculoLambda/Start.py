@@ -6,4 +6,4 @@ class Start(object):
     return Start(self.expression.evaluate())
 
   def printString(self):
-    return self.expression.printString() + ':' #+ self.expression.type
+    return self.expression.printString() + ':' + self.expression.printType()

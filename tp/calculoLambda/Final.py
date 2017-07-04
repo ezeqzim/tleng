@@ -15,6 +15,9 @@ class Zero(object):
   def findAndReplace(self, var, parameter):
     return self
 
+  def printType(self):
+    return self.type.printType()
+
 class FTrue(object):
   def __init__(self):
     self.value = True
@@ -29,6 +32,9 @@ class FTrue(object):
   def findAndReplace(self, var, parameter):
     return self
 
+  def printType(self):
+    return self.type.printType()
+
 class FFalse(object):
   def __init__(self):
     self.value = False
@@ -42,6 +48,9 @@ class FFalse(object):
 
   def findAndReplace(self, var, parameter):
     return self
+
+  def printType(self):
+    return self.type.printType()
 
 class Succ(object):
   def __init__(self, expression):
@@ -61,6 +70,9 @@ class Succ(object):
   def findAndReplace(self, var, parameter):
     return Succ(self.expression.findAndReplace(var, parameter))
 
+  def printType(self):
+    return self.type.printType()
+
 class Pred(object):
   def __init__(self, expression):
     self.expression = expression
@@ -78,6 +90,9 @@ class Pred(object):
 
   def findAndReplace(self, var, parameter):
     return Pred(self.expression.findAndReplace(var, parameter))
+
+  def printType(self):
+    return self.type.printType()
 
 class Iszero(object):
   def __init__(self, expression):
@@ -98,6 +113,9 @@ class Iszero(object):
   def findAndReplace(self, var, parameter):
     return Iszero(self.expression.findAndReplace(var, parameter))
 
+  def printType(self):
+    return self.type.printType()
+
 class Enclosed(object):
   def __init__(self, expression):
     self.expression = expression
@@ -111,3 +129,6 @@ class Enclosed(object):
 
   def findAndReplace(self, var, parameter):
     return Enclosed(self.expression.findAndReplace(var, parameter))
+
+  def printType(self):
+    return self.type.printType()

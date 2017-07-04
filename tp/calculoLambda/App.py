@@ -12,3 +12,6 @@ class App(object):
     resExpression = self.expression.evaluate()
     assertTypeForApplication(resApp, resExpression)
     return resApp.evalWith(resExpression)
+
+  def printString(self):
+    return self.app.printString() + ' ' + self.expression.printString()

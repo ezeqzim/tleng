@@ -19,6 +19,9 @@ class Bool(object):
   def __ne__(self, other):
     return not self.__eq__(self, other)
 
+  def printType(self):
+    return 'Bool'
+
 class Nat(object):
   def __init__(self):
     self.type = Types.NAT
@@ -35,6 +38,9 @@ class Nat(object):
 
   def __ne__(self, other):
     return not self.__eq__(self, other)
+
+  def printType(self):
+    return 'Nat'
 
 class Arrow(object):
   def __init__(self, left, right = None):
@@ -61,3 +67,8 @@ class Arrow(object):
 
   def __ne__(self, other):
     return not self.__eq__(self, other)
+
+  def printType(self):
+    if (self.right is None):
+      return self.left.printType()
+    return self.left.printType() + ' -> ' + self.right.printType()

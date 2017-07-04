@@ -15,3 +15,6 @@ class Lambda(object):
 
   def printString(self):
     return '\\' + self.var.printString() + ':' + self.vtype.printString() + '.' + self.body.printString()
+
+  def printType(self):
+    return self.type.printType()

@@ -23,7 +23,7 @@ if len(sys.argv) == 1:
       print evaluation.printString()
     except EOFError:
       break
-    except (UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable) as e:
+    except (UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable, FreeVariable) as e:
       print(e.message)
       pass
 
