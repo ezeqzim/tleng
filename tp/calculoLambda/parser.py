@@ -92,13 +92,11 @@ def p_var_var(p):
 def p_tipo_bool_flecha(p):
   'tipo : BOOL flecha'
   p[0] = Arrow(Bool(), p[2])
-  # p[0] = Bool()
 
 # Tipo - > Nat Flecha
 def p_tipo_nat_flecha(p):
   'tipo : NAT flecha'
   p[0] = Arrow(Nat(), p[2])
-  # p[0] = Nat()
 
 # Flecha -> -> Tipo
 def p_flecha_arrow_tipo(p):

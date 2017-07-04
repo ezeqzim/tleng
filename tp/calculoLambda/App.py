@@ -4,7 +4,7 @@ class App(object):
   def __init__(self, app, expression):
     self.app = app
     self.expression = expression
-    self.type = Arrow(app.type, expression.type)
+    self.type = Arrow(app.type, expression.type) # ESTE ES FRUTA PARA PROBAR
 
   def evaluate(self):
     resApp = self.app.evaluate()

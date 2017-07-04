@@ -62,7 +62,7 @@ class Succ(object):
     resExpression = self.expression.evaluate()
     assertTypeNat(resExpression)
     resExpression.value += 1
-    return resExpression
+    return Succ(resExpression)
 
   def printString(self):
     return 'succ(' + self.expression.printString() + ')'
@@ -83,7 +83,7 @@ class Pred(object):
     resExpression = self.expression.evaluate()
     assertTypeNat(resExpression)
     resExpression.value -= 0 if resExpression.value == 0 else 1
-    return resExpression
+    return Zero() if resExpression.value == 0 else Succ(resExpression)
 
   def printString(self):
     return 'pred(' + self.expression.printString() + ')'
@@ -103,9 +103,7 @@ class Iszero(object):
   def evaluate(self):
     resExpression = self.expression.evaluate()
     assertTypeNat(resExpression)
-    resExpression.value = resExpression.value == 0
-    resExpression.type = Bool()
-    return resExpression
+    return FTrue() if resExpression.value == 0 else FFalse()
 
   def printString(self):
     return 'iszero(' + self.expression.printString() + ')'

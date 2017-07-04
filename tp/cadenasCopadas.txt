@@ -1,6 +1,5 @@
+(\x:Nat.true) (if true then (\x:Nat.succ(0)) 0 else (\x:Nat.succ(0)) 0)
 (\x:Nat.true) if true then (\x:Nat.succ(0)) 0 else (\x:Nat.succ(0)) 0
-\x:Nat.true if true then (\x:Nat.succ(0)) 0 else (\x:Nat.succ(0)) 0
-\x:Nat.true if true then \x:Nat.succ(0) 0 else \x:Nat.succ(0) 0
 if true then \x:Nat.succ(0) 0 else \x:Nat.succ(0) 0
 \x:Nat.succ(0) 0
 
