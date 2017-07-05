@@ -1,4 +1,5 @@
 from .Type import *
+from .Types import *
 
 class ExpressionMustBeBool(Exception):
   pass
@@ -15,30 +16,27 @@ class ExpressionsMustHaveEqualType(Exception):
 class ExpressionMustBeApplicable(Exception):
   pass
 
-class FreeVariable(Exception):
-  pass
-
 def assertTypeBool(expression):
-  if (not (expression.type == Arrow(Bool()))):
+  if (not (expression.getType() == Arrow(Bool()))):
     message = 'La expresion ' + expression.printString() + ' debe ser de tipo Bool'
     raise ExpressionMustBeBool(message)
 
 def assertTypeNat(expression):
-  if (not (expression.type == Arrow(Nat()))):
+  if (not (expression.getType() == Arrow(Nat()))):
     message = 'La expresion ' + expression.printString() + ' debe ser de tipo Nat'
     raise ExpressionMustBeNat(message)
 
 def assertTypeLambda(expression):
-  if (not (expression.type.right is not None)):
+  if (not (expression.getType().right is not None)):
     message = 'La expresion ' + expression.printString() + ' debe ser de tipo Lambda'
     raise ExpressionMustBeLambda(message)
 
 def assertSameType(expression1, expression2):
-  if (not (expression1.type == expression2.type)):
+  if (not (expression1.getType() == expression2.getType())):
     message = 'Las expresiones ' + expression1.printString() + ' y ' + expression2.printString() + ' deben ser del mismo tipo'
     raise ExpressionsMustHaveEqualType(message)
 
 def assertTypeForApplication(expression1, expression2):
-  if (not (expression1.vtype == expression2.type)):
-    message = 'La expresion ' + expression2.printString() + ' : INSERTAR ALGO ACA no tiene el tipo correcto para aplicarse a ' + expression1.printString() + ' : INSERTAR ALGO ACA'
+  if (not (expression1.getType() == expression2.getType())):
+    message = 'La expresion ' + expression2.printString() + ' : ' + expression2.printType() + ' no tiene el tipo correcto para aplicarse a ' + expression1.printString() + ' : ' + expression1.printType()
     raise ExpressionMustBeApplicable(message)

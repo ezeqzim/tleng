@@ -1,126 +1,187 @@
-from .Type import *
 from .Asserts import *
+from .Type import *
+from .Var import *
 
 class Zero(object):
   def __init__(self):
     self.value = 0
-    self.type = Arrow(Nat())
 
-  def evaluate(self):
+  def getValue(self):
+    return self.value
+
+  def getType(self):
+    return Arrow(Nat())
+
+  def evaluate(self, context):
     return self
 
   def printString(self):
     return '0'
 
+  def printType(self):
+    return self.getType().printType()
+
+  def hasFreeVariables(self, context):
+    return False
+
   def findAndReplace(self, var, parameter):
     return self
-
-  def printType(self):
-    return self.type.printType()
 
 class FTrue(object):
   def __init__(self):
     self.value = True
-    self.type = Arrow(Bool())
 
-  def evaluate(self):
+  def getValue(self):
+    return self.value
+
+  def getType(self):
+    return Arrow(Bool())
+
+  def evaluate(self, context):
     return self
 
   def printString(self):
     return 'true'
 
+  def printType(self):
+    return self.getType().printType()
+
+  def hasFreeVariables(self, context):
+    return False
+
   def findAndReplace(self, var, parameter):
     return self
-
-  def printType(self):
-    return self.type.printType()
 
 class FFalse(object):
   def __init__(self):
     self.value = False
-    self.type = Arrow(Bool())
 
-  def evaluate(self):
+  def getValue(self):
+    return self.value
+
+  def getType(self):
+    return Arrow(Bool())
+
+  def evaluate(self, context):
     return self
 
   def printString(self):
     return 'false'
 
+  def printType(self):
+    return self.getType().printType()
+
+  def hasFreeVariables(self, context):
+    return False
+
   def findAndReplace(self, var, parameter):
     return self
-
-  def printType(self):
-    return self.type.printType()
 
 class Succ(object):
   def __init__(self, expression):
     self.expression = expression
-    self.value = expression.value
-    self.type = expression.type
+    self.value = 0
 
-  def evaluate(self):
-    resExpression = self.expression.evaluate()
+  def getValue(self):
+    return self.value
+
+  def setValue(self, value):
+    self.value = value
+
+  def getType(self):
+    return Arrow(Nat())
+
+  def evaluate(self, context):
+    if (self.expression.hasFreeVariables(context)):
+      self.expression.printType() # raise FreeVariable
+    resExpression = self.expression.evaluate(context)
     assertTypeNat(resExpression)
-    resExpression.value += 1
+    if (not self.expression.hasFreeVariables({})):
+      self.setValue(self.getValue() + 1)
+      return self
     return Succ(resExpression)
 
   def printString(self):
     return 'succ(' + self.expression.printString() + ')'
 
+  def printType(self):
+    return self.getType().printType()
+
+  def hasFreeVariables(self, context):
+    return self.expression.hasFreeVariables(context)
+
   def findAndReplace(self, var, parameter):
     return Succ(self.expression.findAndReplace(var, parameter))
-
-  def printType(self):
-    return self.type.printType()
 
 class Pred(object):
   def __init__(self, expression):
     self.expression = expression
-    self.value = expression.value
-    self.type = expression.type
 
-  def evaluate(self):
-    resExpression = self.expression.evaluate()
+  def getType(self):
+    return Arrow(Nat())
+
+  def evaluate(self, context):
+    if (self.expression.hasFreeVariables(context)):
+      self.expression.printType() # raise FreeVariable
+    resExpression = self.expression.evaluate(context)
     assertTypeNat(resExpression)
-    resExpression.value -= 0 if resExpression.value == 0 else 1
-    return Zero() if resExpression.value == 0 else Succ(resExpression)
+    if (not self.expression.hasFreeVariables({})):
+      oldValue = resExpression.getValue()
+      if (oldValue == 0):
+        return Zero()
+      resExpression.setValue(oldValue - 1)
+      return Zero() if resExpression.value == 0 else Succ(resExpression)
+    return Pred(resExpression)
 
   def printString(self):
     return 'pred(' + self.expression.printString() + ')'
 
-  def findAndReplace(self, var, parameter):
-    return Pred(self.expression.findAndReplace(var, parameter))
-
   def printType(self):
     return self.type.printType()
+
+  def hasFreeVariables(self, context):
+    return self.expression.hasFreeVariables(context)
+
+  def findAndReplace(self, var, parameter):
+    return Pred(self.expression.findAndReplace(var, parameter))
 
 class Iszero(object):
   def __init__(self, expression):
     self.expression = expression
-    self.value = expression.value
-    self.type = expression.type
 
-  def evaluate(self):
-    resExpression = self.expression.evaluate()
+  def getType(self):
+    return Arrow(Bool())
+
+  def evaluate(self, context):
+    if (self.expression.hasFreeVariables(context)):
+      self.expression.printType() # raise FreeVariable
+    resExpression = self.expression.evaluate(context)
     assertTypeNat(resExpression)
-    return FTrue() if resExpression.value == 0 else FFalse()
+    if (not self.expression.hasFreeVariables({})):
+      return FTrue() if resExpression.getValue() == 0 else FFalse()
+    return Iszero(resExpression)
 
   def printString(self):
     return 'iszero(' + self.expression.printString() + ')'
 
-  def findAndReplace(self, var, parameter):
-    return Iszero(self.expression.findAndReplace(var, parameter))
-
   def printType(self):
     return self.type.printType()
+
+  def hasFreeVariables(self, context):
+    return self.expression.hasFreeVariables(context)
+
+  def findAndReplace(self, var, parameter):
+    return Iszero(self.expression.findAndReplace(var, parameter))
 
 class Enclosed(object):
   def __init__(self, expression):
     self.expression = expression
-    self.type = expression.type
 
-  def evaluate(self):
-    return self.expression.evaluate()
+  def getType(self):
+    return self.expression.getType()
+
+  def evaluate(self, context):
+    return Enclosed(self.expression.evaluate(context))
 
   def printString(self):
     return '(' + self.expression.printString() + ')'
@@ -129,4 +190,11 @@ class Enclosed(object):
     return Enclosed(self.expression.findAndReplace(var, parameter))
 
   def printType(self):
-    return self.type.printType()
+    return '(' + self.getType().printType() + ')'
+
+  def hasFreeVariables(self, context):
+    return self.expression.hasFreeVariables(context)
+
+  def evalWith(self, parameter, context):
+    self.expression.evalWith(parameter, context)
+
