@@ -9,6 +9,9 @@ class Zero(object):
   def getValue(self):
     return self.value
 
+  def setValue(self, value):
+    self.value = value
+
   def getType(self):
     return Arrow(Nat())
 
@@ -97,8 +100,8 @@ class Succ(object):
     resExpression = self.expression.evaluate(context)
     assertTypeNat(resExpression)
     if (not self.expression.hasFreeVariables({})):
-      self.setValue(self.getValue() + 1)
-      return self
+      resExpression.setValue(self.getValue() + 1)
+      return Succ(resExpression)
     return Succ(resExpression)
 
   def printString(self):
@@ -196,5 +199,5 @@ class Enclosed(object):
     return self.expression.hasFreeVariables(context)
 
   def evalWith(self, parameter, context):
-    self.expression.evalWith(parameter, context)
+    return self.expression.evalWith(parameter, context)
 

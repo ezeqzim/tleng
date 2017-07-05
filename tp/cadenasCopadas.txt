@@ -27,3 +27,4 @@ succ(succ(pred(0)))
 
 \x:Bool. if x then pred(0) else 0
 (\x:Nat.true) x
+(\x:Bool -> Bool.\y:Nat.(\z:Bool.if z then x y else true))

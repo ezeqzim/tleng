@@ -110,7 +110,6 @@ def p_flecha(p):
 
 def p_error(p):
   print 'Hubo un error en el parseo'
-  raise EOFError
   parser.restart()
 
 parser = yacc.yacc(debug=True)

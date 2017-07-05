@@ -28,6 +28,9 @@ class Var(object):
   def getType(self):
     return self.vtype
 
+  def setType(self, vtype):
+    self.vtype = vtype
+
   def evaluate(self, context):
     if (self.value in context):
       self.vtype = context[self.value]
@@ -38,12 +41,12 @@ class Var(object):
 
   def printType(self):
     assertTypeNonVar(self)
-    return self.type.printType()
+    return self.getType().printType()
 
   def hasFreeVariables(self, context):
+    if (self.value in context):
+      self.vtype = context[self.value]
     return not self.value in context
 
   def findAndReplace(self, var, parameter):
-    print 'findAndReplace : VAR : ', parameter.type, self.vtype
-    self.vtype = parameter.type
     return parameter if self == var else self

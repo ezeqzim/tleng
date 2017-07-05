@@ -4,11 +4,12 @@ from .Types import *
 
 class Lambda(object):
   def __init__(self, var, vtype, body):
+    var.setType(vtype)
     self.var = var
     self.vtype = vtype
     self.body = body
     self.type = Arrow(vtype, body.getType())
-    self.context = {var.value: vtype}
+    self.context = {var.getValue(): vtype}
 
   def getType(self):
     return self.type
@@ -17,7 +18,8 @@ class Lambda(object):
     self.context.update(context)
     if (self.body.hasFreeVariables(self.context)):
       self.body.printType() # raise FreeVariable
-    return Lambda(self.var, self.vtype, self.body.evaluate(self.context))
+    self.body = self.body.evaluate(self.context)
+    return self
 
   def printString(self):
     return '\\' + self.var.printString() + ':' + self.vtype.printString() + '.' + self.body.printString()
@@ -31,6 +33,7 @@ class Lambda(object):
 
   def evalWith(self, parameter, context):
     assertTypeForApplication(self.var, parameter)
-    self.context.pop(self.var)
+    self.context.pop(self.var.getValue())
     replaced = self.body.findAndReplace(self.var, parameter)
-    return replaced.evaluate(self.context.update(context))
+    self.context.update(context)
+    return replaced.evaluate(self.context)

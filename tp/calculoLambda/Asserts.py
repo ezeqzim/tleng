@@ -38,5 +38,5 @@ def assertSameType(expression1, expression2):
 
 def assertTypeForApplication(expression1, expression2):
   if (not (expression1.getType() == expression2.getType())):
-    message = 'La expresion ' + expression2.printString() + ' : ' + expression2.printType() + ' no tiene el tipo correcto para aplicarse a ' + expression1.printString() + ' : ' + expression1.printType()
+    message = 'La expresion ' + expression2.printString() + ' : ' + expression2.printType() + ' no tiene el tipo correcto para sustituir a ' + expression1.printString() + ' : ' + expression1.printType()
     raise ExpressionMustBeApplicable(message)

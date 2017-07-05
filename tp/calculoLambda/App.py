@@ -16,7 +16,7 @@ class App(object):
       self.app.printType() # raise FreeVariable
     resApp = self.app.evaluate(context)
     assertTypeLambda(resApp)
-    if (self.expression.hasFreeVariables(context)):
+    if (self.expression.hasFreeVariables({})):
       self.expression.printType() # raise FreeVariable
     resExpression = self.expression.evaluate(context)
     if (self.app.hasFreeVariables({}) or self.expression.hasFreeVariables({})):
