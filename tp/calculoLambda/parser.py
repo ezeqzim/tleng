@@ -101,7 +101,7 @@ def p_tipo_nat_flecha(p):
 # Flecha -> -> Tipo
 def p_flecha_arrow_tipo(p):
   'flecha : ARROW tipo'
-  p[0] = Arrow(p[2])
+  p[0] = p[2]
 
 # Flecha ->
 def p_flecha(p):

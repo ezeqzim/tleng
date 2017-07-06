@@ -1,11 +1,11 @@
-(\x:Nat.true) (if true then (\y:Nat.succ(0)) 0 else (\z:Nat.succ(0)) 0)
 (\x:Nat.true) if true then (\x:Nat.succ(0)) 0 else (\x:Nat.succ(0)) 0
+(\x:Nat.true) (if true then (\y:Nat.succ(0)) 0 else (\z:Nat.succ(0)) 0)
 \x:Nat.succ(0) 0
-
 if true then \x:Nat.succ(0) 0 else \x:Nat.succ(0) 0
 \x:Nat.iszero(0)
-
-Enunciado
+\x:Bool. if x then pred(0) else 0
+(\x:Nat.true) x
+(\x:Bool -> Bool.\y:Nat.(\z:Bool.if z then x y else true))
 0
 true
 if true then 0 else false
@@ -20,11 +20,3 @@ succ(succ(pred(0)))
 0 0
 (\x:Nat -> Nat.\y:Nat.(\z:Bool.if z then x y else 0))
 (\x:Nat -> Nat.\y:Nat.(\z:Bool.if z then x y else 0)) (\j:Nat.succ(j)) succ(succ(succ(succ(succ(succ(succ(succ(0)))))))) true
-
-
-
-
-
-\x:Bool. if x then pred(0) else 0
-(\x:Nat.true) x
-(\x:Bool -> Bool.\y:Nat.(\z:Bool.if z then x y else true))

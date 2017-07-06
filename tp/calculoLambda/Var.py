@@ -1,12 +1,5 @@
+from .Asserts import *
 from .Types import *
-
-class FreeVariable(Exception):
-  pass
-
-def assertTypeNonVar(expression):
-  if (expression.vtype is None):
-    message = 'La variable ' + expression.value + ' esta libre'
-    raise FreeVariable(message)
 
 class Var(object):
   def __init__(self, value):
@@ -20,13 +13,16 @@ class Var(object):
     return False
 
   def __ne__(self, other):
-    return not self.__eq__(self, other)
+    return not self.__eq__(other)
 
   def getValue(self):
     return self.value
 
   def getType(self):
     return self.vtype
+
+  def getVar(self):
+    return self
 
   def setType(self, vtype):
     self.vtype = vtype
@@ -44,9 +40,7 @@ class Var(object):
     return self.getType().printType()
 
   def hasFreeVariables(self, context):
-    if (self.value in context):
-      self.vtype = context[self.value]
-    return not self.value in context
+    return (not self.value in context, self)
 
   def findAndReplace(self, var, parameter):
     return parameter if self == var else self

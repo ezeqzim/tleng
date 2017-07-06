@@ -9,9 +9,6 @@ class Zero(object):
   def getValue(self):
     return self.value
 
-  def setValue(self, value):
-    self.value = value
-
   def getType(self):
     return Arrow(Nat())
 
@@ -25,7 +22,7 @@ class Zero(object):
     return self.getType().printType()
 
   def hasFreeVariables(self, context):
-    return False
+    return (False, self)
 
   def findAndReplace(self, var, parameter):
     return self
@@ -50,7 +47,7 @@ class FTrue(object):
     return self.getType().printType()
 
   def hasFreeVariables(self, context):
-    return False
+    return (False, self)
 
   def findAndReplace(self, var, parameter):
     return self
@@ -75,7 +72,7 @@ class FFalse(object):
     return self.getType().printType()
 
   def hasFreeVariables(self, context):
-    return False
+    return (False, self)
 
   def findAndReplace(self, var, parameter):
     return self
@@ -95,14 +92,12 @@ class Succ(object):
     return Arrow(Nat())
 
   def evaluate(self, context):
-    if (self.expression.hasFreeVariables(context)):
-      self.expression.printType() # raise FreeVariable
-    resExpression = self.expression.evaluate(context)
-    assertTypeNat(resExpression)
-    if (not self.expression.hasFreeVariables({})):
-      resExpression.setValue(self.getValue() + 1)
-      return Succ(resExpression)
-    return Succ(resExpression)
+    assertNotHasFreeVariables(self.expression, context)
+    self.expression = self.expression.evaluate(context)
+    assertTypeNat(self.expression)
+    if (not self.expression.hasFreeVariables({})[0]):
+      self.setValue(self.getValue() + 1)
+    return self
 
   def printString(self):
     return 'succ(' + self.expression.printString() + ')'
@@ -114,7 +109,8 @@ class Succ(object):
     return self.expression.hasFreeVariables(context)
 
   def findAndReplace(self, var, parameter):
-    return Succ(self.expression.findAndReplace(var, parameter))
+    self.expression = self.expression.findAndReplace(var, parameter)
+    return self
 
 class Pred(object):
   def __init__(self, expression):
@@ -124,29 +120,29 @@ class Pred(object):
     return Arrow(Nat())
 
   def evaluate(self, context):
-    if (self.expression.hasFreeVariables(context)):
-      self.expression.printType() # raise FreeVariable
-    resExpression = self.expression.evaluate(context)
-    assertTypeNat(resExpression)
-    if (not self.expression.hasFreeVariables({})):
-      oldValue = resExpression.getValue()
+    assertNotHasFreeVariables(self.expression, context)
+    self.expression = self.expression.evaluate(context)
+    assertTypeNat(self.expression)
+    if (not self.expression.hasFreeVariables({})[0]):
+      oldValue = self.expression.getValue()
       if (oldValue == 0):
         return Zero()
-      resExpression.setValue(oldValue - 1)
-      return Zero() if resExpression.value == 0 else Succ(resExpression)
-    return Pred(resExpression)
+      self.expression.setValue(oldValue - 1)
+      return Zero() if self.expression.getValue() == 0 else Succ(self.expression)
+    return self
 
   def printString(self):
     return 'pred(' + self.expression.printString() + ')'
 
   def printType(self):
-    return self.type.printType()
+    return self.getType().printType()
 
   def hasFreeVariables(self, context):
     return self.expression.hasFreeVariables(context)
 
   def findAndReplace(self, var, parameter):
-    return Pred(self.expression.findAndReplace(var, parameter))
+    self.expression = self.expression.findAndReplace(var, parameter)
+    return self
 
 class Iszero(object):
   def __init__(self, expression):
@@ -156,11 +152,10 @@ class Iszero(object):
     return Arrow(Bool())
 
   def evaluate(self, context):
-    if (self.expression.hasFreeVariables(context)):
-      self.expression.printType() # raise FreeVariable
+    assertNotHasFreeVariables(self.expression, context)
     resExpression = self.expression.evaluate(context)
     assertTypeNat(resExpression)
-    if (not self.expression.hasFreeVariables({})):
+    if (not self.expression.hasFreeVariables({})[0]):
       return FTrue() if resExpression.getValue() == 0 else FFalse()
     return Iszero(resExpression)
 
@@ -168,13 +163,14 @@ class Iszero(object):
     return 'iszero(' + self.expression.printString() + ')'
 
   def printType(self):
-    return self.type.printType()
+    return self.getType().printType()
 
   def hasFreeVariables(self, context):
     return self.expression.hasFreeVariables(context)
 
   def findAndReplace(self, var, parameter):
-    return Iszero(self.expression.findAndReplace(var, parameter))
+    self.expression = self.expression.findAndReplace(var, parameter)
+    return self
 
 class Enclosed(object):
   def __init__(self, expression):
@@ -183,6 +179,9 @@ class Enclosed(object):
   def getType(self):
     return self.expression.getType()
 
+  def getVar(self):
+    return self.expression.getVar()
+
   def evaluate(self, context):
     return Enclosed(self.expression.evaluate(context))
 
@@ -190,10 +189,11 @@ class Enclosed(object):
     return '(' + self.expression.printString() + ')'
 
   def findAndReplace(self, var, parameter):
-    return Enclosed(self.expression.findAndReplace(var, parameter))
+    self.expression = self.expression.findAndReplace(var, parameter)
+    return self
 
   def printType(self):
-    return '(' + self.getType().printType() + ')'
+    return self.getType().printType()
 
   def hasFreeVariables(self, context):
     return self.expression.hasFreeVariables(context)

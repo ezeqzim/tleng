@@ -1,7 +1,7 @@
 from .Asserts import *
 from .Type import *
 from .Var import *
-
+from .Final import *
 class App(object):
   def __init__(self, app, expression):
     self.app = app
@@ -12,26 +12,42 @@ class App(object):
     return self.type
 
   def evaluate(self, context):
-    if (self.app.hasFreeVariables(context)):
-      self.app.printType() # raise FreeVariable
-    resApp = self.app.evaluate(context)
-    assertTypeLambda(resApp)
-    if (self.expression.hasFreeVariables({})):
-      self.expression.printType() # raise FreeVariable
-    resExpression = self.expression.evaluate(context)
-    if (self.app.hasFreeVariables({}) or self.expression.hasFreeVariables({})):
-      self.type = Arrow(self.app.getType().left)
+    assertNotHasFreeVariables(self.app, context)
+    self.app = self.app.evaluate(context)
+    assertTypeArrow(self.app)
+    assertNotHasFreeVariables(self.expression, context)
+    self.expression = self.expression.evaluate(context)
+    assertIsApplicable(self.app.getVar(), self.expression)
+    if (self.app.hasFreeVariables({})[0] or self.expression.hasFreeVariables({})[0]):
+      # assertTypeForApplication(self.app.getVar(), self.expression)
+      self.type = getAppType(self.app.getType(), self.expression.getType())
       return self
-    return resApp.evalWith(resExpression, context)
+    # assertIsApplicable(self.app.getVar(), self.expression)
+    return self.app.evalWith(self.expression, context)
 
   def printString(self):
-    return '(' + self.app.printString() + ' ' + self.expression.printString() + ')'
+    return self.app.printString() + ' ' + self.expression.printString()
 
   def printType(self):
-    return '(' + self.getType().printType() + ')'
+    return self.getType().printType()
 
   def hasFreeVariables(self, context):
-    return self.app.hasFreeVariables(context) or self.expression.hasFreeVariables(context)
+    hasFreeVariables = self.app.hasFreeVariables(context)
+    if (hasFreeVariables[0]):
+      return (True, hasFreeVariables[1])
+    hasFreeVariables = self.expression.hasFreeVariables(context)
+    if (hasFreeVariables[0]):
+      return (True, hasFreeVariables[1])
+    return (False, hasFreeVariables[1])
 
   def findAndReplace(self, var, parameter):
-    return App(self.app.findAndReplace(var, parameter), self.expression.findAndReplace(var, parameter))
+    self.app = self.app.findAndReplace(var, parameter)
+    self.expression = self.expression.findAndReplace(var, parameter)
+    return self
+
+def getAppType(appType, expType):
+  if (expType.right is None):
+    if (appType.left == Nat() or appType.left == Bool()):
+      return Arrow(appType.left)
+    return appType.left
+  return getAppType(appType.right, expType.right)

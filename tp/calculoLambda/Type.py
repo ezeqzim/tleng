@@ -7,12 +7,10 @@ class Bool(object):
   def __eq__(self, other):
     if (isinstance(other, self.__class__)):
       return self.type == other.type
+    return False
 
   def __ne__(self, other):
-    return not self.__eq__(self, other)
-
-  def evaluate(self):
-    return self
+    return not self.__eq__(other)
 
   def printString(self):
     return 'Bool'
@@ -27,12 +25,10 @@ class Nat(object):
   def __eq__(self, other):
     if (isinstance(other, self.__class__)):
       return self.type == other.type
+    return False
 
   def __ne__(self, other):
-    return not self.__eq__(self, other)
-
-  def evaluate(self):
-    return self
+    return not self.__eq__(other)
 
   def printString(self):
     return 'Nat'
@@ -54,12 +50,7 @@ class Arrow(object):
     return False
 
   def __ne__(self, other):
-    return not self.__eq__(self, other)
-
-  def evaluate(self):
-    if (self.right is None):
-      return self.left
-    return Arrow(self.left, self.right.evaluate())
+    return not self.__eq__(other)
 
   def printString(self):
     if (self.right is None):
@@ -69,4 +60,4 @@ class Arrow(object):
   def printType(self):
     if (self.right is None):
       return self.left.printType()
-    return self.left.printType() + ' -> ' + self.right.printType()
+    return '(' + self.left.printType() + ' -> ' + self.right.printType() + ')'

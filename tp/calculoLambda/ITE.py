@@ -12,31 +12,41 @@ class IfThenElse(object):
     return self.type
 
   def evaluate(self, context):
-    if (self.condition.hasFreeVariables(context)):
-      self.condition.printType() # raise FreeVariable
-    resCond = self.condition.evaluate(context)
-    assertTypeBool(resCond)
-    if (self.ifTrue.hasFreeVariables(context)):
-      self.ifTrue.printType() # raise FreeVariable
-    if (self.ifFalse.hasFreeVariables(context)):
-      self.ifFalse.printType() # raise FreeVariable
-    resTrue = self.ifTrue.evaluate(context)
-    resFalse = self.ifFalse.evaluate(context)
-    assertSameType(resTrue, resFalse)
-    if (self.condition.hasFreeVariables({})):
+    assertNotHasFreeVariables(self.condition, context)
+    self.condition = self.condition.evaluate(context)
+    assertTypeBool(self.condition)
+    assertNotHasFreeVariables(self.ifTrue, context)
+    assertNotHasFreeVariables(self.ifFalse, context)
+    self.ifTrue = self.ifTrue.evaluate(context)
+    self.ifFalse = self.ifFalse.evaluate(context)
+    assertSameType(self.ifTrue, self.ifFalse)
+    self.type = self.ifTrue.getType()
+    if (self.condition.hasFreeVariables({})[0]):
       return self
-    if (resCond.value):
-      return resTrue
-    return resFalse
+    if (self.condition.getValue()):
+      return self.ifTrue
+    return self.ifFalse
 
   def printString(self):
     return 'if ' + self.condition.printString() + ' then ' + self.ifTrue.printString() + ' else ' + self.ifFalse.printString()
 
   def printType(self):
-    return self.getType()
+    return self.getType().printType()
 
   def findAndReplace(self, var, parameter):
-    return IfThenElse(self.condition.findAndReplace(var, parameter), self.ifTrue.findAndReplace(var, parameter), self.ifFalse.findAndReplace(var, parameter))
+    self.condition = self.condition.findAndReplace(var, parameter)
+    self.ifTrue = self.ifTrue.findAndReplace(var, parameter)
+    self.ifFalse = self.ifFalse.findAndReplace(var, parameter)
+    return self
 
   def hasFreeVariables(self, context):
-    return self.condition.hasFreeVariables(context) or self.ifTrue.hasFreeVariables(context) or self.ifFalse.hasFreeVariables(context)
+    hasFreeVariables = self.condition.hasFreeVariables(context)
+    if (hasFreeVariables[0]):
+      return (True, hasFreeVariables[1])
+    hasFreeVariables = self.ifTrue.hasFreeVariables(context)
+    if (hasFreeVariables[0]):
+      return (True, hasFreeVariables[1])
+    hasFreeVariables = self.ifFalse.hasFreeVariables(context)
+    if (hasFreeVariables[0]):
+      return (True, hasFreeVariables[1])
+    return (False, hasFreeVariables[1])
