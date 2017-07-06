@@ -106,7 +106,7 @@ def p_flecha_arrow_tipo(p):
 # Flecha ->
 def p_flecha(p):
   'flecha : '
-  pass
+  p[0] = None
 
 def p_error(p):
   print 'Hubo un error en el parseo'

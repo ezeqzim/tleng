@@ -17,12 +17,10 @@ class App(object):
     assertTypeArrow(self.app)
     assertNotHasFreeVariables(self.expression, context)
     self.expression = self.expression.evaluate(context)
-    assertIsApplicable(self.app.getVar(), self.expression)
     if (self.app.hasFreeVariables({})[0] or self.expression.hasFreeVariables({})[0]):
-      # assertTypeForApplication(self.app.getVar(), self.expression)
+      assertIsApplicable(self.app.getVar(), self.expression)
       self.type = getAppType(self.app.getType(), self.expression.getType())
       return self
-    # assertIsApplicable(self.app.getVar(), self.expression)
     return self.app.evalWith(self.expression, context)
 
   def printString(self):

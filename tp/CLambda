@@ -12,15 +12,13 @@ if len(sys.argv) > 2:
 
 if len(sys.argv) == 2:
   exp_str = sys.argv[1]
-  print(parse(exp_str))
+  print parse(exp_str).evaluate().printString()
 
 if len(sys.argv) == 1:
   while True:
     try:
       exp_str = raw_input('> ')
-      parsed = parse(exp_str)
-      evaluation = parsed.evaluate()
-      print evaluation.printString()
+      print parse(exp_str).evaluate().printString()
     except EOFError:
       break
     except (UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable, FreeVariable) as e:
