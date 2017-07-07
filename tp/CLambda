@@ -12,7 +12,11 @@ if len(sys.argv) > 2:
 
 if len(sys.argv) == 2:
   exp_str = sys.argv[1]
-  print parse(exp_str).evaluate().printString()
+  try:
+    print parse(exp_str).evaluate().printString()
+  except (UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable, FreeVariable) as e:
+      print(e.message)
+      pass
 
 if len(sys.argv) == 1:
   while True:

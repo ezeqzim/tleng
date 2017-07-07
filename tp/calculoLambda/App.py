@@ -2,6 +2,7 @@ from .Asserts import *
 from .Type import *
 from .Var import *
 from .Final import *
+
 class App(object):
   def __init__(self, app, expression):
     self.app = app
@@ -17,8 +18,8 @@ class App(object):
     assertTypeArrow(self.app)
     assertNotHasFreeVariables(self.expression, context)
     self.expression = self.expression.evaluate(context)
+    assertIsApplicable(self.app.getVar(), self.expression)
     if (self.app.hasFreeVariables({})[0] or self.expression.hasFreeVariables({})[0]):
-      assertIsApplicable(self.app.getVar(), self.expression)
       self.type = getAppType(self.app.getType(), self.expression.getType())
       return self
     return self.app.evalWith(self.expression, context)

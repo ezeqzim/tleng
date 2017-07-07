@@ -9,7 +9,7 @@ class Lambda(object):
     self.var = var
     self.vtype = vtype
     self.body = body
-    self.type = Arrow(vtype, body.getType())
+    self.type = Arrow(removeLastNone(vtype), body.getType())
     self.context = { var.getValue(): vtype }
 
   def getType(self):
@@ -47,3 +47,8 @@ class Lambda(object):
     auxContext.update(self.context)
     self.body = self.body.findAndReplace(self.var, parameter).evaluate(auxContext)
     return self.body
+
+def removeLastNone(vtype):
+  if (vtype.right is None):
+    return vtype.left
+  return Arrow(vtype.left, removeLastNone(vtype.right))
