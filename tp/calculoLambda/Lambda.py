@@ -7,7 +7,6 @@ class Lambda(object):
   def __init__(self, var, vtype, body):
     var.setType(vtype)
     self.var = var
-    self.vtype = vtype
     self.body = body
     self.type = Arrow(removeLastNone(vtype), body.getType())
     self.context = { var.getValue(): vtype }
@@ -15,38 +14,50 @@ class Lambda(object):
   def getType(self):
     return self.type
 
+  def setType(self, atype):
+    self.type = atype
+
   def getVar(self):
     return self.var
+
+  def getBody(self):
+    return self.body
+
+  def setBody(self, body):
+    self.body = body
+
+  def getContext(self):
+    return self.context
 
   def evaluate(self, context):
     auxContext = copy.deepcopy(context)
     auxContext.update(self.context)
-    assertNotHasFreeVariables(self.body, auxContext)
-    self.body = self.body.evaluate(auxContext)
-    self.type.right = self.body.getType()
+    assertNotHasFreeVariables(self.getBody(), auxContext)
+    self.setBody(self.getBody().evaluate(auxContext))
+    self.setType(Arrow(self.getType().left, self.getBody().getType()))
     return self
 
   def printString(self):
-    return '\\' + self.var.printString() + ':' + self.vtype.printString() + '.' + self.body.printString()
+    return '\\' + self.getVar().printString() + ':' + self.getVar().getType().printString() + '.' + self.getBody().printString()
 
   def printType(self):
-    return self.type.printType()
+    return self.getType().printType()
 
   def findAndReplace(self, var, parameter):
-    self.body = self.body.findAndReplace(var, parameter)
+    self.setBody(self.getBody().findAndReplace(var, parameter))
     return self
 
   def hasFreeVariables(self, context):
     auxContext = copy.deepcopy(context)
     auxContext.update(self.context)
-    return self.body.hasFreeVariables(auxContext)
+    return self.getBody().hasFreeVariables(auxContext)
 
   def evalWith(self, parameter, context):
-    self.context.pop(self.var.getValue())
+    self.getContext().pop(self.getVar().getValue())
     auxContext = copy.deepcopy(context)
     auxContext.update(self.context)
-    self.body = self.body.findAndReplace(self.var, parameter).evaluate(auxContext)
-    return self.body
+    self.setBody(self.getBody().findAndReplace(self.getVar(), parameter).evaluate(auxContext))
+    return self.getBody()
 
 def removeLastNone(vtype):
   if (vtype.right is None):

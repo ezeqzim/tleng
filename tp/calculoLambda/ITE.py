@@ -11,42 +11,63 @@ class IfThenElse(object):
   def getType(self):
     return self.type
 
-  def evaluate(self, context):
-    assertNotHasFreeVariables(self.condition, context)
-    self.condition = self.condition.evaluate(context)
-    assertTypeBool(self.condition)
-    assertNotHasFreeVariables(self.ifTrue, context)
-    assertNotHasFreeVariables(self.ifFalse, context)
-    self.ifTrue = self.ifTrue.evaluate(context)
-    self.ifFalse = self.ifFalse.evaluate(context)
-    assertSameType(self.ifTrue, self.ifFalse)
-    self.type = self.ifTrue.getType()
-    if (self.condition.hasFreeVariables({})[0]):
-      return self
-    if (self.condition.getValue()):
-      return self.ifTrue
+  def setType(self, atype):
+    self.type = atype
+
+  def getCondition(self):
+    return self.condition
+
+  def setCondition(self, condition):
+    self.condition = condition
+
+  def getIfTrue(self):
+    return self.ifTrue
+
+  def setIfTrue(self, ifTrue):
+    self.ifTrue = ifTrue
+
+  def getIfFalse(self):
     return self.ifFalse
 
+  def setIfFalse(self, ifFalse):
+    self.ifFalse = ifFalse
+
+  def evaluate(self, context):
+    assertNotHasFreeVariables(self.getCondition(), context)
+    self.setCondition(self.getCondition().evaluate(context))
+    assertTypeBool(self.getCondition())
+    assertNotHasFreeVariables(self.getIfTrue(), context)
+    assertNotHasFreeVariables(self.getIfFalse(), context)
+    self.setIfTrue(self.getIfTrue().evaluate(context))
+    self.setIfFalse(self.getIfFalse().evaluate(context))
+    assertSameType(self.getIfTrue(), self.getIfFalse())
+    self.setType(self.getIfTrue().getType())
+    if (self.getCondition().hasFreeVariables({})[0]):
+      return self
+    if (self.getCondition().getValue()):
+      return self.getIfTrue()
+    return self.getIfFalse()
+
   def printString(self):
-    return 'if ' + self.condition.printString() + ' then ' + self.ifTrue.printString() + ' else ' + self.ifFalse.printString()
+    return 'if ' + self.getCondition().printString() + ' then ' + self.getIfTrue().printString() + ' else ' + self.getIfFalse().printString()
 
   def printType(self):
     return self.getType().printType()
 
   def findAndReplace(self, var, parameter):
-    self.condition = self.condition.findAndReplace(var, parameter)
-    self.ifTrue = self.ifTrue.findAndReplace(var, parameter)
-    self.ifFalse = self.ifFalse.findAndReplace(var, parameter)
+    self.setCondition(self.getCondition().findAndReplace(var, parameter))
+    self.setIfTrue(self.getIfTrue().findAndReplace(var, parameter))
+    self.setIfFalse(self.getIfFalse().findAndReplace(var, parameter))
     return self
 
   def hasFreeVariables(self, context):
-    hasFreeVariables = self.condition.hasFreeVariables(context)
+    hasFreeVariables = self.getCondition().hasFreeVariables(context)
     if (hasFreeVariables[0]):
       return (True, hasFreeVariables[1])
-    hasFreeVariables = self.ifTrue.hasFreeVariables(context)
+    hasFreeVariables = self.getIfTrue().hasFreeVariables(context)
     if (hasFreeVariables[0]):
       return (True, hasFreeVariables[1])
-    hasFreeVariables = self.ifFalse.hasFreeVariables(context)
+    hasFreeVariables = self.getIfFalse().hasFreeVariables(context)
     if (hasFreeVariables[0]):
       return (True, hasFreeVariables[1])
     return (False, hasFreeVariables[1])

@@ -31,7 +31,7 @@ def assertTypeNat(expression):
     raise ExpressionMustBeNat(message)
 
 def assertTypeArrow(expression):
-  if (not (expression.getType().right is not None)):
+  if (not (expression.getType().getRight() is not None)):
     message = 'La expresion (' + expression.printString() + ' : ' + expression.printType() + ') debe ser de tipo Arrow'
     raise ExpressionMustBeLambda(message)
 
@@ -53,11 +53,27 @@ def assertNotHasFreeVariables(expression, context):
 def assertIsApplicable(expression1, expression2):
   auxAppType = copy.deepcopy(expression1.getType())
   auxExpType = copy.deepcopy(expression2.getType())
-  while(auxExpType is not None):
-    if (auxAppType.left == auxExpType.left):
-      auxAppType = auxAppType.right
-      auxExpType = auxExpType.right
+  auxAppType = typeFlatten(auxAppType)
+  auxExpType = typeFlatten(auxExpType)
+  while (auxExpType is not None):
+    if (auxAppType is not None and auxAppType.getLeft() == auxExpType.getLeft()):
+      auxAppType = auxAppType.getRight()
+      auxExpType = auxExpType.getRight()
     else:
       message = 'La expresion (' + expression2.printString() + ' : ' + expression2.printType() + ') no tiene el tipo correcto para aplicarse a (' + expression1.printString() + ' : ' + expression1.printType() + ')'
       raise ExpressionMustBeApplicable(message)
   return auxAppType is not None
+
+def typeFlatten(atype):
+  typeList = typeToList(atype)
+  res = Arrow(typeList[len(typeList) - 1])
+  for i in range(len(typeList) - 2, -1, -1):
+    res = Arrow(typeList[i], res)
+  return res
+
+def typeToList(atype):
+  if (atype is None):
+    return []
+  if (atype == Bool() or atype == Nat()):
+    return [atype]
+  return typeToList(atype.getLeft()) + typeToList(atype.getRight())

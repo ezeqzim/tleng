@@ -6,11 +6,14 @@ class Bool(object):
 
   def __eq__(self, other):
     if (isinstance(other, self.__class__)):
-      return self.type == other.type
+      return self.getType() == other.type
     return False
 
   def __ne__(self, other):
     return not self.__eq__(other)
+
+  def getType(self):
+    return self.type
 
   def printString(self):
     return 'Bool'
@@ -24,11 +27,14 @@ class Nat(object):
 
   def __eq__(self, other):
     if (isinstance(other, self.__class__)):
-      return self.type == other.type
+      return self.getType() == other.type
     return False
 
   def __ne__(self, other):
     return not self.__eq__(other)
+
+  def getType(self):
+    return self.type
 
   def printString(self):
     return 'Nat'
@@ -43,21 +49,27 @@ class Arrow(object):
 
   def __eq__(self, other):
     if (isinstance(other, self.__class__)):
-      if (self.right is not None and other.right is not None):
-        return self.left == other.left and self.right == other.right
-      if (self.right is None and other.right is None):
-        return self.left == other.left
+      if (self.getRight() is not None and other.getRight() is not None):
+        return self.getLeft() == other.getLeft() and self.getRight() == other.getRight()
+      if (self.getRight() is None and other.getRight() is None):
+        return self.getLeft() == other.getLeft()
     return False
 
   def __ne__(self, other):
     return not self.__eq__(other)
 
+  def getLeft(self):
+    return self.left
+
+  def getRight(self):
+    return self.right
+
   def printString(self):
-    if (self.right is None):
-      return self.left.printString()
-    return self.left.printString() + ' -> ' + self.right.printString()
+    if (self.getRight() is None):
+      return self.getLeft().printString()
+    return self.getLeft().printString() + ' -> ' + self.getRight().printString()
 
   def printType(self):
-    if (self.right is None):
-      return self.left.printType()
-    return '(' + self.left.printType() + ' -> ' + self.right.printType() + ')'
+    if (self.getRight() is None):
+      return self.getLeft().printType()
+    return '(' + self.getLeft().printType() + ' -> ' + self.getRight().printType() + ')'

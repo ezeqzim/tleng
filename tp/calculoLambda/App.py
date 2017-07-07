@@ -12,36 +12,51 @@ class App(object):
   def getType(self):
     return self.type
 
+  def setType(self, atype):
+    self.type = atype
+
+  def getApp(self):
+    return self.app
+
+  def setApp(self, app):
+    self.app = app
+
+  def getExpression(self):
+    return self.expression
+
+  def setExpression(self, expression):
+    self.expression = expression
+
   def evaluate(self, context):
-    assertNotHasFreeVariables(self.app, context)
-    self.app = self.app.evaluate(context)
-    assertTypeArrow(self.app)
-    assertNotHasFreeVariables(self.expression, context)
-    self.expression = self.expression.evaluate(context)
-    assertIsApplicable(self.app.getVar(), self.expression)
-    if (self.app.hasFreeVariables({})[0] or self.expression.hasFreeVariables({})[0]):
-      self.type = getAppType(self.app.getType(), self.expression.getType())
+    assertNotHasFreeVariables(self.getApp(), context)
+    self.setApp(self.getApp().evaluate(context))
+    assertTypeArrow(self.getApp())
+    assertNotHasFreeVariables(self.getExpression(), context)
+    self.setExpression(self.getExpression().evaluate(context))
+    assertIsApplicable(self.getApp().getVar(), self.getExpression())
+    if (self.getApp().hasFreeVariables({})[0] or self.getExpression().hasFreeVariables({})[0]):
+      self.setType(getAppType(self.getApp().getType(), self.getExpression().getType()))
       return self
-    return self.app.evalWith(self.expression, context)
+    return self.getApp().evalWith(self.getExpression(), context)
 
   def printString(self):
-    return self.app.printString() + ' ' + self.expression.printString()
+    return self.getApp().printString() + ' ' + self.getExpression().printString()
 
   def printType(self):
     return self.getType().printType()
 
   def hasFreeVariables(self, context):
-    hasFreeVariables = self.app.hasFreeVariables(context)
+    hasFreeVariables = self.getApp().hasFreeVariables(context)
     if (hasFreeVariables[0]):
       return (True, hasFreeVariables[1])
-    hasFreeVariables = self.expression.hasFreeVariables(context)
+    hasFreeVariables = self.getExpression().hasFreeVariables(context)
     if (hasFreeVariables[0]):
       return (True, hasFreeVariables[1])
     return (False, hasFreeVariables[1])
 
   def findAndReplace(self, var, parameter):
-    self.app = self.app.findAndReplace(var, parameter)
-    self.expression = self.expression.findAndReplace(var, parameter)
+    self.setApp(self.getApp().findAndReplace(var, parameter))
+    self.setExpression(self.getExpression().findAndReplace(var, parameter))
     return self
 
 def getAppType(appType, expType):
