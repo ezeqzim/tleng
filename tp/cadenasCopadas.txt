@@ -23,8 +23,9 @@
 ./CLambda '(\x:Nat -> Nat -> Nat.\y:Nat->Nat. x y) (\j:Nat->Nat.0) (\z:Nat.succ(0))'
 ./CLambda '(\x:Nat -> Nat -> Nat.\y:Nat->Nat. x y) (\j:Nat->Nat.succ(0))'
 ./CLambda '(\x:Nat -> Nat -> Nat.\y:Nat->Nat. x y) (\j:Nat->Nat.j 0) (\z:Nat.succ(z))'
-./CLambda '(\x:Nat -> Nat -> Nat.\y:Nat->Nat. x y) (\j:Nat->Nat.\c:Nat.j c) (\z:Nat.0)'
 
+./CLambda '(\x:Nat -> Nat -> Nat.\y:Nat->Nat. x y) (\j:Nat->Nat.\c:Nat.j c) (\z:Nat.0)'
 ./CLambda '(\x:Nat -> Nat -> Nat.\y:Nat->Nat. x y) (\j:Nat.\c:Nat.succ(0)) (\z:Nat.0)'
-./CLambda '(\x:Nat -> Nat -> Nat.\y:Nat->Nat. x y) (\j:Nat.\c:Bool.\k:Boo)) (\z:Nat.0)'
+./CLambda '(\x:Nat -> Nat -> Nat.\y:Nat->Nat. x y) (\j:Nat.\c:Bool.\k:Bool.true) (\z:Nat.0)'
 ./CLambda '(\x:Nat -> Nat -> Nat.\y:Nat->Nat. x y) (\j:Nat.\c:Nat.\k:Bool.succ(0)) (\z:Nat.0)'
+./CLambda '(\x:Nat -> Nat -> Nat.\y:Nat. x y) (\j:Nat.\c:Nat.c) 0'

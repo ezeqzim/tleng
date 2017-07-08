@@ -53,8 +53,8 @@ def assertNotHasFreeVariables(expression, context):
 def assertIsApplicable(expression1, expression2):
   auxAppType = copy.deepcopy(expression1.getType())
   auxExpType = copy.deepcopy(expression2.getType())
-  auxAppType = typeFlatten(auxAppType)
-  auxExpType = typeFlatten(auxExpType)
+  # auxAppType = typeFlatten(auxAppType)
+  # auxExpType = typeFlatten(auxExpType)
   while (auxExpType is not None):
     if (auxAppType is not None and auxAppType.getLeft() == auxExpType.getLeft()):
       auxAppType = auxAppType.getRight()
