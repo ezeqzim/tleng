@@ -10,7 +10,7 @@ class Zero(object):
     return self.value
 
   def getType(self):
-    return Arrow(Nat())
+    return Nat()
 
   def evaluate(self, context):
     return self
@@ -35,7 +35,7 @@ class FTrue(object):
     return self.value
 
   def getType(self):
-    return Arrow(Bool())
+    return Bool()
 
   def evaluate(self, context):
     return self
@@ -60,7 +60,7 @@ class FFalse(object):
     return self.value
 
   def getType(self):
-    return Arrow(Bool())
+    return Bool()
 
   def evaluate(self, context):
     return self
@@ -89,7 +89,7 @@ class Succ(object):
     self.value = value
 
   def getType(self):
-    return Arrow(Nat())
+    return Nat()
 
   def getExpression(self):
     return self.expression
@@ -123,7 +123,7 @@ class Pred(object):
     self.expression = expression
 
   def getType(self):
-    return Arrow(Nat())
+    return Nat()
 
   def getExpression(self):
     return self.expression
@@ -161,7 +161,7 @@ class Iszero(object):
     self.expression = expression
 
   def getType(self):
-    return Arrow(Bool())
+    return Bool()
 
   def getExpression(self):
     return self.expression

@@ -6,7 +6,7 @@ class Bool(object):
 
   def __eq__(self, other):
     if (isinstance(other, self.__class__)):
-      return self.getType() == other.type
+      return self.getType() == other.getType()
     return False
 
   def __ne__(self, other):
@@ -27,7 +27,7 @@ class Nat(object):
 
   def __eq__(self, other):
     if (isinstance(other, self.__class__)):
-      return self.getType() == other.type
+      return self.getType() == other.getType()
     return False
 
   def __ne__(self, other):
@@ -43,33 +43,30 @@ class Nat(object):
     return 'Nat'
 
 class Arrow(object):
-  def __init__(self, left, right = None):
-    self.left = left
-    self.right = right
+  def __init__(self, param, result):
+    self.param = param
+    self.result = result
 
   def __eq__(self, other):
     if (isinstance(other, self.__class__)):
-      if (self.getRight() is not None and other.getRight() is not None):
-        return self.getLeft() == other.getLeft() and self.getRight() == other.getRight()
-      if (self.getRight() is None and other.getRight() is None):
-        return self.getLeft() == other.getLeft()
+      return self.getParam() == other.getParam() and self.getResult() == other.getResult()
     return False
 
   def __ne__(self, other):
     return not self.__eq__(other)
 
-  def getLeft(self):
-    return self.left
+  def getParam(self):
+    return self.param
 
-  def getRight(self):
-    return self.right
+  def getResult(self):
+    return self.result
 
   def printString(self):
-    if (self.getRight() is None):
-      return self.getLeft().printString()
-    return self.getLeft().printString() + ' -> ' + self.getRight().printString()
+    if (self.getResult() is None):
+      return self.getParam().printString()
+    return '(' + self.getParam().printString() + ' -> ' + self.getResult().printString() + ')'
 
   def printType(self):
-    if (self.getRight() is None):
-      return self.getLeft().printType()
-    return '(' + self.getLeft().printType() + ' -> ' + self.getRight().printType() + ')'
+    if (self.getResult() is None):
+      return self.getParam().printType()
+    return '(' + self.getParam().printType() + ' -> ' + self.getResult().printType() + ')'

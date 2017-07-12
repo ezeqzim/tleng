@@ -8,7 +8,7 @@ class Lambda(object):
     var.setType(vtype)
     self.var = var
     self.body = body
-    self.type = Arrow(removeLastNone(vtype), body.getType())
+    self.type = Arrow(vtype, body.getType())
     self.context = { var.getValue(): vtype }
 
   def getType(self):
@@ -34,7 +34,7 @@ class Lambda(object):
     auxContext.update(self.context)
     assertNotHasFreeVariables(self.getBody(), auxContext)
     self.setBody(self.getBody().evaluate(auxContext))
-    self.setType(Arrow(self.getType().left, self.getBody().getType()))
+    self.setType(Arrow(self.getType().getParam(), self.getBody().getType()))
     return self
 
   def printString(self):
@@ -58,8 +58,3 @@ class Lambda(object):
     auxContext.update(self.context)
     self.setBody(self.getBody().findAndReplace(self.getVar(), parameter).evaluate(auxContext))
     return self.getBody()
-
-def removeLastNone(vtype):
-  if (vtype.right is None):
-    return vtype.left
-  return Arrow(vtype.left, removeLastNone(vtype.right))

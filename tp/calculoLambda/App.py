@@ -33,9 +33,9 @@ class App(object):
     assertTypeArrow(self.getApp())
     assertNotHasFreeVariables(self.getExpression(), context)
     self.setExpression(self.getExpression().evaluate(context))
-    assertIsApplicable(self.getApp().getVar(), self.getExpression())
+    assertIsApplicable(self.getApp(), self.getExpression())
     if (self.getApp().hasFreeVariables({})[0] or self.getExpression().hasFreeVariables({})[0]):
-      self.setType(getAppType(self.getApp().getType(), self.getExpression().getType()))
+      self.setType(self.getApp().getType().getResult())
       return self
     return self.getApp().evalWith(self.getExpression(), context)
 
@@ -58,10 +58,3 @@ class App(object):
     self.setApp(self.getApp().findAndReplace(var, parameter))
     self.setExpression(self.getExpression().findAndReplace(var, parameter))
     return self
-
-def getAppType(appType, expType):
-  if (expType.right is None):
-    if (appType.left == Nat() or appType.left == Bool()):
-      return Arrow(appType.left)
-    return appType.left
-  return getAppType(appType.right, expType.right)

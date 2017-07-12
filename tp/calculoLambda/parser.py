@@ -91,12 +91,26 @@ def p_var_var(p):
 # Tipo -> Bool Flecha
 def p_tipo_bool_flecha(p):
   'tipo : BOOL flecha'
-  p[0] = Arrow(Bool(), p[2])
+  if (p[2] is None):
+    p[0] = Bool()
+  else:
+    p[0] = Arrow(Bool(), p[2])
 
 # Tipo - > Nat Flecha
 def p_tipo_nat_flecha(p):
   'tipo : NAT flecha'
-  p[0] = Arrow(Nat(), p[2])
+  if (p[2] is None):
+    p[0] = Nat()
+  else:
+    p[0] = Arrow(Nat(), p[2])
+
+# Tipo -> ( Tipo ) Flecha
+def p_tipo_openbracket_tipo_closedbracket_flecha(p):
+  'tipo : OPENBRACKET tipo CLOSEDBRACKET flecha'
+  if (p[4] is None):
+    p[0] = p[2]
+  else:
+    p[0] = Arrow(p[2], p[4])
 
 # Flecha -> -> Tipo
 def p_flecha_arrow_tipo(p):

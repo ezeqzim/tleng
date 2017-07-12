@@ -21,14 +21,15 @@ Rule 15    final -> OPENBRACKET lambda CLOSEDBRACKET
 Rule 16    var -> VAR
 Rule 17    tipo -> BOOL flecha
 Rule 18    tipo -> NAT flecha
-Rule 19    flecha -> ARROW tipo
-Rule 20    flecha -> <empty>
+Rule 19    tipo -> OPENBRACKET tipo CLOSEDBRACKET flecha
+Rule 20    flecha -> ARROW tipo
+Rule 21    flecha -> <empty>
 
 Terminals, with rules where they appear
 
-ARROW                : 19
+ARROW                : 20
 BOOL                 : 17
-CLOSEDBRACKET        : 12 13 14 15
+CLOSEDBRACKET        : 12 13 14 15 19
 COLON                : 2
 ELSE                 : 4
 FALSE                : 10
@@ -36,7 +37,7 @@ IF                   : 4
 ISZERO               : 14
 LAMBDA               : 2
 NAT                  : 18
-OPENBRACKET          : 12 13 14 15
+OPENBRACKET          : 12 13 14 15 19
 POINT                : 2
 PRED                 : 13
 SUCC                 : 12
@@ -50,11 +51,11 @@ Nonterminals, with rules where they appear
 
 app                  : 5 6
 final                : 6 7
-flecha               : 17 18
+flecha               : 17 18 19
 ite                  : 3
 lambda               : 1 2 4 4 4 12 13 14 15
 s                    : 0
-tipo                 : 2 19
+tipo                 : 2 19 20
 var                  : 2 11
 
 Parsing method: LALR
@@ -131,10 +132,10 @@ state 2
 
     (3) lambda -> ite .
 
+    ELSE            reduce using rule 3 (lambda -> ite .)
     $end            reduce using rule 3 (lambda -> ite .)
     THEN            reduce using rule 3 (lambda -> ite .)
     CLOSEDBRACKET   reduce using rule 3 (lambda -> ite .)
-    ELSE            reduce using rule 3 (lambda -> ite .)
 
 
 state 3
@@ -588,9 +589,11 @@ state 29
     (2) lambda -> LAMBDA var COLON . tipo POINT lambda
     (17) tipo -> . BOOL flecha
     (18) tipo -> . NAT flecha
+    (19) tipo -> . OPENBRACKET tipo CLOSEDBRACKET flecha
 
-    BOOL            shift and go to state 36
-    NAT             shift and go to state 35
+    BOOL            shift and go to state 37
+    NAT             shift and go to state 36
+    OPENBRACKET     shift and go to state 35
 
     tipo                           shift and go to state 34
 
@@ -634,7 +637,7 @@ state 32
 
     (4) ite -> IF lambda THEN lambda . ELSE lambda
 
-    ELSE            shift and go to state 37
+    ELSE            shift and go to state 38
 
 
 state 33
@@ -659,32 +662,47 @@ state 34
 
     (2) lambda -> LAMBDA var COLON tipo . POINT lambda
 
-    POINT           shift and go to state 38
+    POINT           shift and go to state 39
 
 
 state 35
 
-    (18) tipo -> NAT . flecha
-    (19) flecha -> . ARROW tipo
-    (20) flecha -> .
+    (19) tipo -> OPENBRACKET . tipo CLOSEDBRACKET flecha
+    (17) tipo -> . BOOL flecha
+    (18) tipo -> . NAT flecha
+    (19) tipo -> . OPENBRACKET tipo CLOSEDBRACKET flecha
 
-    ARROW           shift and go to state 40
-    POINT           reduce using rule 20 (flecha -> .)
+    BOOL            shift and go to state 37
+    NAT             shift and go to state 36
+    OPENBRACKET     shift and go to state 35
 
-    flecha                         shift and go to state 39
+    tipo                           shift and go to state 40
 
 state 36
 
-    (17) tipo -> BOOL . flecha
-    (19) flecha -> . ARROW tipo
-    (20) flecha -> .
+    (18) tipo -> NAT . flecha
+    (20) flecha -> . ARROW tipo
+    (21) flecha -> .
 
-    ARROW           shift and go to state 40
-    POINT           reduce using rule 20 (flecha -> .)
+    ARROW           shift and go to state 42
+    POINT           reduce using rule 21 (flecha -> .)
+    CLOSEDBRACKET   reduce using rule 21 (flecha -> .)
 
     flecha                         shift and go to state 41
 
 state 37
+
+    (17) tipo -> BOOL . flecha
+    (20) flecha -> . ARROW tipo
+    (21) flecha -> .
+
+    ARROW           shift and go to state 42
+    POINT           reduce using rule 21 (flecha -> .)
+    CLOSEDBRACKET   reduce using rule 21 (flecha -> .)
+
+    flecha                         shift and go to state 43
+
+state 38
 
     (4) ite -> IF lambda THEN lambda ELSE . lambda
     (2) lambda -> . LAMBDA var COLON tipo POINT lambda
@@ -718,9 +736,9 @@ state 37
     ite                            shift and go to state 2
     var                            shift and go to state 6
     final                          shift and go to state 7
-    lambda                         shift and go to state 42
+    lambda                         shift and go to state 44
 
-state 38
+state 39
 
     (2) lambda -> LAMBDA var COLON tipo POINT . lambda
     (2) lambda -> . LAMBDA var COLON tipo POINT lambda
@@ -754,34 +772,45 @@ state 38
     ite                            shift and go to state 2
     var                            shift and go to state 6
     final                          shift and go to state 7
-    lambda                         shift and go to state 43
+    lambda                         shift and go to state 45
 
-state 39
+state 40
+
+    (19) tipo -> OPENBRACKET tipo . CLOSEDBRACKET flecha
+
+    CLOSEDBRACKET   shift and go to state 46
+
+
+state 41
 
     (18) tipo -> NAT flecha .
 
     POINT           reduce using rule 18 (tipo -> NAT flecha .)
+    CLOSEDBRACKET   reduce using rule 18 (tipo -> NAT flecha .)
 
 
-state 40
+state 42
 
-    (19) flecha -> ARROW . tipo
+    (20) flecha -> ARROW . tipo
     (17) tipo -> . BOOL flecha
     (18) tipo -> . NAT flecha
+    (19) tipo -> . OPENBRACKET tipo CLOSEDBRACKET flecha
 
-    BOOL            shift and go to state 36
-    NAT             shift and go to state 35
+    BOOL            shift and go to state 37
+    NAT             shift and go to state 36
+    OPENBRACKET     shift and go to state 35
 
-    tipo                           shift and go to state 44
+    tipo                           shift and go to state 47
 
-state 41
+state 43
 
     (17) tipo -> BOOL flecha .
 
     POINT           reduce using rule 17 (tipo -> BOOL flecha .)
+    CLOSEDBRACKET   reduce using rule 17 (tipo -> BOOL flecha .)
 
 
-state 42
+state 44
 
     (4) ite -> IF lambda THEN lambda ELSE lambda .
 
@@ -791,19 +820,40 @@ state 42
     $end            reduce using rule 4 (ite -> IF lambda THEN lambda ELSE lambda .)
 
 
-state 43
+state 45
 
     (2) lambda -> LAMBDA var COLON tipo POINT lambda .
 
+    ELSE            reduce using rule 2 (lambda -> LAMBDA var COLON tipo POINT lambda .)
     $end            reduce using rule 2 (lambda -> LAMBDA var COLON tipo POINT lambda .)
     THEN            reduce using rule 2 (lambda -> LAMBDA var COLON tipo POINT lambda .)
     CLOSEDBRACKET   reduce using rule 2 (lambda -> LAMBDA var COLON tipo POINT lambda .)
-    ELSE            reduce using rule 2 (lambda -> LAMBDA var COLON tipo POINT lambda .)
 
 
-state 44
+state 46
 
-    (19) flecha -> ARROW tipo .
+    (19) tipo -> OPENBRACKET tipo CLOSEDBRACKET . flecha
+    (20) flecha -> . ARROW tipo
+    (21) flecha -> .
 
-    POINT           reduce using rule 19 (flecha -> ARROW tipo .)
+    ARROW           shift and go to state 42
+    POINT           reduce using rule 21 (flecha -> .)
+    CLOSEDBRACKET   reduce using rule 21 (flecha -> .)
+
+    flecha                         shift and go to state 48
+
+state 47
+
+    (20) flecha -> ARROW tipo .
+
+    POINT           reduce using rule 20 (flecha -> ARROW tipo .)
+    CLOSEDBRACKET   reduce using rule 20 (flecha -> ARROW tipo .)
+
+
+state 48
+
+    (19) tipo -> OPENBRACKET tipo CLOSEDBRACKET flecha .
+
+    POINT           reduce using rule 19 (tipo -> OPENBRACKET tipo CLOSEDBRACKET flecha .)
+    CLOSEDBRACKET   reduce using rule 19 (tipo -> OPENBRACKET tipo CLOSEDBRACKET flecha .)
 
