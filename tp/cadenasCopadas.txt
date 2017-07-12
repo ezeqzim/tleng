@@ -37,3 +37,7 @@ NO TIENEN QUE ANDAR
 
 NO TIENE QUE PARSEAR
 ./CLambda '(\x:Nat.true) if true then (\x:Nat.succ(0)) 0 else (\x:Nat.succ(0)) 0'
+./CLambda '(\x:Nat.true) \x:Nat.succ(0)'
+./CLambda '\x:Nat.'
+./CLambda '\x:'
+./CLambda 'if true then else false'

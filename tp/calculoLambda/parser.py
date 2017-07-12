@@ -8,6 +8,9 @@ from .Final import *
 from .Var import *
 from .Type import *
 
+class Restart(Exception):
+  pass
+
 # S -> Lambda
 def p_s_lambda(p):
   's : lambda'
@@ -123,8 +126,9 @@ def p_flecha(p):
   p[0] = None
 
 def p_error(p):
-  print 'Hubo un error en el parseo'
+  message = 'Hubo un error en el parseo'
   parser.restart()
+  raise Restart(message)
 
 parser = yacc.yacc(debug=True)
 

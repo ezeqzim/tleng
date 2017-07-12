@@ -14,7 +14,7 @@ if len(sys.argv) == 2:
   exp_str = sys.argv[1]
   try:
     print parse(exp_str).evaluate().printString()
-  except (UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable, FreeVariable) as e:
+  except (Restart, UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable, FreeVariable) as e:
       print(e.message)
       pass
 
@@ -25,7 +25,7 @@ if len(sys.argv) == 1:
       print parse(exp_str).evaluate().printString()
     except EOFError:
       break
-    except (UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable, FreeVariable) as e:
+    except (Restart, UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable, FreeVariable) as e:
       print(e.message)
       pass
 
@@ -38,6 +38,6 @@ ITE -> if Lambda then Lambda else Lambda | App
 App -> App Final | Final
 Final -> 0 | true | false | Var | succ ( Lambda ) | pred ( Lambda ) | iszero ( Lambda ) | ( Lambda )
 Var -> var
-Tipo -> Bool Flecha | Nat Flecha
+Tipo -> Bool Flecha | Nat Flecha | (Tipo) Flecha
 Flecha -> -> Tipo |
 """
