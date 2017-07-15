@@ -15,8 +15,8 @@ if len(sys.argv) == 2:
   try:
     print parse(exp_str).evaluate().printString()
   except (Restart, UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable, FreeVariable) as e:
-      print(e.message)
-      pass
+    print >> sys.stderr, e.message
+    pass
 
 if len(sys.argv) == 1:
   while True:
@@ -26,7 +26,7 @@ if len(sys.argv) == 1:
     except EOFError:
       break
     except (Restart, UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable, FreeVariable) as e:
-      print(e.message)
+      print >> sys.stderr, e.message
       pass
 
 """
