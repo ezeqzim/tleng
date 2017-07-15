@@ -1,0 +1,43 @@
+#! /usr/bin/env python
+"""
+Para correrlo desde la consola, hay que darle permisos de ejecucion
+chmod +x CLambda
+"""
+import sys
+from calculoLambda import *
+
+if len(sys.argv) > 2:
+  print("El uso correcto es ./CLambda 'input string' o ./CLambda")
+  sys.exit()
+
+if len(sys.argv) == 2:
+  exp_str = sys.argv[1]
+  try:
+    print parse(exp_str).evaluate().printString()
+  except (Restart, UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable, FreeVariable) as e:
+    print >> sys.stderr, e.message
+    pass
+
+if len(sys.argv) == 1:
+  while True:
+    try:
+      exp_str = raw_input('> ')
+      print parse(exp_str).evaluate().printString()
+    except EOFError:
+      break
+    except (Restart, UnexpectedTokenException, ExpressionMustBeBool, ExpressionMustBeNat, ExpressionMustBeLambda, ExpressionsMustHaveEqualType, ExpressionMustBeApplicable, FreeVariable) as e:
+      print >> sys.stderr, e.message
+      pass
+
+"""
+Grammar
+
+S -> Lambda
+Lambda -> \ Var : Tipo . Lambda | ITE
+ITE -> if Lambda then Lambda else Lambda | App
+App -> App Final | Final
+Final -> 0 | true | false | Var | succ ( Lambda ) | pred ( Lambda ) | iszero ( Lambda ) | ( Lambda )
+Var -> var
+Tipo -> Bool Flecha | Nat Flecha | (Tipo) Flecha
+Flecha -> -> Tipo |
+"""
